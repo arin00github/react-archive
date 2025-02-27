@@ -1,9 +1,10 @@
 import { Db, MongoClient } from "mongodb";
+import { ReactNode } from "react";
 
 export interface NavItem {
   label: string;
-  url: string;
-  key: string;
+  href: string;
+  id: string;
 }
 
 export interface MongoObject {
@@ -14,4 +15,8 @@ export interface MongoObject {
 export type LabelItemType = {
   label: string;
   value: string;
+};
+
+export type ChildrenWrapper = {
+  children: ReactNode;
 };

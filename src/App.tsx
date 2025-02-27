@@ -1,7 +1,5 @@
-import React from "react";
-
 import { Route, Routes } from "react-router-dom";
-import HomePage from "./view/pages/home";
+import HomePage from "./view/pages/Home";
 
 function App() {
   console.log("App component rendering");

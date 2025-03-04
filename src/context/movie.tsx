@@ -6,7 +6,7 @@ const initialData: MovieObject = {
   title: "",
   count: 0,
   time: "",
-  date: undefined,
+  date: "",
 };
 
 type ActionType = {

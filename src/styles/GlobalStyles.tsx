@@ -28,6 +28,7 @@ const GlobalStyles = createGlobalStyle`
         border-width: 1px;
         border-radius: 6px;
         cursor: pointer;
+        padding: 8px 18px;
     }
 
 `;

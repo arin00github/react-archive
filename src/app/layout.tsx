@@ -5,6 +5,7 @@ import { StyledThemeProvider } from "@/lib/themeProvider";
 import { ChildrenWrapper } from "@/interfaces/common";
 import Navigation from "@/components/_common/Navigation";
 import GlobalStyles from "@/styles/GlobalStyles";
+import StoreProvider from "@/lib/StoreProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,13 +26,15 @@ export default function RootLayout({ children }: Readonly<ChildrenWrapper>) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <StyledComponentsRegistry>
-          <StyledThemeProvider>
-            <GlobalStyles />
-            <Navigation />
-            {children}
-          </StyledThemeProvider>
-        </StyledComponentsRegistry>
+        <StoreProvider>
+          <StyledComponentsRegistry>
+            <StyledThemeProvider>
+              <GlobalStyles />
+              <Navigation />
+              {children}
+            </StyledThemeProvider>
+          </StyledComponentsRegistry>
+        </StoreProvider>
       </body>
     </html>
   );

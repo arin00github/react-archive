@@ -1,7 +1,6 @@
 "use client";
 
-import { MovieContext, MovieProvider, useMovieBook } from "@/context/movie";
-import { useContext } from "react";
+import { MovieProvider, useMovieBook } from "@/context/movie";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -50,65 +49,87 @@ const SelectForm = () => {
 
   console.log("context state", state);
 
+  const handleChangeForm = (key: string, val: any) => {
+    dispatch({
+      type: "SETTER",
+      payload: { key, value: val },
+    });
+  };
+
   return (
     <StyledSelectForm>
-      <div className="formRow">
-        <label htmlFor="movie-title">title</label>
-        <select
-          name=""
-          id="movie-title"
-          value={state.title}
-          onChange={(e) => {
-            dispatch({
-              type: "SETTER",
-              payload: { key: "title", value: e.target.value },
-            });
-          }}
-        >
-          {movieOptions.map((movie) => {
-            return (
-              <option value={movie.value} key={movie.value}>
-                {movie.label}
-              </option>
-            );
-          })}
-        </select>
-      </div>
-      <div className="formRow">
-        <label htmlFor="movie-time">time</label>
-        <select
-          name=""
-          id="movie-time"
-          value={state.time}
-          onChange={(e) => {
-            dispatch({
-              type: "SETTER",
-              payload: { key: "time", value: e.target.value },
-            });
-          }}
-        >
-          {timeOption.map((movie) => {
-            return (
-              <option value={movie.value} key={movie.value}>
-                {movie.label}
-              </option>
-            );
-          })}
-        </select>
-      </div>
-      <div className="formRow">
-        <label htmlFor="movie-time">count</label>
-        <input
-          type="number"
-          value={state.count}
-          onChange={(e) => {
-            dispatch({
-              type: "SETTER",
-              payload: { key: "count", value: e.target.value },
-            });
-          }}
-        />
-      </div>
+      <form
+        id="movie-book-form"
+        action=""
+        onSubmit={(e) => {
+          e.preventDefault();
+          console.log("click submit form");
+        }}
+      >
+        <div className="formRow">
+          <label htmlFor="movie-title">title</label>
+          <select
+            name=""
+            id="movie-title"
+            value={state.title}
+            onChange={(e) => {
+              handleChangeForm("title", e.target.value);
+            }}
+          >
+            {movieOptions.map((movie) => {
+              return (
+                <option value={movie.value} key={movie.value}>
+                  {movie.label}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+        <div className="formRow">
+          <label htmlFor="movie-title">date</label>
+          <input
+            id="movie-date"
+            type="date"
+            value={state.date}
+            onChange={(e) => {
+              handleChangeForm("date", e.target.value);
+            }}
+          />
+        </div>
+        <div className="formRow">
+          <label htmlFor="movie-time">time</label>
+          <select
+            name="movie-time"
+            id="movie-time"
+            value={state.time}
+            onChange={(e) => {
+              handleChangeForm("time", e.target.value);
+            }}
+          >
+            {timeOption.map((movie) => {
+              return (
+                <option value={movie.value} key={movie.value}>
+                  {movie.label}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+        <div className="formRow">
+          <label htmlFor="movie-count">count</label>
+          <input
+            type="number"
+            id="movie-count"
+            value={state.count}
+            onChange={(e) => {
+              handleChangeForm("count", e.target.value);
+            }}
+          />
+        </div>
+        <div>
+          <button type="submit">Submit</button>
+        </div>
+      </form>
     </StyledSelectForm>
   );
 };

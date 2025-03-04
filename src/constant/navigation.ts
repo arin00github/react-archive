@@ -12,4 +12,5 @@ export const navMenus = [
     href: "/resource/image",
     id: "menu-resource-image",
   },
+  { label: "World Map", href: "/worldmap", id: "menu-archive-worldmap" },
 ];

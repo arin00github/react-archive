@@ -9,7 +9,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 const StyledNavigation = styled.div`
-  z-index: 1000;
+  z-index: 5000;
   position: fixed;
   top: 20px;
   left: 20px;

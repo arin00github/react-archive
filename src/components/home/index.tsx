@@ -1,27 +1,14 @@
 "use client";
 
-import styled from "styled-components";
 import { useRouter } from "next/navigation";
+
 import { navMenus } from "@/constant/navigation";
-
-const Container = styled.div`
-  width: "100%";
-  height: 100vh;
-  background-color: ${(props) => props.theme.bg};
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  .centerBox {
-    width: 300px;
-  }
-`;
+import { BasicStyleLayout } from "../_common/style/BasicLayout";
 
 const HomeContainer = () => {
   const router = useRouter();
   return (
-    <Container>
+    <BasicStyleLayout>
       <div className="centerBox">
         {navMenus.map((menu) => {
           return (
@@ -37,7 +24,7 @@ const HomeContainer = () => {
           );
         })}
       </div>
-    </Container>
+    </BasicStyleLayout>
   );
 };
 

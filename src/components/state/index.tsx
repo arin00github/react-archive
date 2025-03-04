@@ -1,21 +1,9 @@
 "use client";
 
-import { MovieProvider, useMovieBook } from "@/context/movie";
 import styled from "styled-components";
 
-const Container = styled.div`
-  width: "100%";
-  height: 100vh;
-  background-color: ${(props) => props.theme.bg};
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  .centerBox {
-    width: 300px;
-  }
-`;
+import { MovieProvider, useMovieBook } from "@/context/movie";
+import { BasicStyleLayout } from "../_common/style/BasicLayout";
 
 const StyledSelectForm = styled.div`
   .formRow {
@@ -136,11 +124,11 @@ const SelectForm = () => {
 
 const StateContainer = () => {
   return (
-    <Container>
+    <BasicStyleLayout>
       <MovieProvider>
         <SelectForm />
       </MovieProvider>
-    </Container>
+    </BasicStyleLayout>
   );
 };
 

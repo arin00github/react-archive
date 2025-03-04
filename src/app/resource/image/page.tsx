@@ -1,0 +1,3 @@
+const ResourceImagePage = () => {
+  return <ResourceImageContainer />;
+};

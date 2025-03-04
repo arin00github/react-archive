@@ -1,0 +1,3 @@
+const ResourceAudioPage = () => {
+  return <ResourceAudioContainer />;
+};

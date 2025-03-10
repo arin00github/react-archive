@@ -19,6 +19,7 @@ const StyledNavigation = styled.div`
     margin-top: 6px;
     border-style: solid;
     border-width: 1px;
+    background-color: ${(props) => props.theme.bg};
     border-color: ${(props) => props.theme.borderColor3};
     border-radius: 6px;
 

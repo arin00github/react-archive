@@ -11,6 +11,8 @@ import VectorSource from "ol/source/Vector";
 import Fill from "ol/style/Fill";
 import Stroke from "ol/style/Stroke";
 import Style from "ol/style/Style";
+import "ol/ol.css";
+
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { updateSelectedCountry } from "@/redux/country/countrySlice";
 

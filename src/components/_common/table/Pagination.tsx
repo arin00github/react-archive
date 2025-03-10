@@ -3,10 +3,6 @@ import React from "react";
 import { PageButton } from "./PageButton";
 
 interface IPagination {
-  goToFront: (pageNumber: number) => void;
-  goToBack: (pageNumber: number) => void;
-  goToNext: (pageNumber: number) => void;
-  goToPrev: (pageNumber: number) => void;
   onClickIndex: (pageNumber: number) => void;
   currentIndex: number;
   indexArray: number[];
@@ -16,30 +12,28 @@ interface IPagination {
 export const Pagination = ({
   totalDataLength,
   indexArray,
-  goToFront,
-  goToBack,
-  goToNext,
-  goToPrev,
+
   currentIndex,
   onClickIndex,
 }: IPagination) => {
   const originalTotalLength = Math.ceil(totalDataLength / 10);
-  const newNumber = currentIndex - 1;
-  const newNumber2 = currentIndex + 1;
+
+  console.log("indexArray", indexArray);
   return (
     <div className="mt-6">
       {totalDataLength && (
         <div className="pagination">
           <PageButton
-            handleClick={() => goToFront(1)}
+            handleClick={() => onClickIndex(1)}
             disabled={currentIndex === 1}
             symbol={"<"}
           />
           <PageButton
-            handleClick={() => goToPrev(newNumber)}
+            handleClick={() => onClickIndex(currentIndex - 1)}
             disabled={currentIndex === 1}
             symbol={"<"}
           />
+          {indexArray[0] !== 0 && <>...</>}
           {indexArray.map((idx) => {
             return (
               <PageButton
@@ -51,13 +45,15 @@ export const Pagination = ({
               ></PageButton>
             );
           })}
+          {indexArray[4] !== originalTotalLength - 1 && <>...</>}
+
           <PageButton
-            handleClick={() => goToNext(newNumber2)}
+            handleClick={() => onClickIndex(currentIndex + 1)}
             disabled={currentIndex >= originalTotalLength}
             symbol={">"}
           />
           <PageButton
-            handleClick={() => goToBack(originalTotalLength)}
+            handleClick={() => onClickIndex(originalTotalLength)}
             disabled={currentIndex === originalTotalLength}
             symbol={">"}
           />

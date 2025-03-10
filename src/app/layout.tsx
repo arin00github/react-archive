@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+
+import { ChildrenWrapper } from "@/interfaces/common";
 import StyledComponentsRegistry from "@/lib/registry";
 import { StyledThemeProvider } from "@/lib/themeProvider";
-import { ChildrenWrapper } from "@/interfaces/common";
+import StoreProvider from "@/lib/StoreProvider";
+import ReactQueryClientProvider from "@/lib/QueryClientProvider";
+
 import Navigation from "@/components/_common/Navigation";
 import GlobalStyles from "@/styles/GlobalStyles";
-import StoreProvider from "@/lib/StoreProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,15 +29,17 @@ export default function RootLayout({ children }: Readonly<ChildrenWrapper>) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <StoreProvider>
-          <StyledComponentsRegistry>
-            <StyledThemeProvider>
-              <GlobalStyles />
-              <Navigation />
-              {children}
-            </StyledThemeProvider>
-          </StyledComponentsRegistry>
-        </StoreProvider>
+        <ReactQueryClientProvider>
+          <StoreProvider>
+            <StyledComponentsRegistry>
+              <StyledThemeProvider>
+                <GlobalStyles />
+                <Navigation />
+                {children}
+              </StyledThemeProvider>
+            </StyledComponentsRegistry>
+          </StoreProvider>
+        </ReactQueryClientProvider>
       </body>
     </html>
   );

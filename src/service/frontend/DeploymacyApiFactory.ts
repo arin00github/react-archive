@@ -1,20 +1,20 @@
 import { apiClient } from "../axiosInstance";
 
-class DeploymacyApiFactory {
-  private static instance: DeploymacyApiFactory;
+class DeplomacyApiFactory {
+  private static instance: DeplomacyApiFactory;
 
   private constructor() {} // 외부에서 인스턴스를 생성하지 못하도록 private constructor
 
-  public static getInstance(): DeploymacyApiFactory {
-    if (!DeploymacyApiFactory.instance) {
-      DeploymacyApiFactory.instance = new DeploymacyApiFactory();
+  public static getInstance(): DeplomacyApiFactory {
+    if (!DeplomacyApiFactory.instance) {
+      DeplomacyApiFactory.instance = new DeplomacyApiFactory();
     }
-    return DeploymacyApiFactory.instance;
+    return DeplomacyApiFactory.instance;
   }
 
-  public async getCountryInfo() {
-    return apiClient.get("/api/deplomacy");
+  public async getDeplomacyList(query: { keyword: string; pageNo: string }) {
+    return apiClient.get(`/api/deplomacy?${new URLSearchParams(query)}`);
   }
 }
 
-export default DeploymacyApiFactory.getInstance();
+export default DeplomacyApiFactory.getInstance();

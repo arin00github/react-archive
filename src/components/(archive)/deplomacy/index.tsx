@@ -18,9 +18,6 @@ const DeplomacyListContainer = styled.div`
 const DeplomacyContainer = () => {
   return (
     <DeplomacyListContainer>
-      <div>
-        <div>Search Filter</div>
-      </div>
       <SearchContainer />
     </DeplomacyListContainer>
   );

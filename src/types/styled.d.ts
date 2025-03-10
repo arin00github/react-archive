@@ -7,5 +7,7 @@ declare module "styled-components" {
     borderColor: string;
     borderColor2: string;
     borderColor3: string;
+    blue1: string;
+    blue2: string;
   }
 }

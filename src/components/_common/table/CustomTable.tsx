@@ -7,7 +7,7 @@ export interface ICustomTable<T> {
   aria_title?: string;
   data?: T[];
   handleRowClick?: (value: T) => void;
-  handleSort: (columnId: string, sortValue: boolean | undefined) => void;
+  handleSort?: (columnId: string, sortValue: boolean | undefined) => void;
   columns: ITableColumn<T>[];
   options?: IOptions;
   minH?: string;
@@ -36,17 +36,16 @@ const StyledTr = styled.tr`
 
 const StylecTd = styled.td`
   text-align: center;
-  line-height: 44px;
-  height: 44px;
+  line-height: 38px;
+  height: 38px;
+  font-size: 14px;
   border-bottom: 1px solid #dbdde1;
   //min-width: 100px;
 `;
 
 const CustomTable = <T extends object>({
   data,
-  handleSort,
   handleRowClick,
-  options,
   addIdx,
   columns,
   aria_title,
@@ -72,14 +71,14 @@ const CustomTable = <T extends object>({
           <thead>
             <StyledTr>
               {addIdx && <StylecTh className="text-center"></StylecTh>}
+              {columns.map((col, idx) => {
+                if (!exceptedData.includes(col.access)) {
+                  return (
+                    <StylecTh key={`thead-col-${idx}`}>{col.header}</StylecTh>
+                  );
+                }
+              })}
             </StyledTr>
-            {columns.map((col, idx) => {
-              if (!exceptedData.includes(col.access)) {
-                return (
-                  <StylecTh key={`thead-col-${idx}`}>{col.header}</StylecTh>
-                );
-              }
-            })}
           </thead>
           <tbody>
             {data.map((row, index) => {
@@ -88,6 +87,7 @@ const CustomTable = <T extends object>({
                   key={`row_${index}`}
                   onClick={() => handleRowClick && handleRowClick(row)}
                 >
+                  {addIdx && <StylecTd>{index + 1}</StylecTd>}
                   {columns &&
                     columns.map((col, idx) => {
                       const findItem = Object.entries(row).find(

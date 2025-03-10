@@ -7,6 +7,8 @@ const lightTheme: DefaultTheme = {
   borderColor2: "#929292",
   borderColor3: "#adadad",
   hoverColor: "#bcbcbc",
+  blue1: "#0373fc",
+  blue2: "#0040ad",
 };
 
 export default lightTheme;

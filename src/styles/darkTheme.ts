@@ -7,6 +7,8 @@ const darkTheme: DefaultTheme = {
   borderColor2: "#b1b1b1",
   borderColor3: "#8d8d8d",
   hoverColor: "#4b4b4b",
+  blue1: "#0373fc",
+  blue2: "#0040ad",
 };
 
 export default darkTheme;

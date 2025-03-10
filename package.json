@@ -9,7 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-icons/all-files": "^4.1.0",
     "@reduxjs/toolkit": "^2.6.0",
+    "@tanstack/react-query": "^5.67.1",
     "axios": "^1.8.1",
     "bcryptjs": "^3.0.2",
     "mongodb": "^6.13.1",

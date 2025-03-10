@@ -1,6 +1,7 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
+import { IoIosClose } from "react-icons/io";
 
 import { IDiplomacyDetail } from "@/interfaces/deplomacy";
 import DiplomacyApiFactory from "@/service/frontend/DiplomacyApiFactory";
@@ -25,8 +26,18 @@ const StyledPopup = styled.div`
     padding: 0 20px;
     margin-top: 20px;
 
-    .closeBtn {
+    button {
       font-size: 10px;
+      border: none;
+      font-size: 14px;
+    }
+
+    .closeBtn {
+      margin-left: 8px;
+      padding: 0;
+      width: 32px;
+      line-height: 32px;
+      height: 32px;
     }
   }
 
@@ -77,15 +88,14 @@ const Popup = (props: PopupProps) => {
     <StyledPopup>
       <div className="header">
         <button
-          className="closeBtn"
           onClick={() => {
             router.push(`/diplomacy/${selectedCountryIos}`);
           }}
         >
-          Detail
+          Go Detail
         </button>
         <button className="closeBtn" onClick={handleClose}>
-          Close
+          <IoIosClose />
         </button>
       </div>
       {!isError && data && (

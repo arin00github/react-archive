@@ -12,8 +12,10 @@ const StyledContainer = styled.div`
 
   .container {
     .header {
+      margin-bottom: 12px;
       button {
-        font-size: 10px;
+        font-size: 12px;
+        border: none;
       }
     }
     .body {
@@ -38,6 +40,7 @@ const StyledContainer = styled.div`
           display: flex;
           height: 36px;
           line-height: 36px;
+
           .label {
             width: 120px;
             flex: none;
@@ -98,10 +101,12 @@ const InfoContainer = () => {
                 <div className="label">Capital</div>
                 <div className="value">{data.general.capital}</div>
               </div>
-              <div className="row">
-                <div className="label">Climate</div>
-                <div className="value">{data.general.climate}</div>
-              </div>
+              {data.general.climate && (
+                <div className="row">
+                  <div className="label">Climate</div>
+                  <div className="value">{data.general.climate}</div>
+                </div>
+              )}
               <div className="row">
                 <div className="label">Area</div>
                 <div className="value">{data.general.area}</div>

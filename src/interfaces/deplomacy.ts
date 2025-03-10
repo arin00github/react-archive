@@ -201,7 +201,7 @@ export interface ICountryGeneral {
   area: string;
   area_desc: string;
   capital: string;
-  climate: string;
+  climate: string | null;
   country_eng_nm: string;
   country_iso_alp2: string;
   country_name: string;

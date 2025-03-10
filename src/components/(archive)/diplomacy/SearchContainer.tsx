@@ -11,17 +11,9 @@ import { useRouter } from "next/navigation";
 
 const StyledSearchContainer = styled.div`
   padding: 20px;
-  .search-bar {
-    width: 100%;
-    margin-bottom: 24px;
-
-    input {
-      height: 34px;
-      outline: none;
-      min-width: 300px;
-
-      border: 1px solid ${(props) => props.theme.borderColor3};
-    }
+  .title {
+    font-size: 24px;
+    margin-bottom: 12px;
   }
 `;
 
@@ -67,6 +59,7 @@ const SearchContainer = () => {
     <StyledSearchContainer>
       {!isError && data && pageIndexArray && (
         <div className="table-wrapper">
+          <h2 className="title">Country Information</h2>
           <CustomTable
             data={data.items.item}
             addIdx

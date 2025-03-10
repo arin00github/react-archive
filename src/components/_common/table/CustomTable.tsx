@@ -1,17 +1,24 @@
-import { IOptions, ITableColumn } from "@/interfaces/table";
 import React from "react";
 
 import styled from "styled-components";
+import { IOptions, ITableColumn } from "@/interfaces/table";
+import usePagination from "@/hooks/usePagination";
+import { Pagination } from "./Pagination";
 
 export interface ICustomTable<T> {
-  aria_title?: string;
   data?: T[];
-  handleRowClick?: (value: T) => void;
-  handleSort?: (columnId: string, sortValue: boolean | undefined) => void;
   columns: ITableColumn<T>[];
+  handleRowClick?: (value: T) => void;
+  addIdx?: boolean;
+  aria_title?: string;
   options?: IOptions;
   minH?: string;
-  addIdx?: boolean;
+  handleSort?: (columnId: string, sortValue: boolean | undefined) => void;
+  pagination: {
+    currentIndex: number;
+    totalDataCount: number;
+    onClickIndex: (num: number) => void;
+  };
 }
 
 const StyledTable = styled.table`
@@ -49,66 +56,89 @@ const CustomTable = <T extends object>({
   addIdx,
   columns,
   aria_title,
+  pagination,
 }: ICustomTable<T>) => {
   const exceptedData = ["id", "idx"];
+
+  const { pageIndexArray } = usePagination({
+    totalDataCount: pagination.totalDataCount,
+    currentIndex: pagination.currentIndex,
+  });
+
   return (
     <div>
-      {data && data[0] && (
-        <StyledTable>
-          <colgroup>
-            {addIdx && <col style={{ width: "10%" }}></col>}
-            {columns.map((colValue, idx) => {
-              if (colValue.width) {
-                return (
-                  <col
-                    key={`${aria_title}_col_${idx}`}
-                    style={{ width: colValue.width }}
-                  />
-                );
-              }
-            })}
-          </colgroup>
-          <thead>
-            <StyledTr>
-              {addIdx && <StylecTh className="text-center"></StylecTh>}
-              {columns.map((col, idx) => {
-                if (!exceptedData.includes(col.access)) {
+      <div>
+        {data && data[0] && (
+          <StyledTable>
+            <colgroup>
+              {addIdx && <col style={{ width: "10%" }}></col>}
+              {columns.map((colValue, idx) => {
+                if (colValue.width) {
                   return (
-                    <StylecTh key={`thead-col-${idx}`}>{col.header}</StylecTh>
+                    <col
+                      key={`${aria_title}_col_${idx}`}
+                      style={{ width: colValue.width }}
+                    />
                   );
                 }
               })}
-            </StyledTr>
-          </thead>
-          <tbody>
-            {data.map((row, index) => {
-              return (
-                <StyledTr
-                  key={`row_${index}`}
-                  onClick={() => handleRowClick && handleRowClick(row)}
-                >
-                  {addIdx && <StylecTd>{index + 1}</StylecTd>}
-                  {columns &&
-                    columns.map((col, idx) => {
-                      const findItem = Object.entries(row).find(
-                        (it) => it[0] === col.access
-                      );
-                      if (findItem && !exceptedData.includes(col.access)) {
-                        return (
-                          <StylecTd
-                            key={`cell_${index}_${idx}`}
-                            style={{ width: `${col.width}%` }}
-                          >
-                            {col.cell ? col.cell(row) : findItem[1]}
-                          </StylecTd>
+            </colgroup>
+            <thead>
+              <StyledTr>
+                {addIdx && <StylecTh className="text-center"></StylecTh>}
+                {columns.map((col, idx) => {
+                  if (!exceptedData.includes(col.access)) {
+                    return (
+                      <StylecTh key={`thead-col-${idx}`}>{col.header}</StylecTh>
+                    );
+                  }
+                })}
+              </StyledTr>
+            </thead>
+            <tbody>
+              {data.map((row, index) => {
+                return (
+                  <StyledTr
+                    key={`row_${index}`}
+                    onClick={() => handleRowClick && handleRowClick(row)}
+                  >
+                    {addIdx && (
+                      <StylecTd>
+                        {(pagination.currentIndex - 1) * 10 + index + 1}
+                      </StylecTd>
+                    )}
+                    {columns &&
+                      columns.map((col, idx) => {
+                        const findItem = Object.entries(row).find(
+                          (it) => it[0] === col.access
                         );
-                      }
-                    })}
-                </StyledTr>
-              );
-            })}
-          </tbody>
-        </StyledTable>
+                        if (findItem && !exceptedData.includes(col.access)) {
+                          return (
+                            <StylecTd
+                              key={`cell_${index}_${idx}`}
+                              style={{ width: `${col.width}%` }}
+                            >
+                              {col.cell ? col.cell(row) : findItem[1]}
+                            </StylecTd>
+                          );
+                        }
+                      })}
+                  </StyledTr>
+                );
+              })}
+            </tbody>
+          </StyledTable>
+        )}
+      </div>
+
+      {pageIndexArray && (
+        <Pagination
+          indexArray={pageIndexArray}
+          onClickIndex={pagination.onClickIndex}
+          totalDataLength={pagination.totalDataCount}
+          currentIndex={pagination.currentIndex}
+          perPageCount={10}
+        />
       )}
     </div>
   );

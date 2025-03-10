@@ -14,7 +14,7 @@ const BasicMenu: MenuProps[] = [
   { title: "세계지도", href: "/worldmap", isLeftMenu: true },
   // { title: "", href: "deplomacy/:detail", isLeftMenu: false },
   // { title: "글로벌 한국", href: "deplomacy", isLeftMenu: true },
-  { title: "국가목록", href: "/deplomacy", isLeftMenu: true },
+  { title: "국가목록", href: "/diplomacy", isLeftMenu: true },
 ];
 
 function WorldAside() {

@@ -3,7 +3,7 @@
 import styled from "styled-components";
 import SearchContainer from "./SearchContainer";
 
-const DeplomacyListContainer = styled.div`
+const DiplomacyListContainer = styled.div`
   position: fixed;
   z-index: 5000;
   width: 80%;
@@ -15,12 +15,12 @@ const DeplomacyListContainer = styled.div`
   box-shadow: 0px 7px 18px rgba(0, 0, 0, 0.1);
 `;
 
-const DeplomacyContainer = () => {
+const DiplomacyContainer = () => {
   return (
-    <DeplomacyListContainer>
+    <DiplomacyListContainer>
       <SearchContainer />
-    </DeplomacyListContainer>
+    </DiplomacyListContainer>
   );
 };
 
-export default DeplomacyContainer;
+export default DiplomacyContainer;

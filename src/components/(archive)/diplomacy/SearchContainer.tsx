@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import { ChangeEvent, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import DeploymacyApiFactory from "@/service/frontend/DeploymacyApiFactory";
+
+import DeploymacyApiFactory from "@/service/frontend/DiplomacyApiFactory";
 import { ICountryListResponse, IDeplomacyList } from "@/interfaces/deplomacy";
-import { CustomTable, Pagination } from "@/components/_common/table";
+import { CustomTable } from "@/components/_common/table";
 import { ITableColumn } from "@/interfaces/table";
 import usePagination from "@/hooks/usePagination";
 
@@ -41,7 +42,6 @@ const SearchContainer = () => {
       return null;
     },
   });
-  console.log("data", data);
 
   const handleChangeKeyword = (e: ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
@@ -66,8 +66,18 @@ const SearchContainer = () => {
       </div>
       {!isError && data && pageIndexArray && (
         <div className="table-wrapper">
-          <CustomTable data={data.items.item} addIdx columns={tableColumn} />
-          <Pagination
+          <CustomTable
+            data={data.items.item}
+            addIdx
+            columns={tableColumn}
+            pagination={{
+              currentIndex: searchFilter.pageNo,
+              totalDataCount: data.totalCount,
+              onClickIndex: (num) =>
+                setSearchFilter({ ...searchFilter, pageNo: num }),
+            }}
+          />
+          {/* <Pagination
             indexArray={pageIndexArray}
             onClickIndex={(num) =>
               setSearchFilter({ ...searchFilter, pageNo: num })
@@ -75,7 +85,7 @@ const SearchContainer = () => {
             totalDataLength={data?.totalCount}
             currentIndex={searchFilter.pageNo}
             perPageCount={10}
-          />
+          /> */}
         </div>
       )}
     </StyledSearchContainer>

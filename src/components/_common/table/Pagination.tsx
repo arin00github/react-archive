@@ -1,6 +1,21 @@
 import React from "react";
 
 import { PageButton } from "./PageButton";
+import styled from "styled-components";
+
+const PaginationWrap = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;
 
 interface IPagination {
   onClickIndex: (pageNumber: number) => void;
@@ -18,9 +33,8 @@ export const Pagination = ({
 }: IPagination) => {
   const originalTotalLength = Math.ceil(totalDataLength / 10);
 
-  console.log("indexArray", indexArray);
   return (
-    <div className="mt-6">
+    <PaginationWrap>
       {totalDataLength && (
         <div className="pagination">
           <PageButton
@@ -59,7 +73,7 @@ export const Pagination = ({
           />
         </div>
       )}
-    </div>
+    </PaginationWrap>
   );
 };
 

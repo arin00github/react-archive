@@ -8,6 +8,11 @@ export interface ICountryListResponse {
   totalCount: number;
 }
 
+export interface IDiplomacyDetail {
+  flag: ICountryMap;
+  economy: ICountryEconomy;
+}
+
 export interface IOneFilter {
   iso: string;
   name: string;

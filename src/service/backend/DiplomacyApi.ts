@@ -17,6 +17,27 @@ class DiplomacyApi {
     const url = `${process.env.WORLD_BASE_URL}?${query}`;
     return apiServer.get(url);
   }
+
+  public async getCountryFlagImage(params: { iso: string }) {
+    const detailStrig = `&cond[country_iso_alp2::EQ]=${params.iso}`;
+    const query = `serviceKey=${process.env.PUBLIC_DATA_KEY}`;
+    const url = `${process.env.WORLD_FLAG_URL}?${query}${detailStrig}`;
+    return apiServer.get(url);
+  }
+
+  public async getCountryEconomy(params: { iso: string }) {
+    const detailStrig = `&cond[country_iso_alp2::EQ]=${params.iso}`;
+    const query = `serviceKey=${process.env.PUBLIC_DATA_KEY}`;
+    const url = `${process.env.WORLD_ECONOMY_URL}?${query}${detailStrig}`;
+    return apiServer.get(url);
+  }
+
+  public async getCountryEnv(params: { iso: string }) {
+    const detailStrig = `&cond[country_iso_alp2::EQ]=${params.iso}`;
+    const query = `serviceKey=${process.env.PUBLIC_DATA_KEY}`;
+    const url = `${process.env.WORLD_ENV_URL}?${query}${detailStrig}`;
+    return apiServer.get(url);
+  }
 }
 
 export default DiplomacyApi.getInstance();

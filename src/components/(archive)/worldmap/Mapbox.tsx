@@ -11,10 +11,16 @@ import VectorSource from "ol/source/Vector";
 import Fill from "ol/style/Fill";
 import Stroke from "ol/style/Stroke";
 import Style from "ol/style/Style";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { updateSelectedCountry } from "@/redux/country/countrySlice";
 
 const geojson_url = process.env.NEXT_PUBLIC_GEOJSON_WORLD_MAP;
 
 export const MapBox = () => {
+  const dispatch = useAppDispatch();
+  const selectedCountry = useAppSelector(
+    (state) => state.country.selectedCountryIos
+  );
   const [mapObject, setMapObject] = useState<Map | null>(null);
 
   const handleFeatureclick = useCallback(() => {
@@ -22,17 +28,19 @@ export const MapBox = () => {
       const features = event.map.getFeaturesAtPixel(event.pixel);
       if (features.length <= 1 && features.length > 0) {
         features.forEach((feature) => {
-          // dispatch(putSelectedCountry({ name: feature.get("admin"), iso: feature.get("iso_a2") }));
-          console.log("feature", feature.getProperties());
+          const properties = feature.getProperties();
+          dispatch(updateSelectedCountry(properties.iso_a2));
+          console.log("iso_a2", properties.iso_a2);
         });
       } else if (features.length > 1) {
         console.log("popup list display");
       } else {
+        dispatch(updateSelectedCountry(undefined));
         // dispatch(putSelectedCountry(null));
       }
       // setSelectedFeature(features);
     });
-  }, [mapObject]);
+  }, [mapObject, dispatch]);
 
   useEffect(() => {
     if (!geojson_url) return;
@@ -102,6 +110,12 @@ export const MapBox = () => {
       handleFeatureclick();
     }
   }, [mapObject, featureClick, handleFeatureclick]);
+
+  useEffect(() => {
+    if (selectedCountry === undefined) {
+      featureClick.getFeatures().clear();
+    }
+  }, [selectedCountry, featureClick]);
 
   return <div id="world-map" style={{ width: "100%", height: "100vh" }}></div>;
 };

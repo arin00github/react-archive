@@ -11,6 +11,7 @@ export interface ICountryListResponse {
 export interface IDiplomacyDetail {
   flag: ICountryMap;
   economy: ICountryEconomy;
+  general: ICountryGeneral;
 }
 
 export interface IOneFilter {
@@ -62,30 +63,18 @@ export interface ICountryEconomy {
   country_eng_nm: string;
   country_iso_alp2: string;
   country_nm: string;
-  ctypln_policy_cn: unknown | null;
-  ecnmy_growth_rate: number;
+  currency_unit: string;
   import_amount: number;
-  import_amount_src: string;
   export_amount: number;
-  export_amount_src: string;
-  ext_debt: number;
-  foreign_currency_reserve: string;
   gdp: string;
-  gdp_per_capita: string;
-  gdp_src: string;
-  infltn_rate: number;
-  invt_sts_cn: string;
-  main_indust_cn: string;
-  main_resource_cn: string;
-  oda_sts_cn: string;
-  pltcl_state_cn: string;
-  remark: string;
-  trade_export_prdnm_cn: number;
-  trade_imcome_prdnm_cn: number;
-  trade_year: number;
+  gdp_desc: string;
+  gdp_growth_rate: string;
+  gdp_growth_rate_desc: string;
+  inflation_rate: number;
+  main_industry: string | null;
+  main_resource: string | null;
   unemploy_rate: number;
   unemploy_rate_year: number;
-  written_year: number;
 }
 
 export interface ICountryMap {
@@ -206,4 +195,20 @@ export interface ICountryObject {
     urd: { official: string; common: string };
     zho: { official: string; common: string };
   };
+}
+
+export interface ICountryGeneral {
+  area: string;
+  area_desc: string;
+  capital: string;
+  climate: string;
+  country_eng_nm: string;
+  country_iso_alp2: string;
+  country_name: string;
+  establish: null | string;
+  ethnic: string;
+  lang: string;
+  population: string;
+  population_desc: string;
+  religion: string;
 }

@@ -38,6 +38,13 @@ class DiplomacyApi {
     const url = `${process.env.WORLD_ENV_URL}?${query}${detailStrig}`;
     return apiServer.get(url);
   }
+
+  public async getCountryGeneralInfo(params: { iso: string }) {
+    const detailStrig = `&cond[country_iso_alp2::EQ]=${params.iso}`;
+    const query = `serviceKey=${process.env.PUBLIC_DATA_KEY}`;
+    const url = `${process.env.WORLD_GENERAL_URL}?${query}${detailStrig}`;
+    return apiServer.get(url);
+  }
 }
 
 export default DiplomacyApi.getInstance();

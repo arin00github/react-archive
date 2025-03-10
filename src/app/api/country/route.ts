@@ -17,7 +17,9 @@ export async function GET(req: NextRequest) {
 
     const apiRes2 = await DiplomacyApi.getCountryEconomy(params);
 
-    const apiRes3 = await DiplomacyApi.getCountryEnv(params);
+    const apiRes3 = await DiplomacyApi.getCountryGeneralInfo(params);
+
+    console.log("apiRes3 general", apiRes3.data.response);
 
     if (
       apiRes.status === 200 &&
@@ -25,9 +27,9 @@ export async function GET(req: NextRequest) {
       apiRes3.status === 200
     ) {
       return Response.json({
-        flag: apiRes.data.response.body.items.item[0],
-        economy: apiRes2.data.response.body.items.item[0],
-        env: apiRes3.data.response.body.items.item[0],
+        flag: apiRes.data.response?.body.items.item[0],
+        economy: apiRes2.data.response?.body.items.item[0],
+        general: apiRes3.data.response?.body.items.item[0],
       });
     }
 

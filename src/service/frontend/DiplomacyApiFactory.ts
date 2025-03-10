@@ -12,7 +12,7 @@ class DiplomacyApiFactory {
     return DiplomacyApiFactory.instance;
   }
 
-  public async getDeplomacyList(query: { keyword: string; pageNo: string }) {
+  public async getDeplomacyList(query: { pageNo: string }) {
     return apiClient.get(`/api/diplomacy?${new URLSearchParams(query)}`);
   }
 

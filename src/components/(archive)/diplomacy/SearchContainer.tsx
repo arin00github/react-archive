@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import DeploymacyApiFactory from "@/service/frontend/DiplomacyApiFactory";
@@ -7,12 +7,21 @@ import { ICountryListResponse, IDeplomacyList } from "@/interfaces/deplomacy";
 import { CustomTable } from "@/components/_common/table";
 import { ITableColumn } from "@/interfaces/table";
 import usePagination from "@/hooks/usePagination";
+import { useRouter } from "next/navigation";
 
 const StyledSearchContainer = styled.div`
   padding: 20px;
   .search-bar {
     width: 100%;
     margin-bottom: 24px;
+
+    input {
+      height: 34px;
+      outline: none;
+      min-width: 300px;
+
+      border: 1px solid ${(props) => props.theme.borderColor3};
+    }
   }
 `;
 
@@ -22,7 +31,8 @@ interface ISearchFilter {
 }
 
 const SearchContainer = () => {
-  const [keyword, setKeyword] = useState<string>("");
+  const router = useRouter();
+
   const [searchFilter, setSearchFilter] = useState<ISearchFilter>({
     searchword: "",
     pageNo: 1,
@@ -32,7 +42,6 @@ const SearchContainer = () => {
     queryKey: ["get-deplomacy-list", JSON.stringify(searchFilter)],
     queryFn: async () => {
       const query = {
-        keyword: searchFilter.searchword,
         pageNo: `${searchFilter.pageNo}`,
       };
       const res = await DeploymacyApiFactory.getDeplomacyList(query);
@@ -43,14 +52,10 @@ const SearchContainer = () => {
     },
   });
 
-  const handleChangeKeyword = (e: ChangeEvent<HTMLInputElement>) => {
-    setKeyword(e.target.value);
-  };
-
   const tableColumn: ITableColumn<IDeplomacyList>[] = [
-    { access: "country_nm", header: "Name" },
-    { access: "country_eng_nm", header: "En Name" },
-    { access: "country_iso_alp2", header: "약어" },
+    { access: "country_nm", header: "Name", width: "35%" },
+    { access: "country_eng_nm", header: "English Name", width: "35%" },
+    { access: "country_iso_alp2", header: "ISO Code", width: "20%" },
   ];
 
   const { pageIndexArray } = usePagination({
@@ -60,10 +65,6 @@ const SearchContainer = () => {
 
   return (
     <StyledSearchContainer>
-      <div className="search-bar">
-        <span>Search</span>{" "}
-        <input type="text" onChange={handleChangeKeyword} value={keyword} />
-      </div>
       {!isError && data && pageIndexArray && (
         <div className="table-wrapper">
           <CustomTable
@@ -76,16 +77,10 @@ const SearchContainer = () => {
               onClickIndex: (num) =>
                 setSearchFilter({ ...searchFilter, pageNo: num }),
             }}
+            handleRowClick={(dt) => {
+              router.push(`/diplomacy/${dt.country_iso_alp2}`);
+            }}
           />
-          {/* <Pagination
-            indexArray={pageIndexArray}
-            onClickIndex={(num) =>
-              setSearchFilter({ ...searchFilter, pageNo: num })
-            }
-            totalDataLength={data?.totalCount}
-            currentIndex={searchFilter.pageNo}
-            perPageCount={10}
-          /> */}
         </div>
       )}
     </StyledSearchContainer>

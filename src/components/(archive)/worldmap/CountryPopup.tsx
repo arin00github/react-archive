@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import { IDiplomacyDetail } from "@/interfaces/deplomacy";
 import DiplomacyApiFactory from "@/service/frontend/DiplomacyApiFactory";
+import { useRouter } from "next/navigation";
 
 const StyledPopup = styled.div`
   width: 300px;
@@ -55,6 +56,8 @@ interface PopupProps {
   selectedCountryIos: string;
 }
 const Popup = (props: PopupProps) => {
+  const router = useRouter();
+
   const { selectedCountryIos, handleClose } = props;
   const { data, isError } = useQuery<IDiplomacyDetail>({
     queryKey: ["get-deplomacy-selected-country", selectedCountryIos],
@@ -73,6 +76,14 @@ const Popup = (props: PopupProps) => {
   return (
     <StyledPopup>
       <div className="header">
+        <button
+          className="closeBtn"
+          onClick={() => {
+            router.push(`/diplomacy/${selectedCountryIos}`);
+          }}
+        >
+          Detail
+        </button>
         <button className="closeBtn" onClick={handleClose}>
           Close
         </button>
@@ -97,12 +108,6 @@ const Popup = (props: PopupProps) => {
               <div className="label">GDP</div>
               <div className="value">{data.economy.gdp}</div>
             </div>
-            {data.economy.ecnmy_growth_rate && (
-              <div className="row">
-                <div className="label">Growth Rate</div>
-                <div className="value">{data.economy.ecnmy_growth_rate}%</div>
-              </div>
-            )}
           </div>
         </div>
       )}

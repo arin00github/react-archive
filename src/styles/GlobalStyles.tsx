@@ -31,6 +31,10 @@ const GlobalStyles = createGlobalStyle`
         padding: 8px 18px;
     }
 
+    table {
+        border-spacing: 0;
+    }
+
 `;
 
 export default GlobalStyles;

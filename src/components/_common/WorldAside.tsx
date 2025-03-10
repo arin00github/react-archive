@@ -2,7 +2,7 @@
 
 import React from "react";
 import styled from "styled-components";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 type MenuProps = {
   title: string;
@@ -21,6 +21,7 @@ function WorldAside() {
   const showArrayMenu = BasicMenu.filter((menu) => menu.isLeftMenu);
 
   const router = useRouter();
+  const pathName = usePathname();
 
   return (
     <StyledAside>
@@ -30,6 +31,7 @@ function WorldAside() {
             <li
               key={`menu_${menu.title}`}
               onClick={() => router.push(menu.href)}
+              className={pathName.startsWith(menu.href) ? "selected" : ""}
             >
               {menu.title}
             </li>
@@ -58,6 +60,7 @@ const StyledAside = styled.div`
   ul {
     padding: 2rem 10px;
     li {
+      cursor: pointer;
       padding: 0 18px;
       height: 2.4rem;
       line-height: 2.4rem;
@@ -66,5 +69,10 @@ const StyledAside = styled.div`
       background-color: #ebebeb;
       border-radius: 12px;
     }
+  }
+  ul li.selected {
+    border-radius: 12px;
+    background-color: ${(props) => props.theme.blue1};
+    color: white;
   }
 `;

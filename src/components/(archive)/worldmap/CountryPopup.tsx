@@ -14,7 +14,7 @@ const StyledPopup = styled.div`
   top: 120px;
   right: 40px;
   bottom: 40px;
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.bg};
   border-radius: 12px;
   box-shadow: 0px 7px 18px rgba(0, 0, 0, 0.1);
   z-index: 100;
@@ -43,7 +43,12 @@ const StyledPopup = styled.div`
 
   .container {
     padding: 20px;
+    .title {
+      margin-bottom: 12px;
+      font-size: 20px;
+    }
     .flag {
+      border: 1px solid #dadada;
       width: 100%;
       img {
         width: 100%;
@@ -100,6 +105,9 @@ const Popup = (props: PopupProps) => {
       </div>
       {!isError && data && (
         <div className="container">
+          <div className="title">
+            <div className="">{data.economy.country_nm}</div>
+          </div>
           {data.flag?.download_url && (
             <div className="flag">
               <img src={data.flag?.download_url} alt="country-flag" />

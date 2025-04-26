@@ -11,6 +11,7 @@ const StyledContainer = styled.div`
   padding: 24px;
 
   .container {
+    overflow-y: auto;
     .header {
       margin-bottom: 12px;
       button {
@@ -23,6 +24,8 @@ const StyledContainer = styled.div`
       .flag {
         max-width: 320px;
         width: 100%;
+        border: 1px solid #dadada;
+        margin-bottom: auto;
         img {
           width: 100%;
         }

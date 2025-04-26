@@ -7,7 +7,6 @@ import { updateSelectedCountry } from "@/redux/country/countrySlice";
 const WorldMapContainer = () => {
   const dispatch = useAppDispatch();
   const selectedCountry = useAppSelector((state) => state.country);
-  console.log("selected", selectedCountry.selectedCountryIos);
 
   return (
     <div>

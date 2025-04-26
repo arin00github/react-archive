@@ -22,12 +22,12 @@ export const StyledPageButton = styled.button`
     margin-right: 0px;
   }
   &:hover {
-    background-color: ${({ theme }) => theme.blue1};
-    color: #fff;
+    background-color: ${({ theme }) => theme.color.primary};
+    color: ${({ theme }) => theme.color.btnText};
   }
   &.active {
-    background-color: ${({ theme }) => theme.blue1};
-    color: #fff;
+    background-color: ${({ theme }) => theme.color.primary};
+    color: ${({ theme }) => theme.color.btnText};
   }
 `;
 

@@ -7,6 +7,7 @@ import { navMenus } from "@/constant/navigation";
 import ThemeToggle from "./ThemeToggle";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+// import { useThemeMode } from "@/hooks/useThemeMode";
 
 const StyledNavigation = styled.div`
   z-index: 5000;
@@ -19,8 +20,8 @@ const StyledNavigation = styled.div`
     margin-top: 6px;
     border-style: solid;
     border-width: 1px;
-    background-color: ${(props) => props.theme.bg};
-    border-color: ${(props) => props.theme.borderColor3};
+    background-color: ${({ theme }) => theme.color.background};
+    border-color: ${({ theme }) => theme.color.text};
     border-radius: 6px;
 
     ul {
@@ -43,9 +44,9 @@ const StyledNavigation = styled.div`
 
   .navBtn {
     padding: 8px 18px;
-    background-color: ${(props) => props.theme.bg};
-    border-color: ${(props) => props.theme.borderColor};
-    color: ${(props) => props.theme.fontColor};
+    background-color: ${({ theme }) => theme.color.background};
+    border-color: ${({ theme }) => theme.color.btnText};
+    color: ${({ theme }) => theme.color.btnText};
   }
 `;
 
@@ -53,6 +54,7 @@ const Navigation = () => {
   const router = useRouter();
 
   const { systemTheme, theme, setTheme } = useTheme();
+  //const { themeMode, toggleTheme } = useThemeMode();
 
   const [open, setOpen] = useState<boolean>(false);
 
@@ -62,11 +64,13 @@ const Navigation = () => {
 
   const handleSeleteTheme = (val: string) => {
     setTheme(val);
+    //toggleTheme();
     setOpen(false);
   };
 
   const handleClickMenu = (val: string) => {
     router.push(val);
+
     setOpen(false);
   };
   return (

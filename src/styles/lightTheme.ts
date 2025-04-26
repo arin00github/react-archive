@@ -1,4 +1,5 @@
 import { DefaultTheme } from "styled-components";
+import media from "./media";
 
 const lightTheme: DefaultTheme = {
   bg: "#fff",
@@ -9,6 +10,19 @@ const lightTheme: DefaultTheme = {
   hoverColor: "#bcbcbc",
   blue1: "#0373fc",
   blue2: "#0040ad",
+  color: {
+    background: "#ffffff",
+    text: "#000000",
+    tableBorder: "#dadada",
+    primary: "#0373fc",
+    secondary: "#0040ad",
+    btnText: "#505051",
+  },
+  media: {
+    small: media.small,
+    medium: media.medium,
+    large: media.large,
+  },
 };
 
 export default lightTheme;

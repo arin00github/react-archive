@@ -51,7 +51,7 @@ const StyledAside = styled.div`
   top: 120px;
   left: 0;
   bottom: 40px;
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.color.background};
   border-radius: 0px 12px 12px 0px;
   box-shadow: 0px 7px 18px rgba(0, 0, 0, 0.1);
   z-index: 100;
@@ -72,7 +72,7 @@ const StyledAside = styled.div`
   }
   ul li.selected {
     border-radius: 12px;
-    background-color: ${(props) => props.theme.blue1};
+    background-color: ${({ theme }) => theme.color.primary};
     color: white;
   }
 `;

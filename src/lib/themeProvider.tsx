@@ -1,13 +1,15 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { ThemeProvider as NextThemesProvider, useTheme } from "next-themes";
+import { useTheme as useNextTheme } from "next-themes"; // ✅ 여기
+import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { ThemeProvider as StyledComponentsThemeProvider } from "styled-components";
 
 import darkTheme from "@/styles/darkTheme";
 import lightTheme from "@/styles/lightTheme";
 
 import { ChildrenWrapper } from "@/interfaces/common";
+// import { useThemeMode } from "@/hooks/useThemeMode";
 
 export const StyledThemeProvider = ({ children }: ChildrenWrapper) => {
   return (
@@ -23,8 +25,11 @@ export const StyledThemeProvider = ({ children }: ChildrenWrapper) => {
 };
 
 const ThemeProviderWrapper = ({ children }: ChildrenWrapper) => {
-  const { theme } = useTheme();
+  const { theme, systemTheme } = useNextTheme();
   const [mounted, setMounted] = useState(false);
+
+  const currentTheme = theme === "system" ? systemTheme : theme;
+  const themeObject = currentTheme === "dark" ? darkTheme : lightTheme;
 
   useEffect(() => {
     setMounted(true);
@@ -33,8 +38,6 @@ const ThemeProviderWrapper = ({ children }: ChildrenWrapper) => {
   if (!mounted) {
     return null;
   }
-
-  const themeObject = theme === "dark" ? darkTheme : lightTheme;
 
   return (
     <StyledComponentsThemeProvider theme={themeObject}>

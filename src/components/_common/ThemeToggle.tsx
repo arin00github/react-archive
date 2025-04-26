@@ -4,10 +4,10 @@ import styled from "styled-components";
 
 const ThemeButton = styled.button`
   padding: 6px 14px;
-  background-color: ${(props) => props.theme.bg};
-  border-color: ${(props) => props.theme.borderColor2};
+  background-color: ${({ theme }) => theme.color.background};
+  border-color: ${({ theme }) => theme.color.text};
   // border-color: transparent;
-  color: ${(props) => props.theme.fontColor};
+  color: ${({ theme }) => theme.color.text};
 `;
 
 interface ThemeToggleProps {

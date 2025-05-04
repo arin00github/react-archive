@@ -3,6 +3,7 @@
 import React from "react";
 import styled from "styled-components";
 import { usePathname, useRouter } from "next/navigation";
+import media from "@/styles/media";
 
 type MenuProps = {
   title: string;
@@ -45,33 +46,50 @@ function WorldAside() {
 export default WorldAside;
 
 const StyledAside = styled.div`
-  width: 180px;
+  width: 100%;
   //height: calc(100vh - 80px);
   position: fixed;
-  top: 120px;
+  height: 6rem;
+  top: 0;
   left: 0;
-  bottom: 40px;
+  bottom: 0;
   background-color: ${({ theme }) => theme.color.background};
-  border-radius: 0px 12px 12px 0px;
   box-shadow: 0px 7px 18px rgba(0, 0, 0, 0.1);
   z-index: 100;
-  font-size: 14px;
+  font-size: 0.875rem;
+
+  ${media.large`
+    width: 11.25rem;
+    top: 12%;
+    bottom: 6%;
+    height: 80%;
+    border-radius: 0px 0.75rem 0.75rem 0px;
+  `}
 
   ul {
-    padding: 2rem 10px;
+    padding: 2rem 0.625rem;
+    display: flex;
+    flex-direction: row;
+
+    ${media.large`
+    flex-direction: column;
+    `}
+
     li {
+      box-sizing: border-box;
+      width: 100%;
       cursor: pointer;
-      padding: 0 18px;
+      padding: 0 1.12rem;
       height: 2.4rem;
       line-height: 2.4rem;
     }
     li:hover {
       background-color: #ebebeb;
-      border-radius: 12px;
+      border-radius: 0.75rem;
     }
   }
   ul li.selected {
-    border-radius: 12px;
+    border-radius: 0.75rem;
     background-color: ${({ theme }) => theme.color.primary};
     color: white;
   }

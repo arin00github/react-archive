@@ -8,7 +8,7 @@ const PaginationWrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 1.25rem;
 
   .pagination {
     display: flex;

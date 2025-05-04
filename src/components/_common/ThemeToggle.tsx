@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const ThemeButton = styled.button`
-  padding: 6px 14px;
+  padding: 0.375rem 0.875rem;
   background-color: ${({ theme }) => theme.color.background};
   border-color: ${({ theme }) => theme.color.text};
   // border-color: transparent;

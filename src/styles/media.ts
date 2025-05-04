@@ -24,9 +24,9 @@ const createMediaQuery = (query: string) => {
 };
 
 export const media = {
-  small: createMediaQuery("@media (max-width: 639px)"),
-  medium: createMediaQuery("@media (max-width: 1047px)"),
-  large: createMediaQuery("@media (min-width: 1048px)"),
+  small: createMediaQuery("@media (max-width: 480px)"),
+  medium: createMediaQuery("@media (max-width: 768px)"),
+  large: createMediaQuery("@media (min-width: 1024px)"),
 };
 
 export default media;

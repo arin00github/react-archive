@@ -10,10 +10,10 @@ import usePagination from "@/hooks/usePagination";
 import { useRouter } from "next/navigation";
 
 const StyledSearchContainer = styled.div`
-  padding: 20px;
+  padding: 1.25rem;
   .title {
-    font-size: 24px;
-    margin-bottom: 12px;
+    font-size: 1.2rem;
+    margin-bottom: 0.75rem;
   }
 `;
 

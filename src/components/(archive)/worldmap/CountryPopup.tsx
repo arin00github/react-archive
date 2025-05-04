@@ -6,46 +6,52 @@ import { IoIosClose } from "react-icons/io";
 import { IDiplomacyDetail } from "@/interfaces/deplomacy";
 import DiplomacyApiFactory from "@/service/frontend/DiplomacyApiFactory";
 import { useRouter } from "next/navigation";
+import media from "@/styles/media";
 
 const StyledPopup = styled.div`
-  width: 300px;
   //height: calc(100vh - 80px);
   position: fixed;
-  top: 120px;
-  right: 40px;
-  bottom: 40px;
   background-color: ${({ theme }) => theme.bg};
-  border-radius: 12px;
+  width: 50%;
+  top: 7.5rem;
+  border-radius: 0.75rem;
   box-shadow: 0px 7px 18px rgba(0, 0, 0, 0.1);
   z-index: 100;
-  font-size: 14px;
+  font-size: 0.875rem;
+
+  ${media.large`
+    top: 7.5rem;
+    right: 2.5rem;
+    bottom: 2.5rem;
+    width: 18.75rem;
+    `}
 
   .header {
     display: flex;
     justify-content: flex-end;
-    padding: 0 20px;
-    margin-top: 20px;
+    padding: 0 1.25rem;
+    margin-top: 1.25rem;
 
     button {
-      font-size: 10px;
+      font-size: 0.625rem;
       border: none;
-      font-size: 14px;
+      font-size: 0.875rem;
     }
 
     .closeBtn {
-      margin-left: 8px;
+      margin-left: 0.5rem;
       padding: 0;
-      width: 32px;
-      line-height: 32px;
-      height: 32px;
+      width: 2rem;
+      line-height: 2rem;
+      height: 2rem;
     }
   }
 
   .container {
-    padding: 20px;
+    padding: 1.25rem;
     .title {
-      margin-bottom: 12px;
-      font-size: 20px;
+      margin-bottom: 0.75rem;
+      font-size: 1.25rem;
     }
     .flag {
       border: 1px solid #dadada;
@@ -57,10 +63,10 @@ const StyledPopup = styled.div`
 
     .row {
       display: flex;
-      height: 32px;
-      line-height: 32px;
+      height: 2rem;
+      line-height: 2rem;
       .label {
-        width: 120px;
+        width: 7.5rem;
         flex: none;
       }
     }

@@ -6,23 +6,30 @@ import { useQuery } from "@tanstack/react-query";
 import { IDiplomacyDetail } from "@/interfaces/deplomacy";
 import DiplomacyApiFactory from "@/service/frontend/DiplomacyApiFactory";
 import styled from "styled-components";
+import media from "@/styles/media";
 
 const StyledContainer = styled.div`
-  padding: 24px;
+  padding: 1.5rem;
 
   .container {
     overflow-y: auto;
     .header {
-      margin-bottom: 12px;
+      margin-bottom: 0.75rem;
       button {
-        font-size: 12px;
+        font-size: 0.75rem;
         border: none;
       }
     }
     .body {
       display: flex;
+      flex-direction: row;
+
+      ${media.medium`
+      flex-direction: column;
+        `}
+
       .flag {
-        max-width: 320px;
+        max-width: 20rem;
         width: 100%;
         border: 1px solid #dadada;
         margin-bottom: auto;
@@ -31,21 +38,21 @@ const StyledContainer = styled.div`
         }
       }
       .infoSection {
-        margin-left: 30px;
-        font-size: 13px;
+        margin-left: 1.875rem;
+        font-size: 0.813rem;
 
         h3 {
-          font-size: 28px;
-          margin-bottom: 30px;
+          font-size: 1.75rem;
+          margin-bottom: 1.875rem;
         }
 
         .row {
           display: flex;
-          height: 36px;
-          line-height: 36px;
+          height: 2.25rem;
+          line-height: 2.25rem;
 
           .label {
-            width: 120px;
+            width: 7.5rem;
             flex: none;
           }
         }

@@ -12,10 +12,10 @@ type PageButtonProps = {
 export const StyledPageButton = styled.button`
   outline: none;
   border: none;
-  width: 32px;
-  height: 32px;
-  line-height: 32px;
-  margin-right: 10px;
+  width: 2rem;
+  height: 2rem;
+  line-height: 2rem;
+  margin-right: 0.625rem;
   padding: 0;
   text-align: center;
   &:last-child {

@@ -12,23 +12,23 @@ import { useRouter } from "next/navigation";
 const StyledNavigation = styled.div`
   z-index: 5000;
   position: fixed;
-  top: 20px;
-  right: 20px;
-  width: 180px;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 11.25rem;
 
   .box {
-    margin-top: 6px;
+    margin-top: 0.375rem;
     border-style: solid;
     border-width: 1px;
     background-color: ${({ theme }) => theme.color.background};
     border-color: ${({ theme }) => theme.color.text};
-    border-radius: 6px;
+    border-radius: 0.375rem;
 
     ul {
       li {
-        height: 36px;
-        line-height: 36px;
-        padding: 0 12px;
+        height: 2.25rem;
+        line-height: 2.25rem;
+        padding: 0 0.75rem;
         cursor: pointer;
 
         &:hover {
@@ -38,12 +38,12 @@ const StyledNavigation = styled.div`
     }
 
     .themeBox {
-      padding: 10px;
+      padding: 0.63rem;
     }
   }
 
   .navBtn {
-    padding: 8px 18px;
+    padding: 0.5rem 1.125rem;
     background-color: ${({ theme }) => theme.color.background};
     border-color: ${({ theme }) => theme.color.btnText};
     color: ${({ theme }) => theme.color.btnText};

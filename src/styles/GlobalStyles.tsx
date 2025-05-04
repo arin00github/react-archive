@@ -9,6 +9,10 @@ const GlobalStyles = createGlobalStyle`
     padding: 0;
     }
 
+    html {
+        font-size: 100%; 
+    }
+
     body {
         margin: 0;
         padding: 0;
@@ -25,10 +29,10 @@ const GlobalStyles = createGlobalStyle`
     button {
         outline: none;
         border-style: solid;
-        border-width: 1px;
-        border-radius: 6px;
+        border-width: 0.063rem;
+        border-radius: 0.375rem;
         cursor: pointer;
-        padding: 8px 18px;
+        padding: 0.5rem 1.125rem;
     }
 
     table {

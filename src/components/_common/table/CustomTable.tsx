@@ -27,8 +27,8 @@ const StyledTable = styled.table`
 
 const StylecTh = styled.th`
   text-align: center;
-  line-height: 44px;
-  height: 44px;
+  line-height: 2.2rem;
+  height: 2.2rem;
   border-bottom: 1px solid #dbdde1;
   //min-width: 100px;
 `;
@@ -43,9 +43,9 @@ const StyledTr = styled.tr`
 
 const StylecTd = styled.td`
   text-align: center;
-  line-height: 38px;
-  height: 38px;
-  font-size: 14px;
+  line-height: 2.2rem;
+  height: 2.2rem;
+  font-size: 0.875rem;
   border-bottom: 1px solid #dbdde1;
   //min-width: 100px;
 `;

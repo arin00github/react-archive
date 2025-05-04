@@ -15,6 +15,8 @@ export async function GET(req: NextRequest) {
 
     const apiRes = await DiplomacyApi.getCountryInfoWidthPortal(params);
 
+    console.log("apires", apiRes);
+
     if (apiRes.status === 200) {
       return Response.json({ result: apiRes.data.response.body });
     }

@@ -57,8 +57,10 @@ const StyledAside = styled.div`
   box-shadow: 0px 7px 18px rgba(0, 0, 0, 0.1);
   z-index: 100;
   font-size: 0.875rem;
+  display: none;
 
   ${media.large`
+    display:block;
     width: 11.25rem;
     top: 12%;
     bottom: 6%;

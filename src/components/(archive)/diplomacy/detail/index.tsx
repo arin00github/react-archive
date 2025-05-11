@@ -27,7 +27,7 @@ const DiplomacyListContainer = styled.div`
     `}
 
   ${media.medium`
-    top: 4rem;
+    top: 60px;
     bottom: 0;
     border-radius:0;
     width: 100%;

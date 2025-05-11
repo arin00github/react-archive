@@ -24,20 +24,19 @@ const StyledPopup = styled.div`
 
   ${media.large`
     width: 50%;
-    height: 80%;
+    height: calc(100% - 180px);
     left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    top: 80px;
+    transform: translateX(-50%);
     `}
 
   ${media.medium`
     width: 80%;
-    height: 90%;
   `}
 
   ${media.small`
+    height: calc(100% - 180px);
       width: 100%;
-      height: 100%;
     `}
 
   .header {

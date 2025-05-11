@@ -122,10 +122,11 @@ const StyledMenuBox = styled.div`
 
 const StyledAside = styled.div`
   ${media.large`
-  display: none;
+  display: block;
     `}
 
   .overlay {
+    display: none;
     position: fixed;
     height: 100%;
     top: 0;
@@ -134,7 +135,7 @@ const StyledAside = styled.div`
     z-index: 8300;
     height: 100%;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.4);
     display: flex;
     justify-content: center;
     align-items: center;

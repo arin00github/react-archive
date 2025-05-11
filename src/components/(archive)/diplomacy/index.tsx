@@ -6,20 +6,34 @@ import media from "@/styles/media";
 
 const DiplomacyListContainer = styled.div`
   position: fixed;
-  z-index: 5000;
-  width: 100%;
-  top: 16%;
+  z-index: 1400;
+  width: 80%;
+  top: 12%;
+  bottom: 6%;
   right: 0;
+  left: auto;
+  height: 80%;
+  border-radius: 0.75rem 0px 0px 0.75rem;
   background-color: ${({ theme }) => theme.bg};
   box-shadow: 0px 7px 18px rgba(0, 0, 0, 0.1);
 
   ${media.large`
-    width: 80%;
+    width: 100%;
+    left: 0;
+    right: 0;
     top: 12%;
     bottom: 6%;
+    border-radius:0;
+  `}
+
+  ${media.medium`
+    top: 4rem;
+    bottom: 0;
+    border-radius:0;
+    width: 100%;
+    left: 0;
     right: 0;
-    height: 80%;
-    border-radius: 0.75rem 0px 0px 0.75rem;
+    height: calc(100% - 4rem);
   `}
 `;
 

@@ -49,33 +49,25 @@ const StyledAside = styled.div`
   width: 100%;
   //height: calc(100vh - 80px);
   position: fixed;
-  height: 6rem;
-  top: 0;
-  left: 0;
-  bottom: 0;
+  display: block;
+  width: 11.25rem;
+  top: 12%;
+  bottom: 6%;
+  height: 80%;
+  border-radius: 0px 0.75rem 0.75rem 0px;
   background-color: ${({ theme }) => theme.color.background};
   box-shadow: 0px 7px 18px rgba(0, 0, 0, 0.1);
   z-index: 100;
   font-size: 0.875rem;
-  display: none;
 
   ${media.large`
-    display:block;
-    width: 11.25rem;
-    top: 12%;
-    bottom: 6%;
-    height: 80%;
-    border-radius: 0px 0.75rem 0.75rem 0px;
+    display: none;
   `}
 
   ul {
     padding: 2rem 0.625rem;
     display: flex;
-    flex-direction: row;
-
-    ${media.large`
     flex-direction: column;
-    `}
 
     li {
       box-sizing: border-box;

@@ -26,7 +26,7 @@ const createMediaQuery = (query: string) => {
 export const media = {
   small: createMediaQuery("@media (max-width: 480px)"),
   medium: createMediaQuery("@media (max-width: 768px)"),
-  large: createMediaQuery("@media (min-width: 1024px)"),
+  large: createMediaQuery("@media (max-width: 1024px)"),
 };
 
 export default media;

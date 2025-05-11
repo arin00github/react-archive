@@ -9,6 +9,7 @@ import ReactQueryClientProvider from "@/lib/QueryClientProvider";
 
 import Navigation from "@/components/_common/Navigation";
 import GlobalStyles from "@/styles/GlobalStyles";
+import { FormsProvider } from "@/context/FormContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,7 +36,7 @@ export default function RootLayout({ children }: Readonly<ChildrenWrapper>) {
               <StyledThemeProvider>
                 <GlobalStyles />
                 <Navigation />
-                {children}
+                <FormsProvider>{children}</FormsProvider>
               </StyledThemeProvider>
             </StyledComponentsRegistry>
           </StoreProvider>

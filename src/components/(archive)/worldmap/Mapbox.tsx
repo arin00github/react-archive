@@ -15,6 +15,8 @@ import "ol/ol.css";
 
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { updateSelectedCountry } from "@/redux/country/countrySlice";
+import styled from "styled-components";
+import media from "@/styles/media";
 
 const geojson_url = process.env.NEXT_PUBLIC_GEOJSON_WORLD_MAP;
 
@@ -119,5 +121,17 @@ export const MapBox = () => {
     }
   }, [selectedCountry, featureClick]);
 
-  return <div id="world-map" style={{ width: "100%", height: "100vh" }}></div>;
+  return <StyledMapDiv id="world-map"></StyledMapDiv>;
 };
+
+const StyledMapDiv = styled.div`
+  top: 0;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  ${media.large`
+    top: 60px;
+  `}
+`;

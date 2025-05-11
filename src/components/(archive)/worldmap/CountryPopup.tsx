@@ -12,18 +12,32 @@ const StyledPopup = styled.div`
   //height: calc(100vh - 80px);
   position: fixed;
   background-color: ${({ theme }) => theme.bg};
-  width: 50%;
   top: 7.5rem;
+  right: 2.5rem;
+  bottom: 2.5rem;
+  width: 18.75rem;
+  transform: translate(0, 0);
   border-radius: 0.75rem;
   box-shadow: 0px 7px 18px rgba(0, 0, 0, 0.1);
   z-index: 100;
   font-size: 0.875rem;
 
   ${media.large`
-    top: 7.5rem;
-    right: 2.5rem;
-    bottom: 2.5rem;
-    width: 18.75rem;
+    width: 50%;
+    height: 80%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    `}
+
+  ${media.medium`
+    width: 80%;
+    height: 90%;
+  `}
+
+  ${media.small`
+      width: 100%;
+      height: 100%;
     `}
 
   .header {

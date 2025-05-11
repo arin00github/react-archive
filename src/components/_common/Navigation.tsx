@@ -5,26 +5,43 @@ import { useTheme } from "next-themes";
 
 import { navMenus } from "@/constant/navigation";
 import ThemeToggle from "./ThemeToggle";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import media from "@/styles/media";
 // import { useThemeMode } from "@/hooks/useThemeMode";
 
 const StyledNavigation = styled.div`
   z-index: 5000;
   position: fixed;
-  top: 1.25rem;
-  right: 1.25rem;
-  width: 11.25rem;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  display: flex;
+  transform: translateX(0);
+  transition: all 0.5s ease-in;
+
+  &.hide {
+    transform: translateX(12rem);
+  }
+
+  ${media.large`
+    display: none;
+  `}
 
   .box {
-    margin-top: 0.375rem;
+    width: 12rem;
+    height: 100%;
     border-style: solid;
     border-width: 1px;
     background-color: ${({ theme }) => theme.color.background};
     border-color: ${({ theme }) => theme.color.text};
-    border-radius: 0.375rem;
+
+    .closeBtn {
+      border: none;
+    }
 
     ul {
+      padding-top: 1rem;
       li {
         height: 2.25rem;
         line-height: 2.25rem;
@@ -43,7 +60,9 @@ const StyledNavigation = styled.div`
   }
 
   .navBtn {
+    height: 2rem;
     padding: 0.5rem 1.125rem;
+    border-radius: 0;
     background-color: ${({ theme }) => theme.color.background};
     border-color: ${({ theme }) => theme.color.btnText};
     color: ${({ theme }) => theme.color.btnText};
@@ -54,50 +73,64 @@ const Navigation = () => {
   const router = useRouter();
 
   const { systemTheme, theme, setTheme } = useTheme();
+
+  const boxRef = useRef<HTMLDivElement | null>(null);
   //const { themeMode, toggleTheme } = useThemeMode();
 
-  const [open, setOpen] = useState<boolean>(false);
+  const [isHide, setIsHide] = useState<boolean>(false);
 
   const handleToggleOpen = () => {
-    setOpen(!open);
+    console.log("toggle", isHide);
+    if (isHide) {
+      boxRef.current?.classList.add("hide");
+    } else {
+      boxRef.current?.classList.remove("hide");
+    }
+    setIsHide(!isHide);
+  };
+
+  const handleCloseBtn = () => {
+    console.log("handleCloseBtn", isHide);
+    boxRef.current?.classList.add("hide");
+    setIsHide(true);
   };
 
   const handleSeleteTheme = (val: string) => {
     setTheme(val);
     //toggleTheme();
-    setOpen(false);
+    setIsHide(false);
   };
 
   const handleClickMenu = (val: string) => {
     router.push(val);
-
-    setOpen(false);
+    setIsHide(false);
   };
   return (
-    <StyledNavigation>
+    <StyledNavigation ref={boxRef}>
       <button className="navBtn" onClick={handleToggleOpen}>
-        Navigation
+        My
       </button>
-      {open && (
-        <div className="box">
-          <ul className="menuBox">
-            {navMenus.map((menu) => {
-              return (
-                <li key={menu.id} onClick={() => handleClickMenu(menu.href)}>
-                  {menu.label}
-                </li>
-              );
-            })}
-          </ul>
-          <div className="themeBox">
-            <ThemeToggle
-              systemTheme={systemTheme}
-              theme={theme}
-              handleSeleteTheme={handleSeleteTheme}
-            />
-          </div>
+      <div className="box">
+        <button className="closeBtn" onClick={handleCloseBtn}>
+          Close
+        </button>
+        <ul className="menuBox">
+          {navMenus.map((menu) => {
+            return (
+              <li key={menu.id} onClick={() => handleClickMenu(menu.href)}>
+                {menu.label}
+              </li>
+            );
+          })}
+        </ul>
+        <div className="themeBox">
+          <ThemeToggle
+            systemTheme={systemTheme}
+            theme={theme}
+            handleSeleteTheme={handleSeleteTheme}
+          />
         </div>
-      )}
+      </div>
     </StyledNavigation>
   );
 };

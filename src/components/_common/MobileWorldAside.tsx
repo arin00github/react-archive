@@ -71,11 +71,16 @@ function MobileWorldAside() {
 export default MobileWorldAside;
 
 const StyledMenuButton = styled.button`
-  width: 2.4rem;
+  width: 4rem;
   height: 2.4rem;
   position: absolute;
-  top: 1.5rem;
-  left: 1.5rem;
+  top: 1rem;
+  left: 1rem;
+  display: none;
+
+  ${media.large`
+    display:block;
+  `}
 `;
 
 const StyledMenuBox = styled.div`

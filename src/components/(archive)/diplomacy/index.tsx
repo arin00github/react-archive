@@ -14,7 +14,7 @@ const DiplomacyListContainer = styled.div`
   left: auto;
   height: 80%;
   border-radius: 0.75rem 0px 0px 0.75rem;
-  background-color: ${({ theme }) => theme.bg};
+  background-color: ${({ theme }) => theme.custom.color.background};
   box-shadow: 0px 7px 18px rgba(0, 0, 0, 0.1);
 
   ${media.large`

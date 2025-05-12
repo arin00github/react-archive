@@ -55,7 +55,7 @@ const StyledAside = styled.div`
   bottom: 6%;
   height: 80%;
   border-radius: 0px 0.75rem 0.75rem 0px;
-  background-color: ${({ theme }) => theme.color.background};
+  background-color: ${({ theme }) => theme.custom.color.background};
   box-shadow: 0px 7px 18px rgba(0, 0, 0, 0.1);
   z-index: 100;
   font-size: 0.875rem;
@@ -84,7 +84,7 @@ const StyledAside = styled.div`
   }
   ul li.selected {
     border-radius: 0.75rem;
-    background-color: ${({ theme }) => theme.color.primary};
+    background-color: ${({ theme }) => theme.custom.color.primary};
     color: white;
   }
 `;

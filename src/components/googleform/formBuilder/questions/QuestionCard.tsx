@@ -1,15 +1,15 @@
 "use Client";
 
 import styled from "styled-components";
-import { GoogleFormInput } from "@/components/_common/googleform/GoogleFormInput";
 import { Question } from "@/interfaces/googleform";
+import { TextField } from "@mui/material";
 
 const StyledQuestionCard = styled.div`
   width: 100%;
   .card {
     width: 100%;
     border-radius: 0.5rem;
-    background-color: ${({ theme }) => theme.bg};
+    background-color: ${({ theme }) => theme.custom.color.background};
     padding: 1.2rem;
   }
 `;
@@ -22,7 +22,7 @@ function QuestionCard({ question }: IQuestionCard) {
   return (
     <StyledQuestionCard>
       <div className="card">
-        <GoogleFormInput value={question.label} onChange={() => {}} />
+        <TextField value={question.label} variant="standard" />
       </div>
     </StyledQuestionCard>
   );

@@ -85,7 +85,7 @@ const StyledMenuButton = styled.button`
 
 const StyledMenuBox = styled.div`
   width: 40%;
-  background-color: ${({ theme }) => theme.color.background};
+  background-color: ${({ theme }) => theme.custom.color.background};
   padding: 2rem 0.625rem;
   .header {
     text-align: center;
@@ -112,7 +112,7 @@ const StyledMenuBox = styled.div`
   }
   ul li.selected {
     border-radius: 0.75rem;
-    background-color: ${({ theme }) => theme.color.primary};
+    background-color: ${({ theme }) => theme.custom.color.primary};
     color: white;
   }
 

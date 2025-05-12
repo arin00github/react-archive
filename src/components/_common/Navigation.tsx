@@ -40,8 +40,8 @@ const StyledNavigation = styled.div`
       height: 100%;
       border-style: solid;
       border-width: 1px;
-      background-color: ${({ theme }) => theme.color.background};
-      border-color: ${({ theme }) => theme.color.text};
+      background-color: ${({ theme }) => theme.custom.color.background};
+      border-color: ${({ theme }) => theme.custom.color.text};
 
       .closeBtn {
         border: none;
@@ -56,7 +56,7 @@ const StyledNavigation = styled.div`
           cursor: pointer;
 
           &:hover {
-            background-color: ${(props) => props.theme.hoverColor};
+            // background-color: ${(props) => props.theme.hoverColor};
           }
         }
       }
@@ -70,9 +70,9 @@ const StyledNavigation = styled.div`
       height: 2rem;
       padding: 0.5rem 1.125rem;
       border-radius: 0;
-      background-color: ${({ theme }) => theme.color.background};
-      border-color: ${({ theme }) => theme.color.btnText};
-      color: ${({ theme }) => theme.color.btnText};
+      background-color: ${({ theme }) => theme.custom.color.background};
+      border-color: ${({ theme }) => theme.custom.color.btnText};
+      color: ${({ theme }) => theme.custom.color.btnText};
     }
   }
 `;

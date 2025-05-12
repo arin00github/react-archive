@@ -18,8 +18,8 @@ const GlobalStyles = createGlobalStyle`
         margin: 0;
         padding: 0;
         font-family: 'Roboto', sans-serif;
-        background-color: ${({ theme }) => theme.bg};
-        color: ${({ theme }) => theme.fontColor};
+        background-color: ${({ theme }) => theme.custom.color.background};
+        color: ${({ theme }) => theme.custom.color.text};
         transition: background-color 0.3s ease, color 0.3s ease;
     }
 

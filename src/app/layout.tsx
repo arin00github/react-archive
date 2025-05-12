@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 
 import { ChildrenWrapper } from "@/interfaces/common";
 import StyledComponentsRegistry from "@/lib/registry";
@@ -11,15 +10,15 @@ import Navigation from "@/components/_common/Navigation";
 import GlobalStyles from "@/styles/GlobalStyles";
 import { FormsProvider } from "@/context/FormContext";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+// const geistSans = Geist({
+//   variable: "--font-geist-sans",
+//   subsets: ["latin"],
+// });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// const geistMono = Geist_Mono({
+//   variable: "--font-geist-mono",
+//   subsets: ["latin"],
+// });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -29,7 +28,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<ChildrenWrapper>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body>
         <ReactQueryClientProvider>
           <StoreProvider>
             <StyledComponentsRegistry>

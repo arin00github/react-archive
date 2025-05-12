@@ -1,6 +1,7 @@
 "use client";
 
 import { useForms } from "@/context/FormContext";
+import { TextField } from "@mui/material";
 import { ChangeEvent } from "react";
 import styled from "styled-components";
 
@@ -25,11 +26,7 @@ function FormSetting() {
   return (
     <StyledFormSetting>
       <div className="wrapper">
-        <input
-          type="text"
-          value={currentForm?.title}
-          onChange={handleChangeTitle}
-        />
+        <TextField value={currentForm?.title} onChange={handleChangeTitle} />
       </div>
     </StyledFormSetting>
   );
@@ -38,19 +35,13 @@ function FormSetting() {
 export default FormSetting;
 
 const StyledFormSetting = styled.div`
-  background-color: ${({ theme }) => theme.bg};
+  background-color: ${({ theme }) => theme.custom.color.background};
 
   .wrapper {
     padding: 1rem;
 
     .title {
       font-size: 1.25rem;
-    }
-
-    input {
-      height: 38px;
-      line-height: 38px;
-      border-color: transparent;
     }
   }
 `;

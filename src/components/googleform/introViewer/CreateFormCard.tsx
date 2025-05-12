@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const StyledCreateFormCard = styled.button`
   // padding: 1rem;
-  // border: 1px solid ${({ theme }) => theme.borderColor3};
+
   cursor: pointer;
 `;
 

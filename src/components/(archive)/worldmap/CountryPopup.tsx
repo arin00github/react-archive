@@ -1,17 +1,16 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
-import { IoIosClose } from "react-icons/io";
+import { useRouter } from "next/navigation";
 
 import { IDiplomacyDetail } from "@/interfaces/deplomacy";
 import DiplomacyApiFactory from "@/service/frontend/DiplomacyApiFactory";
-import { useRouter } from "next/navigation";
 import media from "@/styles/media";
 
 const StyledPopup = styled.div`
   //height: calc(100vh - 80px);
   position: fixed;
-  background-color: ${({ theme }) => theme.bg};
+  background-color: ${({ theme }) => theme.custom.color.background};
   top: 7.5rem;
   right: 2.5rem;
   bottom: 2.5rem;
@@ -119,7 +118,7 @@ const Popup = (props: PopupProps) => {
           Go Detail
         </button>
         <button className="closeBtn" onClick={handleClose}>
-          <IoIosClose />
+          X
         </button>
       </div>
       {!isError && data && (

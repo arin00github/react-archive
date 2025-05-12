@@ -8,13 +8,11 @@ const StyledFormListCard = styled.div`
   padding: 1rem 2rem;
   border-radius: 0.625rem;
   border: 1px solid black;
-  border-color: ${({ theme }) => theme.borderColor3};
   display: flex;
   justify-content: space-between;
 
   &:hover {
     cursor: pointer;
-    border-color: ${({ theme }) => theme.blue2};
   }
 
   .info {

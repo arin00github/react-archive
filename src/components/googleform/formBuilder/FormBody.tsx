@@ -7,7 +7,7 @@ import QuestionCard from "./questions/QuestionCard";
 const StyledFormBody = styled.div`
   width: 100%;
   height: calc(100vh - 60px);
-  background-color: ${({ theme }) => theme.blue2};
+  background-color: ${({ theme }) => theme.custom.color.secondary};
 
   .wrapper {
     margin: 0 auto;

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useTheme as useNextTheme } from "next-themes"; // ✅ 여기
+import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { ThemeProvider as StyledComponentsThemeProvider } from "styled-components";
 
@@ -40,8 +41,10 @@ const ThemeProviderWrapper = ({ children }: ChildrenWrapper) => {
   }
 
   return (
-    <StyledComponentsThemeProvider theme={themeObject}>
-      {children}
-    </StyledComponentsThemeProvider>
+    <MuiThemeProvider theme={themeObject}>
+      <StyledComponentsThemeProvider theme={themeObject}>
+        {children}
+      </StyledComponentsThemeProvider>
+    </MuiThemeProvider>
   );
 };

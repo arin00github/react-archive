@@ -9,11 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@react-icons/all-files": "^4.1.0",
+    "@mui/icons-material": "^7.1.0",
+    "@mui/material": "^7.1.0",
+    "@mui/styled-engine-sc": "^7.1.0",
     "@reduxjs/toolkit": "^2.6.0",
     "@tanstack/react-query": "^5.67.1",
     "axios": "^1.8.1",
     "bcryptjs": "^3.0.2",
+    "dayjs": "^1.11.13",
     "mongodb": "^6.13.1",
     "next": "15.2.0",
     "next-auth": "^4.24.11",
@@ -21,7 +24,6 @@
     "ol": "^10.4.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-icons": "^5.5.0",
     "react-redux": "^9.2.0",
     "styled-components": "^6.1.15"
   },
@@ -32,6 +34,7 @@
     "@types/ol": "^7.0.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "babel-plugin-styled-components": "^2.1.4",
     "eslint": "^9",
     "eslint-config-next": "15.2.0",
     "typescript": "^5"

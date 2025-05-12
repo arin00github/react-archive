@@ -11,17 +11,6 @@ function FormSetting() {
     (form) => form.formId === state.activeFormId
   );
 
-  const handleChangeDesc = (e: ChangeEvent<HTMLInputElement>) => {
-    if (!state.activeFormId) return;
-    dispatch({
-      type: "UPDATE_FORM",
-      payload: {
-        id: state.activeFormId,
-        updates: { description: e.target.value },
-      },
-    });
-  };
-
   const handleChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
     if (!state.activeFormId) return;
     dispatch({
@@ -35,18 +24,11 @@ function FormSetting() {
 
   return (
     <StyledFormSetting>
-      <div>
+      <div className="wrapper">
         <input
           type="text"
           value={currentForm?.title}
           onChange={handleChangeTitle}
-        />
-      </div>
-      <div>
-        <input
-          type="text"
-          value={currentForm?.description}
-          onChange={handleChangeDesc}
         />
       </div>
     </StyledFormSetting>
@@ -56,11 +38,19 @@ function FormSetting() {
 export default FormSetting;
 
 const StyledFormSetting = styled.div`
+  background-color: ${({ theme }) => theme.bg};
+
   .wrapper {
     padding: 1rem;
 
     .title {
       font-size: 1.25rem;
+    }
+
+    input {
+      height: 38px;
+      line-height: 38px;
+      border-color: transparent;
     }
   }
 `;

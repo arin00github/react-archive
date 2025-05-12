@@ -12,6 +12,11 @@ const StyledCardContainer = styled.div`
   max-width: 800px;
   margin: 0 auto;
 
+  .header {
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
   .wrapper {
     width: 100%;
     display: flex;
@@ -35,7 +40,7 @@ function createForm(): FormObject {
     ],
     title: "No title",
     description: "",
-    createdAt: `${dateString}`,
+    createdAt: `${new Date().toISOString()}`,
   };
 }
 
@@ -58,6 +63,9 @@ function FormIntroViewContainer() {
   return (
     <div>
       <StyledCardContainer>
+        <div className="header">
+          <h1>Google Form Copy</h1>
+        </div>
         <div className="wrapper">
           <CreateFormCard handleCreate={handleCreate} />
           <div>

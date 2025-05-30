@@ -2,6 +2,7 @@
 
 import { MouseEvent, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import SettingModal from "./SettingModal";
 
 const StyledDrawingSetting = styled.div`
   width: 100%;
@@ -21,6 +22,8 @@ const DrawingBoard = () => {
 
   const [undoStack, setUndoStack] = useState<ImageData[]>([]);
   const [redoStack, setRedoStack] = useState<ImageData[]>([]);
+
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -111,8 +114,57 @@ const DrawingBoard = () => {
     ctx.putImageData(nextState, 0, 0);
   };
 
+  const downloadImage = (val: {
+    fileName: string;
+    fileType: string;
+    bgColor: string;
+  }) => {
+    const { fileName, fileType, bgColor } = val;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    //NOTE - 임시 캔버스 생성. 진짜 그림이 바뀌는 것을 방지
+    const tempCanvas = document.createElement("canvas");
+    tempCanvas.width = canvas.width;
+    tempCanvas.height = canvas.height;
+    const ctx = tempCanvas.getContext("2d");
+    if (!ctx) return;
+
+    //NOTE - 배경설정
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+
+    ctx.drawImage(canvas, 0, 0, tempCanvas.width, tempCanvas.height);
+
+    // 이미지 생성
+    const mimeType = fileType === "jpeg" ? "image/jpeg" : "image/png";
+    const image = tempCanvas.toDataURL(mimeType);
+    const extension = fileType === "jpeg" ? ".jpg" : ".png";
+    const safeName = fileName.trim() || "drawing";
+    const fileNameVal = safeName.endsWith(extension)
+      ? safeName
+      : safeName + extension;
+
+    // 다운로드
+    const link = document.createElement("a");
+    link.href = image;
+    link.download = fileNameVal;
+    link.click();
+
+    setModalOpen(false);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <div>
+      <SettingModal
+        isOpen={modalOpen}
+        handleClose={closeModal}
+        handleSave={downloadImage}
+      />
       <StyledDrawingSetting>
         <div>
           <label htmlFor="setting-line-color">Color</label>
@@ -137,6 +189,7 @@ const DrawingBoard = () => {
         <button onClick={clearCanvas}>Reset</button>
         <button onClick={undo}>Undo</button>
         <button onClick={redo}>Redo</button>
+        <button onClick={() => setModalOpen(true)}>Download</button>
       </StyledDrawingSetting>
       <canvas
         ref={canvasRef}

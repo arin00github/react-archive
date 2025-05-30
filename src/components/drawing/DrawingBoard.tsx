@@ -19,6 +19,9 @@ const DrawingBoard = () => {
   const [color, setColor] = useState<string>("#000000");
   const [lineWidth, setLineWidth] = useState<number>(3);
 
+  const [undoStack, setUndoStack] = useState<ImageData[]>([]);
+  const [redoStack, setRedoStack] = useState<ImageData[]>([]);
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -44,7 +47,17 @@ const DrawingBoard = () => {
     }
   }, [color, lineWidth]);
 
+  const saveState = () => {
+    const canvas = canvasRef.current;
+    const ctx = ctxRef.current;
+    if (!canvas || !ctx) return;
+
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    setUndoStack((prev) => [...prev, imageData]);
+  };
+
   const startDrawing = (e: MouseEvent<HTMLCanvasElement>) => {
+    saveState();
     if (!ctxRef.current) return;
     ctxRef.current.beginPath();
     ctxRef.current.moveTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
@@ -66,7 +79,36 @@ const DrawingBoard = () => {
   const clearCanvas = () => {
     const canvas = canvasRef.current;
     if (!canvas || !ctxRef.current) return;
+    saveState();
     ctxRef.current.clearRect(0, 0, canvas.width, canvas.height);
+  };
+
+  const undo = () => {
+    const canvas = canvasRef.current;
+    const ctx = ctxRef.current;
+    if (!canvas || !ctx || undoStack.length < 2) return;
+
+    const newUndoStack = [...undoStack];
+    const lastState = newUndoStack.pop()!;
+    const currentState = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    setUndoStack(newUndoStack);
+    setRedoStack((prev) => [...prev, currentState]);
+    ctx.putImageData(lastState, 0, 0);
+  };
+
+  const redo = () => {
+    const canvas = canvasRef.current;
+    const ctx = ctxRef.current;
+    if (!canvas || !ctx || redoStack.length === 0) return;
+
+    const newRedoStack = [...redoStack];
+    const nextState = newRedoStack.pop()!;
+    const currentState = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+    setRedoStack(newRedoStack);
+    setUndoStack((prev) => [...prev, currentState]);
+
+    ctx.putImageData(nextState, 0, 0);
   };
 
   return (
@@ -93,6 +135,8 @@ const DrawingBoard = () => {
           />
         </div>
         <button onClick={clearCanvas}>Reset</button>
+        <button onClick={undo}>Undo</button>
+        <button onClick={redo}>Redo</button>
       </StyledDrawingSetting>
       <canvas
         ref={canvasRef}

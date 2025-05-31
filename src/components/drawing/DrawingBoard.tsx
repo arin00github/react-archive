@@ -2,6 +2,11 @@
 
 import { MouseEvent, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import RedoIcon from "@mui/icons-material/Redo";
+import UndoIcon from "@mui/icons-material/Undo";
+import DownloadIcon from "@mui/icons-material/Download";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import { IconButton, Input, Slider, Stack } from "@mui/material";
 import SettingModal from "./SettingModal";
 
 const StyledDrawingSetting = styled.div`
@@ -13,9 +18,16 @@ const StyledDrawingSetting = styled.div`
   align-items: center;
 `;
 
+const StyledCustomColorThumbnail = styled.div`
+  width: 2.2rem;
+  height: 2rem;
+`;
+
 const DrawingBoard = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
+  const colorInputRef = useRef<HTMLInputElement | null>(null);
+
   const [isDrawing, setIsDrawing] = useState<boolean>(false);
   const [color, setColor] = useState<string>("#000000");
   const [lineWidth, setLineWidth] = useState<number>(3);
@@ -26,21 +38,51 @@ const DrawingBoard = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    canvas.width = 800;
-    canvas.height = 600;
-    // canvas 위에 그림을 그릴 수 있게 해주는 도구 세트를 반환
-    // 프로그래밍에서 **"컨텍스트(context)"**라는 말은 **"작업을 수행할 수 있는 환경/상태/도구 모음"**을 의미해.
-    const ctx = canvas.getContext("2d");
+    const resizeCanvas = () => {
+      console.log("resizeCanvas");
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      const parent = canvas.parentElement;
 
-    if (!ctx) return;
+      if (!parent) return;
 
-    ctx.lineCap = "round";
-    ctx.strokeStyle = color;
-    ctx.lineWidth = lineWidth;
+      // canvas 위에 그림을 그릴 수 있게 해주는 도구 세트를 반환
+      // 프로그래밍에서 **"컨텍스트(context)"**라는 말은 **"작업을 수행할 수 있는 환경/상태/도구 모음"**을 의미해.
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
 
-    ctxRef.current = ctx;
+      // 이전 이미지 저장장
+      const prevImage = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+      // 실제 리사이즈
+      const ratio = window.devicePixelRatio || 1;
+      canvas.width = parent.clientWidth * ratio;
+      canvas.height = parent.clientHeight * ratio;
+      canvas.style.width = `${parent.clientWidth}px`;
+      canvas.style.height = `${parent.clientHeight}px`;
+
+      const newCtx = canvas.getContext("2d");
+      if (!newCtx) return;
+
+      newCtx.setTransform(1, 0, 0, 1, 0, 0);
+      newCtx.scale(ratio, ratio);
+      newCtx.lineCap = "round";
+      newCtx.strokeStyle = color;
+      newCtx.lineWidth = lineWidth;
+      // 기존 참조값 덮어쓰기기
+      ctxRef.current = newCtx;
+
+      try {
+        // 저장했던 이미지를 새 컨텍스트에 넣기기
+        newCtx.putImageData(prevImage, 0, 0);
+      } catch (e) {
+        console.warn("putImageData failed:", e);
+      }
+    };
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    return () => window.removeEventListener("resize", resizeCanvas);
   }, []);
 
   useEffect(() => {
@@ -159,37 +201,60 @@ const DrawingBoard = () => {
   };
 
   return (
-    <div>
+    <div style={{ height: "80vh" }}>
       <SettingModal
         isOpen={modalOpen}
         handleClose={closeModal}
         handleSave={downloadImage}
       />
       <StyledDrawingSetting>
-        <div>
-          <label htmlFor="setting-line-color">Color</label>
+        <Stack direction="row" spacing={1}>
+          {/* <label htmlFor="setting-line-color">Color</label> */}
+          <StyledCustomColorThumbnail
+            onClick={() => {
+              if (!colorInputRef.current) return;
+              colorInputRef.current.click();
+            }}
+            style={{ backgroundColor: color }}
+          />
           <input
+            ref={colorInputRef}
+            style={{ opacity: 0, width: "0.3rem" }}
             type="color"
             id="setting-line-color"
             value={color}
             onChange={(e) => setColor(e.target.value)}
           />
-        </div>
-        <div>
-          <label htmlFor="setting-line-width">Width</label>
-          <input
-            type="range"
+        </Stack>
+        <Stack spacing={1} direction="row">
+          <Slider
             id="setting-line-width"
             min={1}
             max={20}
             value={lineWidth}
-            onChange={(e) => setLineWidth(Number(e.target.value))}
+            style={{ width: "4rem" }}
+            onChange={(_: unknown, val) => setLineWidth(Number(val))}
           />
-        </div>
-        <button onClick={clearCanvas}>Reset</button>
-        <button onClick={undo}>Undo</button>
-        <button onClick={redo}>Redo</button>
-        <button onClick={() => setModalOpen(true)}>Download</button>
+          <Input
+            value={lineWidth}
+            onChange={(e) => {
+              setLineWidth(Number(e.target.value));
+            }}
+            style={{ width: "1.2rem" }}
+          />
+        </Stack>
+        <IconButton onClick={clearCanvas}>
+          <RefreshIcon />
+        </IconButton>
+        <IconButton onClick={undo}>
+          <UndoIcon />
+        </IconButton>
+        <IconButton onClick={redo}>
+          <RedoIcon />
+        </IconButton>
+        <IconButton onClick={() => setModalOpen(true)}>
+          <DownloadIcon />
+        </IconButton>
       </StyledDrawingSetting>
       <canvas
         ref={canvasRef}

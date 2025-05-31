@@ -5,7 +5,7 @@ import { useTheme } from "next-themes";
 
 import { navMenus } from "@/constant/navigation";
 import ThemeToggle from "./ThemeToggle";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
 const StyledNavigation = styled.div`
@@ -113,6 +113,12 @@ const Navigation = () => {
     router.push(val);
     setIsHide(true);
   };
+
+  useEffect(() => {
+    if (!boxRef.current) return;
+    boxRef.current?.classList.add("hide");
+  }, []);
+
   return (
     <StyledNavigation>
       {isHide && <div className="overlay"></div>}

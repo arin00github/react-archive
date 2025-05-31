@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 import { ChildrenWrapper } from "@/interfaces/common";
-import StyledComponentsRegistry from "@/lib/registry";
-import { StyledThemeProvider } from "@/lib/themeProvider";
+import StyledComponentsRegistry from "@/lib/StyledRegistry";
+import { StyledThemeProvider } from "@/lib/ThemeProvider";
 import StoreProvider from "@/lib/StoreProvider";
 import ReactQueryClientProvider from "@/lib/QueryClientProvider";
 

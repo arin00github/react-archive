@@ -1,12 +1,15 @@
 "use client";
 
+import { useRef } from "react";
+import { useRouter } from "next/navigation";
 import styled from "styled-components";
 import { useTheme } from "next-themes";
 
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+
 import { navMenus } from "@/constant/navigation";
 import ThemeToggle from "./ThemeToggle";
-import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 
 const StyledNavigation = styled.div`
   .overlay {
@@ -25,34 +28,42 @@ const StyledNavigation = styled.div`
     z-index: 5000;
     position: fixed;
     top: 0;
-    right: 0;
+    left: 0;
     height: 100vh;
-    display: flex;
+    // display: flex;
     transform: translateX(0);
     transition: all 0.5s ease-in;
 
     &.hide {
-      transform: translateX(12.3rem);
+      transform: translateX(-13rem);
     }
 
     .box {
-      width: 12rem;
+      width: 13rem;
       height: 100%;
-      border-style: solid;
-      border-width: 1px;
+      //border-style: solid;
+      //border-width: 1px;
       background-color: ${({ theme }) => theme.custom.color.background};
-      border-color: ${({ theme }) => theme.custom.color.text};
+      // border-color: ${({ theme }) => theme.custom.color.text};
+      box-shadow: 4px 12px 12px rgba(148, 148, 148, 0.4);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
 
       .closeBtn {
         border: none;
       }
 
-      ul {
-        padding-top: 1rem;
+      ul.menuBox {
+        padding-top: 3rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
         li {
-          height: 2.25rem;
-          line-height: 2.25rem;
-          padding: 0 0.75rem;
+          color: ${({ theme }) => theme.custom.color.text100};
+          height: 2.4rem;
+          //line-height: 2.4rem;
+          padding: 0 2rem;
           cursor: pointer;
 
           &:hover {
@@ -67,17 +78,29 @@ const StyledNavigation = styled.div`
     }
 
     .navBtn {
+      position: absolute;
+      top: 0;
+      right: -2rem;
       height: 2rem;
-      padding: 0.5rem 1.125rem;
+      width: 2rem;
+      padding: 0;
+      border: none;
+      //padding: 1rem;
       border-radius: 0;
+      box-shadow: 10px 2px 8px rgba(148, 148, 148, 0.4);
       background-color: ${({ theme }) => theme.custom.color.background};
-      border-color: ${({ theme }) => theme.custom.color.btnText};
+      //border-color: ${({ theme }) => theme.custom.color.btnText};
       color: ${({ theme }) => theme.custom.color.btnText};
     }
   }
 `;
 
-const Navigation = () => {
+interface INavigation {
+  isOpen: boolean;
+  handleToggle: () => void;
+}
+
+const Navigation = (props: INavigation) => {
   const router = useRouter();
 
   const { systemTheme, theme, setTheme } = useTheme();
@@ -85,51 +108,33 @@ const Navigation = () => {
   const boxRef = useRef<HTMLDivElement | null>(null);
   //const { themeMode, toggleTheme } = useThemeMode();
 
-  const [isHide, setIsHide] = useState<boolean>(false);
-
   const handleToggleOpen = () => {
-    console.log("toggle", isHide);
-    if (isHide) {
+    if (props.isOpen) {
       boxRef.current?.classList.add("hide");
     } else {
       boxRef.current?.classList.remove("hide");
     }
-    setIsHide(!isHide);
-  };
-
-  const handleCloseBtn = () => {
-    console.log("handleCloseBtn", isHide);
-    boxRef.current?.classList.add("hide");
-    setIsHide(!isHide);
+    props.handleToggle();
   };
 
   const handleSeleteTheme = (val: string) => {
     setTheme(val);
     //toggleTheme();
-    setIsHide(true);
   };
 
   const handleClickMenu = (val: string) => {
     router.push(val);
-    setIsHide(true);
+    //setIsHide(true);
   };
-
-  useEffect(() => {
-    if (!boxRef.current) return;
-    boxRef.current?.classList.add("hide");
-  }, []);
 
   return (
     <StyledNavigation>
-      {isHide && <div className="overlay"></div>}
+      {/* {isHide && <div className="overlay"></div>} */}
       <div className="globalNav" ref={boxRef}>
-        <button className="navBtn" onClick={handleToggleOpen}>
-          My
-        </button>
         <div className="box">
-          <button className="closeBtn" onClick={handleCloseBtn}>
+          {/* <button className="closeBtn" onClick={handleCloseBtn}>
             Close
-          </button>
+          </button> */}
           <ul className="menuBox">
             {navMenus.map((menu) => {
               return (
@@ -147,6 +152,9 @@ const Navigation = () => {
             />
           </div>
         </div>
+        <button className="navBtn" onClick={handleToggleOpen}>
+          {props.isOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+        </button>
       </div>
     </StyledNavigation>
   );

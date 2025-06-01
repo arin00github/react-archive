@@ -1,5 +1,7 @@
+import RecordAudioContainer from "@/components/record-audio";
+
 const RecordAudioPage = () => {
-  return <div>Record Audio Page</div>;
+  return <RecordAudioContainer />;
 };
 
 export default RecordAudioPage;

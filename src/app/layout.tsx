@@ -6,9 +6,8 @@ import { StyledThemeProvider } from "@/lib/ThemeProvider";
 import StoreProvider from "@/lib/StoreProvider";
 import ReactQueryClientProvider from "@/lib/QueryClientProvider";
 
-import Navigation from "@/components/_common/Navigation";
 import GlobalStyles from "@/styles/GlobalStyles";
-import { FormsProvider } from "@/context/FormContext";
+import GlobalLayout from "@/components/_common/GlobalLayout";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -34,8 +33,7 @@ export default function RootLayout({ children }: Readonly<ChildrenWrapper>) {
             <StyledComponentsRegistry>
               <StyledThemeProvider>
                 <GlobalStyles />
-                <Navigation />
-                <FormsProvider>{children}</FormsProvider>
+                <GlobalLayout>{children}</GlobalLayout>
               </StyledThemeProvider>
             </StyledComponentsRegistry>
           </StoreProvider>

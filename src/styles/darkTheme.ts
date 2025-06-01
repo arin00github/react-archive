@@ -13,6 +13,7 @@ const darkTheme = {
     color: {
       background: "#121212",
       text: "#ffffff",
+      text100: "#606060",
       tableBorder: "#444444",
       primary: "#0373fc",
       secondary: "#0040ad",

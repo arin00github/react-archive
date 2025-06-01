@@ -11,8 +11,9 @@ const lightTheme = {
   ...baseTheme,
   custom: {
     color: {
-      background: "#ffffff",
+      background: "#fafafa",
       text: "#000000",
+      text100: "#606060",
       tableBorder: "#dadada",
       primary: "#0373fc",
       secondary: "#0040ad",

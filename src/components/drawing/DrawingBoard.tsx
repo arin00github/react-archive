@@ -12,7 +12,7 @@ import SettingModal from "./SettingModal";
 const StyledDrawingSetting = styled.div`
   width: 100%;
   height: 4rem;
-  padding: 0 2rem;
+  padding: 0 3.2rem;
   display: flex;
   gap: 1rem;
   align-items: center;
@@ -201,7 +201,7 @@ const DrawingBoard = () => {
   };
 
   return (
-    <div style={{ height: "80vh" }}>
+    <div style={{ height: "calc(100vh - 4rem)" }}>
       <SettingModal
         isOpen={modalOpen}
         handleClose={closeModal}
@@ -226,7 +226,7 @@ const DrawingBoard = () => {
             onChange={(e) => setColor(e.target.value)}
           />
         </Stack>
-        <Stack spacing={1} direction="row">
+        <Stack spacing={1} direction="row" display={"none"}>
           <Slider
             id="setting-line-width"
             min={1}
@@ -262,7 +262,7 @@ const DrawingBoard = () => {
         onMouseMove={draw}
         onMouseLeave={stopDrawing}
         onMouseUp={stopDrawing}
-        style={{ border: "1px solid #000" }}
+        style={{ border: "1px solid #cdcdcd" }}
       ></canvas>
     </div>
   );

@@ -7,7 +7,7 @@ const StyledDrawingContainer = styled.div`
   width: 100%;
   height: 100vh;
   background-color: white;
-  padding: 2rem;
+  //padding: 2rem;
 `;
 
 const DrawingContainer = () => {

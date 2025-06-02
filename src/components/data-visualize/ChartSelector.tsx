@@ -27,7 +27,7 @@ const ChartSelector = (props: IChartSelector) => {
   const { selectedType, handleChange } = props;
 
   return (
-    <Stack direction={"row"} spacing={2} paddingTop={2} paddingBottom={2}>
+    <Stack direction={"column"} spacing={2}>
       {chartTypeArray.map((chart) => {
         return (
           <StyledChartTypeBox

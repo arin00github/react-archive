@@ -1,5 +1,7 @@
+import DataVisualizeContainer from "@/components/data-visualize";
+
 const DataVisualizePage = () => {
-  return <div>Data Visualize Page</div>;
+  return <DataVisualizeContainer />;
 };
 
 export default DataVisualizePage;

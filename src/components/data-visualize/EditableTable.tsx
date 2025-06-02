@@ -1,8 +1,8 @@
 "use client";
 
 import { DatasetType } from "@/interfaces/chart";
-import { Input } from "@mui/material";
-import { ChangeEvent } from "react";
+import { FormControl, Input } from "@mui/material";
+import { ChangeEvent, useEffect, useState } from "react";
 import styled from "styled-components";
 
 const StyledEditableTable = styled.div`
@@ -33,6 +33,13 @@ export interface IEditableTable {
 const EditableTable = (props: IEditableTable) => {
   const { datasets, handleChangeSets, headers } = props;
 
+  const [columnNameInput, setColumnNameInput] = useState(headers);
+  const [nameErrors, setNameErrors] = useState(headers.map(() => false));
+
+  useEffect(() => {
+    setColumnNameInput(headers);
+  }, [headers]);
+
   const handleChangeCellValue = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     datasetIdx: number,
@@ -53,17 +60,35 @@ const EditableTable = (props: IEditableTable) => {
 
   const handleChangeColumnName = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    column: string
+    idx: number
   ) => {
-    const newSets = datasets.map((dtset) => {
-      return {
-        ...dtset,
-        data: dtset.data.map((dt) =>
-          dt.name === column ? { ...dt, name: e.target.value } : dt
-        ),
-      };
-    });
-    handleChangeSets(newSets);
+    const updated = [...columnNameInput];
+    updated[idx] = e.target.value;
+    setColumnNameInput(updated);
+
+    const isDuplicated = headers.some(
+      (ds, index) => ds === e.target.value && idx !== index
+    );
+
+    console.log("is Duplicated??", isDuplicated, e.target.value);
+    console.log("current headers", headers);
+
+    if (isDuplicated) {
+      setNameErrors((prev) =>
+        prev.map((_, index) => (index === idx ? isDuplicated : false))
+      );
+    } else {
+      const newSets = datasets.map((dtset) => {
+        return {
+          ...dtset,
+          data: dtset.data.map((dt) =>
+            dt.name === headers[idx] ? { ...dt, name: e.target.value } : dt
+          ),
+        };
+      });
+      setNameErrors(() => headers.map(() => false));
+      handleChangeSets(newSets);
+    }
   };
 
   return (
@@ -71,14 +96,16 @@ const EditableTable = (props: IEditableTable) => {
       <table>
         <thead>
           <tr>
-            {headers.map((header) => {
+            {columnNameInput.map((header, idx) => {
               return (
-                <th key={header}>
-                  <Input
-                    style={{ fontWeight: "bold" }}
-                    onChange={(e) => handleChangeColumnName(e, header)}
-                    value={header}
-                  />
+                <th key={`th_col_${idx}`}>
+                  <FormControl error={nameErrors[idx]}>
+                    <Input
+                      style={{ fontWeight: "bold" }}
+                      onChange={(e) => handleChangeColumnName(e, idx)}
+                      value={header}
+                    />
+                  </FormControl>
                 </th>
               );
             })}

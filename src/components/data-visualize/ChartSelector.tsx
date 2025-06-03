@@ -2,13 +2,21 @@
 
 import { Stack } from "@mui/material";
 import styled from "styled-components";
+import BarChartIcon from "@mui/icons-material/BarChart";
+import TimelineIcon from "@mui/icons-material/Timeline";
+import DonutLargeIcon from "@mui/icons-material/DonutLarge";
+
 import { ChartType } from ".";
 
 const StyledChartTypeBox = styled.div`
   width: 6rem;
   height: 6rem;
-  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   border: 1px solid;
+  border-radius: 0.5rem;
 
   &.selected {
     background-color: ${({ theme }) => theme.custom.color.primary};
@@ -35,7 +43,12 @@ const ChartSelector = (props: IChartSelector) => {
             onClick={() => handleChange(chart)}
             className={selectedType === chart ? "selected" : ""}
           >
-            {chart}
+            <div>
+              {chart === "bar" && <BarChartIcon />}
+              {chart === "line" && <TimelineIcon />}
+              {chart === "pie" && <DonutLargeIcon />}
+            </div>
+            <div>{chart}</div>
           </StyledChartTypeBox>
         );
       })}

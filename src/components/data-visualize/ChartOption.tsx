@@ -79,6 +79,7 @@ const ChartOption = (props: IChartOption) => {
         <div className="sectionPart">
           <FormLabel>Position</FormLabel>
           <Select
+            size="small"
             value={legend.position}
             onChange={(e) => {
               handleChange({

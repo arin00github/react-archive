@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import styled from "styled-components";
 
 import { ChartOptonType, ChartType, DatasetType } from "@/interfaces/chart";
@@ -11,6 +11,7 @@ import ChartViewer from "./ChartViewer";
 import EditableTable from "./EditableTable";
 import ChartSelector from "./ChartSelector";
 import ChartOption from "./ChartOption";
+import SectionHeader from "../_common/style/SectionHeader";
 
 const StyledContainer = styled.div`
   width: 100%;
@@ -104,7 +105,7 @@ const DataVisualizeContainer = () => {
       <StyledContainer>
         <div className="container">
           <div className="wrapper">
-            <Typography marginTop="4rem">Chart Viewer</Typography>
+            <SectionHeader>Chart Viewer</SectionHeader>
             <Box
               marginTop={"2.2rem"}
               display={"flex"}
@@ -122,7 +123,7 @@ const DataVisualizeContainer = () => {
                 chartOption={chartOption}
               />
             </Box>
-            <Typography marginTop={"4rem"}>Chart Table</Typography>
+            <SectionHeader>Chart Table</SectionHeader>
             <Box marginTop={"2rem"}>
               <EditableTable
                 headers={headers}
@@ -130,7 +131,7 @@ const DataVisualizeContainer = () => {
                 handleChangeSets={handleChangeData}
               />
             </Box>
-            <Typography marginTop={"4rem"}>Chart Options</Typography>
+            <SectionHeader>Chart Options</SectionHeader>
             <ChartOption
               chartOption={chartOption}
               handleChange={handleChangeOption}

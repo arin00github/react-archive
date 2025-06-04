@@ -23,7 +23,7 @@ const StyledChartTypeBox = styled.div`
   }
 `;
 
-const chartTypeArray: ChartType[] = ["bar", "line", "pie"];
+const chartTypeArray: ChartType[] = ["bar", "line", "doughnut"];
 
 interface IChartSelector {
   selectedType: ChartType;
@@ -45,7 +45,7 @@ const ChartSelector = (props: IChartSelector) => {
             <div>
               {chart === "bar" && <BarChartIcon />}
               {chart === "line" && <TimelineIcon />}
-              {chart === "pie" && <DonutLargeIcon />}
+              {chart === "doughnut" && <DonutLargeIcon />}
             </div>
             <div>{chart}</div>
           </StyledChartTypeBox>

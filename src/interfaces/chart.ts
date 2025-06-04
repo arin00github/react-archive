@@ -1,4 +1,4 @@
-export type ChartType = "bar" | "line" | "pie";
+export type ChartType = "bar" | "line" | "doughnut";
 
 export type DataType = { name: string; value: string };
 

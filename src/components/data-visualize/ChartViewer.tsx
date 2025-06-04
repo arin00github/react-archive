@@ -12,6 +12,7 @@ import {
   LinearScale,
   PointElement,
   ArcElement,
+  ChartOptions,
 } from "chart.js";
 import styled from "styled-components";
 import { Bar, Line, Doughnut } from "react-chartjs-2";
@@ -45,10 +46,27 @@ ChartJS.register(
   LinearScale
 );
 
+export function getChartOptions<T extends ChartType>(
+  chartType: T,
+  option: ChartOptonType
+): ChartOptions<T> {
+  return {
+    responsive: true,
+    plugins: {
+      title: {
+        display: option.title.display,
+        text: option.title.text,
+      },
+      legend: {
+        display: option.legend.display,
+        position: option.legend.position,
+      },
+    },
+  } as ChartOptions<T>;
+}
+
 const ChartViewer = (props: IChartViewer) => {
   const { datasets, chartType, chartOption } = props;
-
-  const { title, legend } = chartOption;
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [size, setSize] = useState<{ width: number; height: number }>({
@@ -56,22 +74,9 @@ const ChartViewer = (props: IChartViewer) => {
     height: 0,
   });
 
-  const options = {
-    responsive: true,
-    plugins: {
-      title: {
-        display: title.display,
-        text: title.text,
-      },
-      legend: {
-        display: legend.display,
-        position: legend.position,
-      },
-      // tooltip: {
-      //   display: tooltip.display,
-      // },
-    },
-  };
+  const barOption = getChartOptions("bar", chartOption);
+  const lineOption = getChartOptions("line", chartOption);
+  const doughnutOption = getChartOptions("doughnut", chartOption);
 
   const data = {
     labels: datasets[0].data.map((dt) => dt.name),
@@ -80,9 +85,9 @@ const ChartViewer = (props: IChartViewer) => {
         label: dtset.label,
         data: dtset.data.map((dt) => Number(dt.value)),
         backgroundColor:
-          chartType === "pie"
-            ? ["#eb4034", "#eb9634", "#298f04", "#0379ab", "#0e1bad", "#6904c2"]
-            : "#eb4034",
+          chartType === "doughnut"
+            ? ["#0e1bad", "#60c5ff", "#061c56", "#0379ab", "#5863dd", "#6904c2"]
+            : "#0e1bad",
       };
     }),
   };
@@ -90,7 +95,6 @@ const ChartViewer = (props: IChartViewer) => {
   useEffect(() => {
     const observer = new ResizeObserver((entries) => {
       const entry = entries[0]; // 첫 번째 resize 이벤트 정보
-      console.log("entry", entry);
       const { width, height } = entry.contentRect; // DOM 요소의 크기 정보
       setSize({ width, height }); // 상태 갱신
     });
@@ -113,9 +117,11 @@ const ChartViewer = (props: IChartViewer) => {
           alignItems: "center",
         }}
       >
-        {chartType === "bar" && <Bar data={data} options={options} />}
-        {chartType === "line" && <Line data={data} options={options} />}
-        {chartType === "pie" && <Doughnut data={data} options={options} />}
+        {chartType === "bar" && <Bar data={data} options={barOption} />}
+        {chartType === "line" && <Line data={data} options={lineOption} />}
+        {chartType === "doughnut" && (
+          <Doughnut data={data} options={doughnutOption} />
+        )}
       </div>
     </StyledChartWrapper>
   );

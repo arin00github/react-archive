@@ -16,8 +16,7 @@ import {
 import styled from "styled-components";
 import { Bar, Line, Doughnut } from "react-chartjs-2";
 
-import { DatasetType } from "@/interfaces/chart";
-import { ChartType } from ".";
+import { ChartOptonType, ChartType, DatasetType } from "@/interfaces/chart";
 
 const StyledChartWrapper = styled.div`
   width: 100%;
@@ -31,6 +30,7 @@ interface IChartViewer {
   chartType: ChartType;
   headers: string[];
   datasets: DatasetType[];
+  chartOption: ChartOptonType;
 }
 
 ChartJS.register(
@@ -46,7 +46,9 @@ ChartJS.register(
 );
 
 const ChartViewer = (props: IChartViewer) => {
-  const { datasets, chartType } = props;
+  const { datasets, chartType, chartOption } = props;
+
+  const { title, legend } = chartOption;
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [size, setSize] = useState<{ width: number; height: number }>({
@@ -58,9 +60,16 @@ const ChartViewer = (props: IChartViewer) => {
     responsive: true,
     plugins: {
       title: {
-        display: true,
-        title: "Untitle",
+        display: title.display,
+        text: title.text,
       },
+      legend: {
+        display: legend.display,
+        position: legend.position,
+      },
+      // tooltip: {
+      //   display: tooltip.display,
+      // },
     },
   };
 

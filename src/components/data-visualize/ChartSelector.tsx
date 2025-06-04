@@ -5,8 +5,7 @@ import styled from "styled-components";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import TimelineIcon from "@mui/icons-material/Timeline";
 import DonutLargeIcon from "@mui/icons-material/DonutLarge";
-
-import { ChartType } from ".";
+import { ChartType } from "@/interfaces/chart";
 
 const StyledChartTypeBox = styled.div`
   width: 6rem;

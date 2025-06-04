@@ -17,7 +17,7 @@ const GlobalStyles = createGlobalStyle`
     body {
         margin: 0;
         padding: 0;
-        font-family: 'Roboto', sans-serif;
+        font-family: 'Inter','Roboto','Noto Sans KR', sans-serif;
         background-color: ${({ theme }) => theme.custom.color.background};
         color: ${({ theme }) => theme.custom.color.text};
         transition: background-color 0.3s ease, color 0.3s ease;

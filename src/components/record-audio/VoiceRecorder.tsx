@@ -3,10 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import MicIcon from "@mui/icons-material/Mic";
 import PauseIcon from "@mui/icons-material/Pause";
-// import StopCircleIcon from "@mui/icons-material/StopCircle";
-// import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
-import styled from "styled-components";
 import { Box, Container, Typography } from "@mui/material";
+import styled from "styled-components";
+
 import { saveAudioToDB } from "@/utils/voiceDB";
 
 const StyledRecorder = styled.div`
@@ -47,7 +46,13 @@ const getDisplaySeceond = (val: number) => {
   }
 };
 
-const VoiceRecorder = () => {
+interface IVoiceRecorder {
+  handleSave: (id: string) => void;
+}
+
+const VoiceRecorder = (props: IVoiceRecorder) => {
+  const {} = props;
+
   const [isRecording, setIsRecording] = useState<boolean>(false);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [hasRecording, setHasRecording] = useState<boolean>(false);

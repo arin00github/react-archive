@@ -7,6 +7,7 @@ import PauseIcon from "@mui/icons-material/Pause";
 // import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import styled from "styled-components";
 import { Box, Container, Typography } from "@mui/material";
+import { saveAudioToDB } from "@/utils/voiceDB";
 
 const StyledRecorder = styled.div`
   width: 100%;
@@ -71,12 +72,14 @@ const VoiceRecorder = () => {
         }
       };
 
-      mediaRecorder.onstop = () => {
+      mediaRecorder.onstop = async () => {
         const audioBlob = new Blob(audioChunksRef.current, {
           type: "audio/webm",
         });
         const url = URL.createObjectURL(audioBlob);
         setAudioUrl(url);
+        //NOTE - IndexedDB저장
+        await saveAudioToDB(audioBlob);
         setHasRecording(true);
         clearTimer();
       };

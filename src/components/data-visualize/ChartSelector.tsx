@@ -16,6 +16,7 @@ const StyledChartTypeBox = styled.div`
   flex-direction: column;
   border: 1px solid;
   border-radius: 0.5rem;
+  cursor: pointer;
 
   &.selected {
     background-color: ${({ theme }) => theme.custom.color.primary};

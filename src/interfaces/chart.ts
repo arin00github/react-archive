@@ -12,6 +12,8 @@ export type Position =
   | "left"
   | "chartArea";
 
+export type AlignOption = "right" | "center" | "left";
+
 export interface ChartOptonType {
   legend: {
     display: boolean;
@@ -20,8 +22,9 @@ export interface ChartOptonType {
   title: {
     display: boolean;
     text: string;
+    align: AlignOption;
   };
   tooltip: {
-    display: boolean;
+    enabled: boolean;
   };
 }

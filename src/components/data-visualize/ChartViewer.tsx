@@ -61,6 +61,10 @@ export function getChartOptions<T extends ChartType>(
         display: option.legend.display,
         position: option.legend.position,
       },
+      tooltip: {
+        enabled: option.tooltip.enabled,
+        mode: "index",
+      },
     },
   } as ChartOptions<T>;
 }

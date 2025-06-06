@@ -17,6 +17,9 @@ const StyledEditableTable = styled.div`
       padding: 0.5rem 1rem;
       border-bottom: 1px solid ${({ theme }) => theme.custom.color.text100};
     }
+    th {
+      border-width: 2px;
+    }
 
     td {
       border-bottom: 1px solid ${({ theme }) => theme.custom.color.tableBorder};
@@ -69,9 +72,6 @@ const EditableTable = (props: IEditableTable) => {
     const isDuplicated = headers.some(
       (ds, index) => ds === e.target.value && idx !== index
     );
-
-    console.log("is Duplicated??", isDuplicated, e.target.value);
-    console.log("current headers", headers);
 
     if (isDuplicated) {
       setNameErrors((prev) =>

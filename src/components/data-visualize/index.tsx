@@ -77,9 +77,10 @@ const DataVisualizeContainer = () => {
     title: {
       display: false,
       text: "",
+      align: "center",
     },
     tooltip: {
-      display: false,
+      enabled: false,
     },
   });
 

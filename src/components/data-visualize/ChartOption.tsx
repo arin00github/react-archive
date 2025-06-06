@@ -99,11 +99,11 @@ const ChartOption = (props: IChartOption) => {
       <Stack className="section" direction={"row"} spacing={1}>
         <FormLabel>display</FormLabel>
         <Switch
-          checked={tooltip.display}
+          checked={tooltip.enabled}
           onChange={() => {
             handleChange({
               ...chartOption,
-              tooltip: { ...chartOption.tooltip, display: !tooltip.display },
+              tooltip: { ...chartOption.tooltip, enabled: !tooltip.enabled },
             });
           }}
         />

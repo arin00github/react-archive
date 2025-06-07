@@ -21,9 +21,9 @@ export const saveAudioToDB = async (blob: Blob) => {
   const audioId = `recording-${new Date().toISOString()}`;
   store.put({ id: audioId, blob });
 
-  return new Promise<void>((resolve, reject) => {
-    tx.oncomplete = () => resolve();
-    tx.onerror = () => reject();
+  return new Promise<string | null>((resolve, reject) => {
+    tx.oncomplete = () => resolve(audioId);
+    tx.onerror = () => reject(null);
   });
 };
 
@@ -37,5 +37,18 @@ export const loadAllAudiosFormDB = async (): Promise<
     const request = store.getAll();
     request.onsuccess = () => resolve(request.result || []);
     request.onerror = () => resolve([]);
+  });
+};
+
+export const loadAudioFromDB = async (
+  id: string
+): Promise<{ id: string; blob: Blob } | null> => {
+  const db = await openVoiceDB();
+  const tx = db.transaction("audios", "readonly");
+  const store = tx.objectStore("audios");
+  return new Promise((resolve) => {
+    const request = store.get(id);
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => resolve(null);
   });
 };

@@ -51,7 +51,7 @@ interface IVoiceRecorder {
 }
 
 const VoiceRecorder = (props: IVoiceRecorder) => {
-  const {} = props;
+  const { handleSave } = props;
 
   const [isRecording, setIsRecording] = useState<boolean>(false);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
@@ -84,7 +84,11 @@ const VoiceRecorder = (props: IVoiceRecorder) => {
         const url = URL.createObjectURL(audioBlob);
         setAudioUrl(url);
         //NOTE - IndexedDB저장
-        await saveAudioToDB(audioBlob);
+        const result = await saveAudioToDB(audioBlob);
+        if (result) {
+          console.log("saveAudioToDB", result);
+          handleSave(result);
+        }
         setHasRecording(true);
         clearTimer();
       };

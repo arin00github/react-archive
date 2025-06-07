@@ -1,32 +1,55 @@
 "use client";
 
 import styled from "styled-components";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+
 import VoiceRecorder from "./VoiceRecorder";
 import RecordingList from "./RecordingList";
 import { useEffect, useState } from "react";
 import { loadAllAudiosFormDB } from "@/utils/voiceDB";
 import { RecordData } from "@/interfaces/record";
+import RecordingPlayer from "./RecordingPlayer";
 
 const StyledAudioContainer = styled.div`
   width: 100%;
   display: flex;
-  gap: 2rem;
+  gap: 4rem;
   margin-top: 6rem;
   padding: 0 3rem;
 
   .voiceRecorder {
-    width: 60%;
+    width: 55%;
+
+    .navHeader {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+
+      .navChevron {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+      }
+    }
   }
   .recordingList {
-    width: 40%;
+    width: 45%;
   }
 `;
+
+type SectionType = "record" | "audio";
 
 const RecordAudioContainer = () => {
   const [audioList, setAudioList] = useState<RecordData[]>([]);
   const [selectedAudioId, setSelectedAudioId] = useState<string | undefined>();
+  const [section, setSection] = useState<SectionType>("record");
 
-  const handleSaveAudio = (id: string) => {
+  console.log("selectedAudioId", selectedAudioId);
+
+  const handleSaveAudio = async (id: string) => {
+    await loadAll();
+    setSection("audio");
     setSelectedAudioId(id);
   };
 
@@ -37,24 +60,51 @@ const RecordAudioContainer = () => {
   };
 
   const handleDeleteFromDB = (id: string) => {
-    //
     console.log("delete target id", id);
   };
 
   const handleSelect = (id: string) => {
     setSelectedAudioId(id);
+    setSection("audio");
   };
 
   useEffect(() => {
     loadAll();
   }, []);
 
-  console.log("RecordAudioContainer", audioList);
-
   return (
     <StyledAudioContainer>
       <div className="voiceRecorder">
-        <VoiceRecorder handleSave={handleSaveAudio} />
+        <div className="navHeader">
+          {section === "audio" ? (
+            <div
+              className="navChevron"
+              onClick={() => {
+                setSection("record");
+                setSelectedAudioId(undefined);
+              }}
+            >
+              <ChevronLeftIcon /> New Recording
+            </div>
+          ) : (
+            <div
+              className="navChevron"
+              onClick={() => {
+                setSection("audio");
+                if (audioList.length > 0) {
+                  setSelectedAudioId(audioList[0].id);
+                }
+              }}
+            >
+              Recording Play <ChevronRightIcon />
+            </div>
+          )}
+        </div>
+        {section === "audio" ? (
+          <RecordingPlayer selectedAudioId={selectedAudioId} />
+        ) : (
+          <VoiceRecorder handleSave={handleSaveAudio} />
+        )}
       </div>
       <div className="recordingList">
         <RecordingList

@@ -14,13 +14,26 @@ const StyledRecordingList = styled.div`
     display: flex;
     flex-direction: column;
     gap: 0.625rem;
-    padding: 0.625rem;
+    padding: 1.2rem;
+    background-color: ${({ theme }) => theme.custom.color.alpha100};
 
     .audioListItem {
       cursor: pointer;
       border: 1px solid ${({ theme }) => theme.custom.color.tableBorder};
       padding: 1rem;
       background-color: ${({ theme }) => theme.custom.color.background};
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      &:hover {
+        border-color: ${({ theme }) => theme.custom.color.primary};
+      }
+
+      &.selected {
+        border-color: ${({ theme }) => theme.custom.color.primary};
+        color: ${({ theme }) => theme.custom.color.primary};
+      }
     }
   }
 `;
@@ -34,7 +47,7 @@ interface IRecordingList {
 
 const RecordingList = (props: IRecordingList) => {
   console.log("RecordingList props", props);
-  const { audioList, handleDelete, handleSelect } = props;
+  const { audioList, handleDelete, handleSelect, selectedAudioId } = props;
 
   return (
     <StyledRecordingList>
@@ -44,7 +57,9 @@ const RecordingList = (props: IRecordingList) => {
           return (
             <div
               key={data.id}
-              className="audioListItem"
+              className={`${
+                selectedAudioId === data.id ? "selected" : ""
+              } audioListItem`}
               onClick={() => handleSelect(data.id)}
             >
               <span>{data.id}</span>

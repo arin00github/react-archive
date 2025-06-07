@@ -1,24 +1,30 @@
 "use client";
 
 import styled from "styled-components";
+import { IconButton } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 
 import { RecordData } from "@/interfaces/record";
-import SectionHeader from "../_common/style/SectionHeader";
-import { IconButton } from "@mui/material";
 
 const StyledRecordingList = styled.div`
   width: 100%;
+
+  h4 {
+    font-size: 1.2rem;
+    color: ${({ theme }) => theme.custom.color.text};
+    font-weight: 500;
+  }
   .listBox {
-    margin-top: 2rem;
+    margin-top: 1rem;
     display: flex;
     flex-direction: column;
-    gap: 0.625rem;
-    padding: 1.2rem;
+    gap: 0.5rem;
+    padding: 1.5rem;
     background-color: ${({ theme }) => theme.custom.color.alpha100};
 
     .audioListItem {
       cursor: pointer;
+      border-radius: 0.325rem;
       border: 1px solid ${({ theme }) => theme.custom.color.tableBorder};
       padding: 1rem;
       background-color: ${({ theme }) => theme.custom.color.background};
@@ -28,12 +34,19 @@ const StyledRecordingList = styled.div`
 
       &:hover {
         border-color: ${({ theme }) => theme.custom.color.primary};
+        color: ${({ theme }) => theme.custom.color.primary};
       }
 
       &.selected {
         border-color: ${({ theme }) => theme.custom.color.primary};
         color: ${({ theme }) => theme.custom.color.primary};
       }
+    }
+
+    &.empty {
+      justify-content: center;
+      align-items: center;
+      min-height: 40rem;
     }
   }
 `;
@@ -51,25 +64,31 @@ const RecordingList = (props: IRecordingList) => {
 
   return (
     <StyledRecordingList>
-      <SectionHeader>Recording List</SectionHeader>
-      <div className="listBox">
-        {audioList?.map((data) => {
-          return (
-            <div
-              key={data.id}
-              className={`${
-                selectedAudioId === data.id ? "selected" : ""
-              } audioListItem`}
-              onClick={() => handleSelect(data.id)}
-            >
-              <span>{data.id}</span>
-              <IconButton onClick={() => handleDelete(data.id)}>
-                <ClearIcon />
-              </IconButton>
-            </div>
-          );
-        })}
-      </div>
+      <h4>Recording List</h4>
+      {audioList.length > 0 ? (
+        <div className="listBox">
+          {audioList?.map((data) => {
+            return (
+              <div
+                key={data.id}
+                className={`${
+                  selectedAudioId === data.id ? "selected" : ""
+                } audioListItem`}
+                onClick={() => handleSelect(data.id)}
+              >
+                <span>{data.id}</span>
+                <IconButton onClick={() => handleDelete(data.id)}>
+                  <ClearIcon />
+                </IconButton>
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="listBox empty">
+          <div>녹음한 음성이 없습니다.</div>
+        </div>
+      )}
     </StyledRecordingList>
   );
 };

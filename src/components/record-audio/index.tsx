@@ -1,27 +1,41 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
-import VoiceRecorder from "./VoiceRecorder";
-import RecordingList from "./RecordingList";
-import { useEffect, useState } from "react";
 import { loadAllAudiosFormDB } from "@/utils/voiceDB";
 import { RecordData } from "@/interfaces/record";
+
+import VoiceRecorder from "./VoiceRecorder";
+import RecordingList from "./RecordingList";
 import RecordingPlayer from "./RecordingPlayer";
 
 const StyledAudioContainer = styled.div`
   width: 100%;
+  height: 100vh;
   display: flex;
   gap: 4rem;
-  margin-top: 6rem;
+  //margin-top: 6rem;
   padding: 0 3rem;
+  justify-content: center;
+  align-items: center;
 
   .voiceRecorder {
     width: 55%;
+    min-height: 60%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
 
     .navHeader {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
       width: 100%;
       display: flex;
       justify-content: flex-end;
@@ -32,9 +46,17 @@ const StyledAudioContainer = styled.div`
         cursor: pointer;
       }
     }
+
+    .functionBox {
+      height: auto;
+    }
   }
   .recordingList {
     width: 45%;
+    min-height: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
   }
 `;
 
@@ -44,8 +66,6 @@ const RecordAudioContainer = () => {
   const [audioList, setAudioList] = useState<RecordData[]>([]);
   const [selectedAudioId, setSelectedAudioId] = useState<string | undefined>();
   const [section, setSection] = useState<SectionType>("record");
-
-  console.log("selectedAudioId", selectedAudioId);
 
   const handleSaveAudio = async (id: string) => {
     await loadAll();
@@ -100,11 +120,13 @@ const RecordAudioContainer = () => {
             </div>
           )}
         </div>
-        {section === "audio" ? (
-          <RecordingPlayer selectedAudioId={selectedAudioId} />
-        ) : (
-          <VoiceRecorder handleSave={handleSaveAudio} />
-        )}
+        <div className="functionBox">
+          {section === "audio" ? (
+            <RecordingPlayer selectedAudioId={selectedAudioId} />
+          ) : (
+            <VoiceRecorder handleSave={handleSaveAudio} />
+          )}
+        </div>
       </div>
       <div className="recordingList">
         <RecordingList

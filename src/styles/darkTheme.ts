@@ -31,3 +31,5 @@ const darkTheme = {
 };
 
 export default darkTheme;
+
+export type AppTheme = typeof darkTheme;

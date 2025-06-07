@@ -7,7 +7,7 @@ import StoreProvider from "@/lib/StoreProvider";
 import ReactQueryClientProvider from "@/lib/QueryClientProvider";
 
 import GlobalStyles from "@/styles/GlobalStyles";
-import GlobalLayout from "@/components/_common/GlobalLayout";
+import GlobalLayout from "@/components/_common/layout/GlobalLayout";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",

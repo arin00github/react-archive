@@ -15,8 +15,6 @@ declare module "styled-components" {
         alpha100: string;
         alpha200: string;
         alpha300: string;
-        alpha400: string;
-        alpha500: string;
       };
     };
   }

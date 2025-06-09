@@ -16,11 +16,12 @@ const StyledChartTypeBox = styled.div`
   flex-direction: column;
   border: 1px solid;
   border-radius: 0.5rem;
+  color: ${({ theme }) => theme.custom.color.text300};
   cursor: pointer;
 
   &.selected {
     background-color: ${({ theme }) => theme.custom.color.primary};
-    color: white;
+    color: ${({ theme }) => theme.custom.color.text};
   }
 `;
 

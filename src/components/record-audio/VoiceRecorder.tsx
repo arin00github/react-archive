@@ -24,7 +24,7 @@ const StyledRecorder = styled.div`
     text-align: center;
     font-size: 1rem;
     margin-bottom: 2rem;
-    color: ${({ theme }) => theme.custom.color.text100};
+    color: ${({ theme }) => theme.custom.color.text200};
   }
 
   .circleBtn {
@@ -32,6 +32,7 @@ const StyledRecorder = styled.div`
     height: 6rem;
     border-radius: 50%;
     border: 1px solid ${({ theme }) => theme.custom.color.text100};
+    background-color: ${({ theme }) => theme.custom.color.background};
     display: flex;
     justify-content: center;
     align-items: center;

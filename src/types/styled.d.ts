@@ -8,8 +8,13 @@ declare module "styled-components" {
         background: string;
         text: string;
         text100: string;
+        text200: string;
+        text300: string;
         btnText: string;
+        btnBorder: string;
+        listBorder: string;
         tableBorder: string;
+        navShadow: string;
         primary: string;
         secondary: string;
         alpha100: string;

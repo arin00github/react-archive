@@ -11,18 +11,8 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { navMenus } from "@/constant/navigation";
 import ThemeToggle from "./ThemeToggle";
 
-const StyledNavigation = styled.div`
-  .overlay {
-    background-color: rgba(0, 0, 0, 0.4);
-    width: 100%;
-    height: 100vh;
-    z-index: 4900;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-  }
+const StyledNavigation = styled.div<{ isOpen: string }>`
+  display: ${(props) => (props.isOpen === "true" ? "block" : "none")};
 
   .globalNav {
     z-index: 5000;
@@ -30,16 +20,17 @@ const StyledNavigation = styled.div`
     top: 0;
     left: 0;
     height: 100vh;
+    width: 100%;
     // display: flex;
     transform: translateX(0);
     transition: all 0.5s ease-in;
 
-    &.hide {
+    /* &.hide {
       transform: translateX(-13rem);
-    }
+    } */
 
     .box {
-      width: 13rem;
+      width: 100%;
       height: 100%;
       background-color: ${({ theme }) => theme.custom.color.background};
       box-shadow: 4px 12px 12px ${({ theme }) => theme.custom.color.navShadow};
@@ -59,6 +50,7 @@ const StyledNavigation = styled.div`
         li {
           color: ${({ theme }) => theme.custom.color.text300};
           height: 2.4rem;
+          //line-height: 2.4rem;
           padding: 0 2rem;
           cursor: pointer;
 
@@ -91,12 +83,12 @@ const StyledNavigation = styled.div`
   }
 `;
 
-interface INavigation {
+interface IMobileNavigation {
   isOpen: boolean;
   handleToggle: () => void;
 }
 
-const Navigation = (props: INavigation) => {
+const MobileNavigation = (props: IMobileNavigation) => {
   const router = useRouter();
 
   const { systemTheme, theme, setTheme } = useTheme();
@@ -105,11 +97,6 @@ const Navigation = (props: INavigation) => {
   //const { themeMode, toggleTheme } = useThemeMode();
 
   const handleToggleOpen = () => {
-    if (props.isOpen) {
-      boxRef.current?.classList.add("hide");
-    } else {
-      boxRef.current?.classList.remove("hide");
-    }
     props.handleToggle();
   };
 
@@ -124,13 +111,13 @@ const Navigation = (props: INavigation) => {
   };
 
   return (
-    <StyledNavigation>
+    <StyledNavigation isOpen={props.isOpen ? "true" : "false"}>
       {/* {isHide && <div className="overlay"></div>} */}
       <div className="globalNav" ref={boxRef}>
         <div className="box">
-          {/* <button className="closeBtn" onClick={handleCloseBtn}>
+          <button className="closeBtn" onClick={handleToggleOpen}>
             Close
-          </button> */}
+          </button>
           <ul className="menuBox">
             {navMenus.map((menu) => {
               return (
@@ -156,4 +143,4 @@ const Navigation = (props: INavigation) => {
   );
 };
 
-export default Navigation;
+export default MobileNavigation;

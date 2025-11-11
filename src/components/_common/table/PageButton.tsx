@@ -18,6 +18,8 @@ export const StyledPageButton = styled.button`
   margin-right: 0.625rem;
   padding: 0;
   text-align: center;
+  background-color: transparent;
+  border-color: ${({ theme }) => theme.custom.color.tableBorder};
   &:last-child {
     margin-right: 0px;
   }

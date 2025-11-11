@@ -10,6 +10,7 @@ import usePagination from "@/hooks/usePagination";
 import { useRouter } from "next/navigation";
 
 const StyledSearchContainer = styled.div`
+  width: 100%;
   padding: 1.25rem;
   .title {
     font-size: 1.2rem;

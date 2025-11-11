@@ -30,13 +30,14 @@ const StylecTh = styled.th`
   line-height: 2.2rem;
   height: 2.2rem;
   border-bottom: 1px solid #dbdde1;
+  border-color: ${({ theme }) => theme.custom.color.tableBorder};
   //min-width: 100px;
 `;
 
 const StyledTr = styled.tr`
   width: 100%;
   &:hover {
-    background-color: #ededed;
+    background-color: ${({ theme }) => theme.custom.color.primary};
     cursor: pointer;
   }
 `;
@@ -47,6 +48,7 @@ const StylecTd = styled.td`
   height: 2.2rem;
   font-size: 0.875rem;
   border-bottom: 1px solid #dbdde1;
+  border-color: ${({ theme }) => theme.custom.color.tableBorder};
   //min-width: 100px;
 `;
 

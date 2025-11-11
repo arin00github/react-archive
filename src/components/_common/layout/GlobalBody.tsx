@@ -4,13 +4,13 @@ import { ChildrenWrapper } from "@/interfaces/common";
 import styled from "styled-components";
 
 const StyledGlobalBody = styled.div<{ isopen: string }>`
-  position: fixed;
   width: ${(props) =>
     props.isopen === "true" ? "calc(100% - 13rem)" : "100%"};
 
   @media (max-width: 600px) {
     width: 100%;
   }
+  position: fixed;
   height: 100vh;
   top: 0;
   right: 0;
@@ -30,6 +30,7 @@ interface IGlobalBody extends ChildrenWrapper {
 }
 
 const GlobalBody = (props: IGlobalBody) => {
+  console.log("isOpenProps", props.isOpen);
   return (
     <StyledGlobalBody isopen={props.isOpen ? "true" : "false"}>
       {/* <button className="navBtn" onClick={props.handleToggle}>

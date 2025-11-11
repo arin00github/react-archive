@@ -14,4 +14,5 @@ export const navMenus = [
     id: "MENU-DATA-VISUALIZE",
   },
   { label: "World Map", href: "/worldmap", id: "MENU-WORLDMAP" },
+  { label: "Country", href: "/diplomacy", id: "MENU-Diplomacy" },
 ];

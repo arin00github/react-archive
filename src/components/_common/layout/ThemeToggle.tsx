@@ -34,7 +34,7 @@ const ThemeToggle = ({
     if (theme === undefined) {
       handleSeleteTheme("dark");
     }
-  }, [setLoaded]);
+  }, []);
 
   return (
     <ThemeButton onClick={handleThemeToggle} color="inherit">

@@ -32,9 +32,9 @@ interface IGlobalBody extends ChildrenWrapper {
 const GlobalBody = (props: IGlobalBody) => {
   return (
     <StyledGlobalBody isopen={props.isOpen ? "true" : "false"}>
-      <button className="navBtn" onClick={props.handleToggle}>
+      {/* <button className="navBtn" onClick={props.handleToggle}>
         Nav
-      </button>
+      </button> */}
       {props.children}
     </StyledGlobalBody>
   );

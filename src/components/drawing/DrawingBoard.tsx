@@ -16,11 +16,14 @@ const StyledDrawingSetting = styled.div`
   display: flex;
   gap: 1rem;
   align-items: center;
+  background-color: ${({ theme }) => theme.custom.color.background};
 `;
 
 const StyledCustomColorThumbnail = styled.div`
   width: 2.2rem;
   height: 2rem;
+  border: 2px solid #fff;
+  border-color: ${({ theme }) => theme.custom.color.tableBorder};
 `;
 
 const DrawingBoard = () => {

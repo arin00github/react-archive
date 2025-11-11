@@ -1,6 +1,14 @@
 import { Db, MongoClient } from "mongodb";
 import { ReactNode } from "react";
 
+export type DialogStatus = "input" | "confirm" | "result" | "result-fail";
+
+export interface DialogState<T> {
+  status: DialogStatus;
+  message: string;
+  data: T;
+}
+
 export interface NavItem {
   label: string;
   href: string;

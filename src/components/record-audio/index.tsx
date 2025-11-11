@@ -5,12 +5,14 @@ import styled from "styled-components";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
-import { loadAllAudiosFormDB } from "@/utils/voiceDB";
+import { deleteAudioFromDB, loadAllAudiosFormDB } from "@/utils/voiceDB";
 import { RecordData } from "@/interfaces/record";
 
 import VoiceRecorder from "./VoiceRecorder";
 import RecordingList from "./RecordingList";
 import RecordingPlayer from "./RecordingPlayer";
+import CommonDialog from "../_common/CommonDialog";
+import { DialogState } from "@/interfaces/common";
 
 const StyledAudioContainer = styled.div`
   width: 100%;
@@ -44,6 +46,7 @@ const StyledAudioContainer = styled.div`
         display: flex;
         align-items: center;
         cursor: pointer;
+        color: ${({ theme }) => theme.custom.color.text300};
       }
     }
 
@@ -66,6 +69,11 @@ const RecordAudioContainer = () => {
   const [audioList, setAudioList] = useState<RecordData[]>([]);
   const [selectedAudioId, setSelectedAudioId] = useState<string | undefined>();
   const [section, setSection] = useState<SectionType>("record");
+  const [dialogState, setDialogState] = useState<DialogState<string>>({
+    status: "input",
+    message: "",
+    data: "",
+  });
 
   const handleSaveAudio = async (id: string) => {
     await loadAll();
@@ -74,18 +82,35 @@ const RecordAudioContainer = () => {
   };
 
   const loadAll = async () => {
-    const audios = await loadAllAudiosFormDB();
-    console.log("loaded audios", audios);
-    setAudioList(audios);
+    try {
+      const audios = await loadAllAudiosFormDB();
+      console.log("loaded audios", audios);
+      setAudioList(audios);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
-  const handleDeleteFromDB = (id: string) => {
-    console.log("delete target id", id);
+  const handleDeleteFromDB = async () => {
+    try {
+      await deleteAudioFromDB(dialogState.data);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const handleSelect = (id: string) => {
     setSelectedAudioId(id);
     setSection("audio");
+  };
+
+  const handleCloseDialog = () => {
+    setDialogState({
+      ...dialogState,
+      status: "input",
+      message: "",
+      data: "",
+    });
   };
 
   useEffect(() => {
@@ -131,11 +156,31 @@ const RecordAudioContainer = () => {
       <div className="recordingList">
         <RecordingList
           audioList={audioList}
-          handleDelete={handleDeleteFromDB}
+          handleDelete={(id) => {
+            setDialogState({
+              ...dialogState,
+              status: "confirm",
+              message: "Do you want to delete this audio?",
+              data: id,
+            });
+          }}
           handleSelect={handleSelect}
           selectedAudioId={selectedAudioId}
         />
       </div>
+      <CommonDialog
+        status={dialogState.status}
+        isOpen={dialogState.status === "confirm"}
+        handleClose={handleCloseDialog}
+        message={dialogState.message}
+        handleConfirm={handleDeleteFromDB}
+      ></CommonDialog>
+      <CommonDialog
+        status={dialogState.status}
+        isOpen={dialogState.status === "result"}
+        handleClose={handleCloseDialog}
+        message={dialogState.message}
+      ></CommonDialog>
     </StyledAudioContainer>
   );
 };

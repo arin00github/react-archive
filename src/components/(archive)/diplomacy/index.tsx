@@ -5,19 +5,16 @@ import SearchContainer from "./SearchContainer";
 import media from "@/styles/media";
 
 const DiplomacyListContainer = styled.div`
-  position: fixed;
-  z-index: 1400;
-  width: 80%;
-  top: 12%;
-  bottom: 6%;
-  right: 0;
-  left: auto;
-  height: 80%;
-  border-radius: 0.75rem 0px 0px 0.75rem;
-  background-color: ${({ theme }) => theme.custom.color.background};
-  box-shadow: 0px 7px 18px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  gap: 4rem;
+  //margin-top: 6rem;
+  padding: 0 3rem;
+  justify-content: center;
+  align-items: center;
 
-  ${media.large`
+  /* ${media.large`
     width: 100%;
     left: 0;
     right: 0;
@@ -34,7 +31,7 @@ const DiplomacyListContainer = styled.div`
     left: 0;
     right: 0;
     height: calc(100% - 4rem);
-  `}
+  `} */
 `;
 
 const DiplomacyContainer = () => {

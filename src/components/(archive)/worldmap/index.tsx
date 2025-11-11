@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import CountryPopup from "./CountryPopup";
 import { updateSelectedCountry } from "@/redux/country/countrySlice";
 import styled from "styled-components";
+import { MapBox } from "./Mapbox";
 
 const MapContainer = styled.div`
   height: 100%;
@@ -17,6 +18,7 @@ const WorldMapContainer = () => {
 
   return (
     <MapContainer>
+      <MapBox />
       {selectedCountry.selectedCountryIos && (
         <CountryPopup
           selectedCountryIos={selectedCountry.selectedCountryIos}

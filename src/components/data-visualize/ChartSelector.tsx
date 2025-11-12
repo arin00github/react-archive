@@ -15,13 +15,14 @@ const StyledChartTypeBox = styled.div`
   align-items: center;
   flex-direction: column;
   border: 1px solid;
+  border-color: ${({ theme }) => theme.custom.color.btnBorder};
   border-radius: 0.5rem;
-  color: ${({ theme }) => theme.custom.color.text300};
+  color: ${({ theme }) => theme.custom.color.text200};
   cursor: pointer;
 
   &.selected {
     background-color: ${({ theme }) => theme.custom.color.primary};
-    color: ${({ theme }) => theme.custom.color.text};
+    color: #fff;
   }
 `;
 

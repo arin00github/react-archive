@@ -59,7 +59,15 @@ const ChartOption = (props: IChartOption) => {
         </div>
         <div className="sectionPart">
           <FormLabel>Text</FormLabel>
-          <Input value={title.text} onChange={() => {}} />
+          <Input
+            value={title.text}
+            onChange={(e) => {
+              handleChange({
+                ...chartOption,
+                title: { ...chartOption.title, text: e.target.value },
+              });
+            }}
+          />
         </div>
       </Stack>
       <h4 className="sectionHeader">Legend</h4>

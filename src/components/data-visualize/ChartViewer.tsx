@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import {
   Chart as ChartJS,
+  Title,
   LineElement,
   BarElement,
   Legend,
@@ -18,6 +19,7 @@ import styled from "styled-components";
 import { Bar, Line, Doughnut } from "react-chartjs-2";
 
 import { ChartOptonType, ChartType, DatasetType } from "@/interfaces/chart";
+import { useTheme } from "next-themes";
 
 const StyledChartWrapper = styled.div`
   width: 100%;
@@ -37,6 +39,7 @@ interface IChartViewer {
 ChartJS.register(
   Legend,
   Tooltip,
+  Title,
   PointElement,
   LineElement,
   BarElement,
@@ -48,18 +51,44 @@ ChartJS.register(
 
 export function getChartOptions<T extends ChartType>(
   chartType: T,
-  option: ChartOptonType
+  option: ChartOptonType,
+  theme: string | undefined
 ): ChartOptions<T> {
   return {
     responsive: true,
+    scales:
+      chartType === "doughnut"
+        ? undefined
+        : {
+            x: {
+              grid: {
+                color: theme === "dark" ? "#6a6a6a" : "#9f9f9f",
+              },
+              ticks: {
+                color: theme === "dark" ? "#8a8a8a" : "#919191",
+              },
+            },
+            y: {
+              grid: {
+                color: theme === "dark" ? "#6a6a6a" : "#9f9f9f",
+              },
+              ticks: {
+                color: theme === "dark" ? "#8a8a8a" : "#919191",
+              },
+            },
+          },
     plugins: {
       title: {
         display: option.title.display,
         text: option.title.text,
+        color: theme === "dark" ? "#cfcfcf" : "#565656",
       },
       legend: {
         display: option.legend.display,
         position: option.legend.position,
+        title: {
+          color: theme === "dark" ? "#8a8a8a" : "#919191",
+        },
       },
       tooltip: {
         enabled: option.tooltip.enabled,
@@ -72,15 +101,18 @@ export function getChartOptions<T extends ChartType>(
 const ChartViewer = (props: IChartViewer) => {
   const { datasets, chartType, chartOption } = props;
 
+  console.log("option", chartOption);
+
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [size, setSize] = useState<{ width: number; height: number }>({
     width: 0,
     height: 0,
   });
+  const { theme } = useTheme();
 
-  const barOption = getChartOptions("bar", chartOption);
-  const lineOption = getChartOptions("line", chartOption);
-  const doughnutOption = getChartOptions("doughnut", chartOption);
+  const barOption = getChartOptions("bar", chartOption, theme);
+  const lineOption = getChartOptions("line", chartOption, theme);
+  const doughnutOption = getChartOptions("doughnut", chartOption, theme);
 
   const data = {
     labels: datasets[0].data.map((dt) => dt.name),
@@ -88,10 +120,11 @@ const ChartViewer = (props: IChartViewer) => {
       return {
         label: dtset.label,
         data: dtset.data.map((dt) => Number(dt.value)),
+        ...(chartType === "line" ? { borderColor: "#2133f6" } : {}),
         backgroundColor:
           chartType === "doughnut"
-            ? ["#0e1bad", "#60c5ff", "#061c56", "#0379ab", "#5863dd", "#6904c2"]
-            : "#0e1bad",
+            ? ["#60c5ff", "#0e1bad", "#061c56", "#0379ab", "#5863dd", "#6904c2"]
+            : "#2133f6",
       };
     }),
   };

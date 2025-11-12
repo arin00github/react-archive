@@ -31,15 +31,22 @@ const SearchContainer = () => {
     pageNo: 1,
   });
 
-  const { data, isError } = useQuery<ICountryListResponse>({
+  const { data, isError } = useQuery<ICountryListResponse | null>({
     queryKey: ["get-deplomacy-list", JSON.stringify(searchFilter)],
     queryFn: async () => {
       const query = {
         pageNo: `${searchFilter.pageNo}`,
       };
       const res = await DeploymacyApiFactory.getDeplomacyList(query);
+      const data: {
+        response: {
+          body: ICountryListResponse;
+          header: { resultCode: string; resultMsg: "" };
+        };
+      } = await res.json();
+      console.log("data", data);
       if (res.status === 200) {
-        return res.data.result;
+        return data?.response.body;
       }
       return null;
     },

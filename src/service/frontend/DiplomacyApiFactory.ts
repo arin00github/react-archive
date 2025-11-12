@@ -1,5 +1,6 @@
 import { apiClient } from "../axiosInstance";
 
+const PROXY = "http://127.0.0.1:8787";
 class DiplomacyApiFactory {
   private static instance: DiplomacyApiFactory;
 
@@ -12,14 +13,29 @@ class DiplomacyApiFactory {
     return DiplomacyApiFactory.instance;
   }
 
+  // public async getDeplomacyList(query: { pageNo: string }) {
+  //   return apiClient.get(`/api/diplomacy?${new URLSearchParams(query)}`);
+  // }
+
+  // public async getDiplomacyDetail(country: string) {
+  //   return apiClient.get(
+  //     // `/api/diplomacy/detail?${new URLSearchParams({ country })}`
+  //     `/api/country?${new URLSearchParams({ country })}`
+  //   );
+  // }
+
+  // public async getDeplomacyList(query: { pageNo: string }) {
+  //   return apiClient.get(`${PROXY}/diplomacy?${new URLSearchParams(query)}`);
+  // }
+
   public async getDeplomacyList(query: { pageNo: string }) {
-    return apiClient.get(`/api/diplomacy?${new URLSearchParams(query)}`);
+    return fetch(`${PROXY}/diplomacy?${new URLSearchParams(query)}`);
   }
 
   public async getDiplomacyDetail(country: string) {
     return apiClient.get(
       // `/api/diplomacy/detail?${new URLSearchParams({ country })}`
-      `/api/country?${new URLSearchParams({ country })}`
+      `${PROXY}/country?${new URLSearchParams({ country })}`
     );
   }
 }

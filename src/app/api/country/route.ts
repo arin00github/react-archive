@@ -2,10 +2,11 @@ import { NextRequest } from "next/server";
 
 import DiplomacyApi from "@/service/backend/DiplomacyApi";
 
+export const dynamic = "force-static";
+
 export async function GET(req: NextRequest) {
   try {
     const searchParams = req.nextUrl.searchParams;
-    console.log("searchParams", searchParams);
 
     const country = searchParams.get("country") as string;
 
@@ -18,8 +19,6 @@ export async function GET(req: NextRequest) {
     const apiRes2 = await DiplomacyApi.getCountryEconomy(params);
 
     const apiRes3 = await DiplomacyApi.getCountryGeneralInfo(params);
-
-    console.log("apiRes3 general", apiRes3.data.response);
 
     if (
       apiRes.status === 200 &&

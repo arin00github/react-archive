@@ -7,7 +7,8 @@ import { ICountryListResponse, IDeplomacyList } from "@/interfaces/deplomacy";
 import { CustomTable } from "@/components/_common/table";
 import { ITableColumn } from "@/interfaces/table";
 import usePagination from "@/hooks/usePagination";
-import { useRouter } from "next/navigation";
+//import { useRouter } from "next/navigation";
+import InfoContainer from "./detail/InfoContainer";
 
 const StyledSearchContainer = styled.div`
   width: 100%;
@@ -24,7 +25,9 @@ interface ISearchFilter {
 }
 
 const SearchContainer = () => {
-  const router = useRouter();
+  // const router = useRouter();
+
+  const [selectedCnt, setSelectedCnt] = useState<string | undefined>(undefined);
 
   const [searchFilter, setSearchFilter] = useState<ISearchFilter>({
     searchword: "",
@@ -79,10 +82,17 @@ const SearchContainer = () => {
                 setSearchFilter({ ...searchFilter, pageNo: num }),
             }}
             handleRowClick={(dt) => {
-              router.push(`/diplomacy/${dt.country_iso_alp2}`);
+              //router.push(`/diplomacy/${dt.country_iso_alp2}`);
+              setSelectedCnt(dt.country_iso_alp2);
             }}
           />
         </div>
+      )}
+      {selectedCnt && (
+        <InfoContainer
+          country={selectedCnt}
+          handleClick={() => setSelectedCnt(undefined)}
+        />
       )}
     </StyledSearchContainer>
   );

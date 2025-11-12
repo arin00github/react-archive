@@ -1,5 +1,3 @@
-import { apiClient } from "../axiosInstance";
-
 const PROXY = "http://127.0.0.1:8787";
 class DiplomacyApiFactory {
   private static instance: DiplomacyApiFactory;
@@ -33,7 +31,7 @@ class DiplomacyApiFactory {
   }
 
   public async getDiplomacyDetail(country: string) {
-    return apiClient.get(
+    return fetch(
       // `/api/diplomacy/detail?${new URLSearchParams({ country })}`
       `${PROXY}/country?${new URLSearchParams({ country })}`
     );

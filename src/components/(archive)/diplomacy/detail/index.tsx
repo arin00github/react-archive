@@ -1,7 +1,7 @@
 "use client";
 
 import styled from "styled-components";
-import InfoContainer from "./InfoContainer";
+//import InfoContainer from "./InfoContainer";
 import media from "@/styles/media";
 
 const DiplomacyListContainer = styled.div`
@@ -14,7 +14,7 @@ const DiplomacyListContainer = styled.div`
   left: auto;
   height: 80%;
   background-color: ${({ theme }) => theme.custom.color.background};
-  // box-shadow: 0px 7px 18px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 7px 18px rgba(0, 0, 0, 0.1);
 
   ${media.large`
       width: 100%;
@@ -38,9 +38,7 @@ const DiplomacyListContainer = styled.div`
 
 const DiplomacyDetailContainer = () => {
   return (
-    <DiplomacyListContainer>
-      <InfoContainer />
-    </DiplomacyListContainer>
+    <DiplomacyListContainer>{/* <InfoContainer /> */}</DiplomacyListContainer>
   );
 };
 

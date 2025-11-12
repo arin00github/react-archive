@@ -131,7 +131,7 @@ const StyledMapDiv = styled.div`
   bottom: 0;
   right: 0;
 
-  ${media.large`
+  /* ${media.large`
     top: 60px;
-  `}
+  `} */
 `;

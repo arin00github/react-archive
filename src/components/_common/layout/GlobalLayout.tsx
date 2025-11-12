@@ -16,7 +16,8 @@ const GlobalLayout = (props: ChildrenWrapper) => {
   const handleNavToggle = () => {
     setIsNavOpen(!isNavOpen);
   };
-  console.log("match", matches);
+
+  console.log("current screen (max-width:600px)", matches);
 
   return (
     <>

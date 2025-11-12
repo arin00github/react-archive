@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { IDiplomacyDetail } from "@/interfaces/deplomacy";
 import DiplomacyApiFactory from "@/service/frontend/DiplomacyApiFactory";
 import media from "@/styles/media";
+import { BasicButton } from "@/components/_common/style/BasicButton";
 
 const StyledPopup = styled.div`
   //height: calc(100vh - 80px);
@@ -46,7 +47,6 @@ const StyledPopup = styled.div`
 
     button {
       font-size: 0.625rem;
-      border: none;
       font-size: 0.875rem;
     }
 
@@ -110,21 +110,21 @@ const Popup = (props: PopupProps) => {
   return (
     <StyledPopup>
       <div className="header">
-        <button
+        <BasicButton
           onClick={() => {
             router.push(`/diplomacy/${selectedCountryIos}`);
           }}
         >
           Go Detail
-        </button>
-        <button className="closeBtn" onClick={handleClose}>
+        </BasicButton>
+        <BasicButton className="closeBtn" onClick={handleClose}>
           X
-        </button>
+        </BasicButton>
       </div>
       {!isError && data && (
         <div className="container">
           <div className="title">
-            <div className="">{data.economy.country_nm}</div>
+            <div className="">{data.economy?.country_nm ?? ""}</div>
           </div>
           {data.flag?.download_url && (
             <div className="flag">

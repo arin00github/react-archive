@@ -19,7 +19,7 @@ const darkTheme = {
       btnText: "#ebebeb",
       tableBorder: "rgb(61, 61, 61)",
       listBorder: "rgb(61, 61, 61)",
-      btnBorder: "rgb(61, 61, 61)",
+      btnBorder: "rgb(128, 128, 128)",
       navShadow: "rgba(99, 99, 99, 0.4)",
       primary: "#0373fc",
       secondary: "#0040ad",

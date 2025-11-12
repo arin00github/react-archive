@@ -28,7 +28,7 @@ const lightTheme = {
       btnText: "rgb(99, 99, 99)",
       tableBorder: "#dadada",
       listBorder: "#dadada",
-      btnBorder: "#dadada",
+      btnBorder: "rgb(144, 144, 144)",
       navShadow: "rgba(148, 148, 148, 0.4)",
       primary: "#0373fc",
       secondary: "#0040ad",

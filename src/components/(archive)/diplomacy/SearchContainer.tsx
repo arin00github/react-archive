@@ -5,9 +5,10 @@ import { useQuery } from "@tanstack/react-query";
 import DeploymacyApiFactory from "@/service/frontend/DiplomacyApiFactory";
 import { ICountryListResponse, IDeplomacyList } from "@/interfaces/deplomacy";
 import { CustomTable } from "@/components/_common/table";
+import { Loading } from "@/components/_common/loading/Loading";
 import { ITableColumn } from "@/interfaces/table";
 import usePagination from "@/hooks/usePagination";
-//import { useRouter } from "next/navigation";
+
 import InfoContainer from "./detail/InfoContainer";
 
 const StyledSearchContainer = styled.div`
@@ -17,6 +18,19 @@ const StyledSearchContainer = styled.div`
     font-size: 1.2rem;
     margin-bottom: 0.75rem;
   }
+
+  .loadingBox {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .loading {
+      width: 20rem;
+      height: 20rem;
+      font-size: 1.2rem;
+    }
+  }
 `;
 
 interface ISearchFilter {
@@ -25,8 +39,6 @@ interface ISearchFilter {
 }
 
 const SearchContainer = () => {
-  // const router = useRouter();
-
   const [selectedCnt, setSelectedCnt] = useState<string | undefined>(undefined);
 
   const [searchFilter, setSearchFilter] = useState<ISearchFilter>({
@@ -34,7 +46,7 @@ const SearchContainer = () => {
     pageNo: 1,
   });
 
-  const { data, isError } = useQuery<ICountryListResponse | null>({
+  const { data, isError, isLoading } = useQuery<ICountryListResponse | null>({
     queryKey: ["get-deplomacy-list", JSON.stringify(searchFilter)],
     queryFn: async () => {
       const query = {
@@ -69,8 +81,9 @@ const SearchContainer = () => {
   return (
     <StyledSearchContainer>
       {!isError && data && pageIndexArray && (
-        <div className="table-wrapper">
+        <div className="container">
           <h2 className="title">Country Information</h2>
+
           <CustomTable
             data={data.items.item}
             addIdx
@@ -82,10 +95,16 @@ const SearchContainer = () => {
                 setSearchFilter({ ...searchFilter, pageNo: num }),
             }}
             handleRowClick={(dt) => {
-              //router.push(`/diplomacy/${dt.country_iso_alp2}`);
               setSelectedCnt(dt.country_iso_alp2);
             }}
           />
+        </div>
+      )}
+      {isLoading && (
+        <div className="loadingBox">
+          <div className="loading">
+            <Loading />
+          </div>
         </div>
       )}
       {selectedCnt && (

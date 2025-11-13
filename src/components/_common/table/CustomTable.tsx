@@ -38,6 +38,7 @@ const StyledTr = styled.tr`
   width: 100%;
   &:hover {
     background-color: ${({ theme }) => theme.custom.color.primary};
+    color: #fff;
     cursor: pointer;
   }
 `;

@@ -25,7 +25,7 @@ const StyledNavigation = styled.div`
   }
 
   .globalNav {
-    z-index: 5000;
+    z-index: 2000;
     position: fixed;
     top: 0;
     left: 0;

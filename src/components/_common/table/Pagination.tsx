@@ -2,6 +2,10 @@ import React from "react";
 
 import { PageButton } from "./PageButton";
 import styled from "styled-components";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 const PaginationWrap = styled.div`
   width: 100%;
@@ -14,6 +18,7 @@ const PaginationWrap = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 0.8rem;
   }
 `;
 
@@ -40,14 +45,14 @@ export const Pagination = ({
           <PageButton
             handleClick={() => onClickIndex(1)}
             disabled={currentIndex === 1}
-            symbol={"<"}
+            symbol={<KeyboardDoubleArrowLeftIcon />}
           />
           <PageButton
             handleClick={() => onClickIndex(currentIndex - 1)}
             disabled={currentIndex === 1}
-            symbol={"<"}
+            symbol={<KeyboardArrowLeftIcon />}
           />
-          {indexArray[0] !== 0 && <>...</>}
+          {indexArray[0] !== 0 && <div>...</div>}
           {indexArray.map((idx) => {
             return (
               <PageButton
@@ -59,17 +64,17 @@ export const Pagination = ({
               ></PageButton>
             );
           })}
-          {indexArray[4] !== originalTotalLength - 1 && <>...</>}
+          {indexArray[4] !== originalTotalLength - 1 && <div>...</div>}
 
           <PageButton
             handleClick={() => onClickIndex(currentIndex + 1)}
             disabled={currentIndex >= originalTotalLength}
-            symbol={">"}
+            symbol={<KeyboardArrowRightIcon />}
           />
           <PageButton
             handleClick={() => onClickIndex(originalTotalLength)}
             disabled={currentIndex === originalTotalLength}
-            symbol={">"}
+            symbol={<KeyboardDoubleArrowRightIcon />}
           />
         </div>
       )}

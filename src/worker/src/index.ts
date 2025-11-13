@@ -117,7 +117,10 @@ export default {
       const passthrough = await fetch(targetUrl, {
         method: "GET",
         headers: { Accept: "application/json, */*;q=0.1" },
-      }).catch(() => null);
+      }).catch((e) => {
+        console.error(e);
+        return null;
+      });
 
       if (!passthrough) {
         return new Response(JSON.stringify({ error: "upstream failed" }), {

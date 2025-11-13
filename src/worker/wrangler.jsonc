@@ -31,9 +31,8 @@
    * https://developers.cloudflare.com/workers/wrangler/configuration/#environment-variables
    */
   "vars": {
-    "MY_VARIABLE": "production_value",
-    "PUBLIC_DATA_KEY": "oRdk1fzUYkeNqM6hPLj3IZm0Om6k%2BS3lIqL%2BfLGyd6z1pHrxUblNXkYbaUN0GfHay%2BVLgXkS0JtHReoD6Jp2Sg%3D%3D",
-    "API_KEY": "oRdk1fzUYkeNqM6hPLj3IZm0Om6k%2BS3lIqL%2BfLGyd6z1pHrxUblNXkYbaUN0GfHay%2BVLgXkS0JtHReoD6Jp2Sg%3D%3D"
+    "MY_VARIABLE": "production_value"
+    // "API_KEY": "oRdk1fzUYkeNqM6hPLj3IZm0Om6k%2BS3lIqL%2BfLGyd6z1pHrxUblNXkYbaUN0GfHay%2BVLgXkS0JtHReoD6Jp2Sg%3D%3D"
   }
   /**
    * Note: Use secrets to store sensitive data.

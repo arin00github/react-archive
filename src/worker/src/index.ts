@@ -2,7 +2,6 @@
 
 interface Env {
   API_KEY: string;
-  PUBLIC_DATA_KEY: string;
 }
 
 const WORLD_BASE_URL =
@@ -16,12 +15,11 @@ const WORLD_FLAG_URL =
 
 const ALLOWED_ORIGIN = [
   "http://localhost:3000", // dev (Next.js)
-  "https://username.github.io", // prod (GitHub Pages)
+  "https://arin00github.github.io", // prod (GitHub Pages)
 ];
 
 const DEFAULT_TIMEOUT_MS = 10000; // 네트워크 정체 방지(왜: CF 무료 플랜에서 장기 연결은 낭비)
 
-/** 공공데이터포털 대부분 API는 JSON 강제 파라미터를 지원(왜: XML 기본인 경우가 많음) */
 const JSON_ENFORCER = "returnType=JSON";
 
 function withQuery(base: string, params: Record<string, string | undefined>) {
@@ -35,9 +33,8 @@ function withQuery(base: string, params: Record<string, string | undefined>) {
   return url.toString();
 }
 function getDiplomacyListUrl(params: { pageNo: string; env: Env }) {
-  // console.log("key", params.env.PUBLIC_DATA_KEY);
   return withQuery(WORLD_BASE_URL, {
-    serviceKey: params.env.PUBLIC_DATA_KEY,
+    serviceKey: params.env.API_KEY,
     pageNo: params.pageNo || "1",
     numOfRows: "10",
     // JSON 강제
@@ -47,9 +44,8 @@ function getDiplomacyListUrl(params: { pageNo: string; env: Env }) {
 
 function getCountryDetailUrl(params: { iso: string; env: Env }) {
   const common = {
-    serviceKey: params.env.PUBLIC_DATA_KEY,
+    serviceKey: params.env.API_KEY,
     [JSON_ENFORCER.split("=")[0]]: JSON_ENFORCER.split("=")[1],
-    // cond[country_iso_alp2::EQ]=KR
     "cond[country_iso_alp2::EQ]": params.iso,
   };
   return {
@@ -82,7 +78,6 @@ async function fetchJson(
       signal: ac.signal,
       headers: {
         ...(init?.headers || {}),
-        // 왜: 일부 엔드포인트는 Accept에 민감
         Accept: "application/json, text/json, */*;q=0.1",
       },
     });
@@ -90,7 +85,6 @@ async function fetchJson(
       const text = await res.text().catch(() => "");
       throw new Error(`upstream ${res.status}: ${text?.slice(0, 256)}`);
     }
-    // 공공데이터는 가끔 'application/octet-stream' 등 이상한 타입으로 줌 → 강제 JSON 파싱 시도
     return await res.json();
   } catch (err) {
     throw err;
@@ -101,6 +95,8 @@ async function fetchJson(
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
+    console.log("fetcn env", env);
+
     const origin = request.headers.get("Origin") || "";
     const isAllowed = ALLOWED_ORIGIN.includes(origin);
     const url = new URL(request.url);
@@ -112,15 +108,11 @@ export default {
         headers: corsHeaders(origin, isAllowed),
       });
     }
-    console.log("url", url);
-    console.log("pathname", url.pathname);
 
-    // 라우팅
+    // 국가리스트 조회
     if (url.pathname === "/diplomacy") {
       const pageNo = url.searchParams.get("pageNo") || "1";
       const targetUrl = getDiplomacyListUrl({ pageNo, env });
-
-      //console.log("targetUrl", targetUrl);
 
       const passthrough = await fetch(targetUrl, {
         method: "GET",
@@ -140,16 +132,16 @@ export default {
       const respHeaders = new Headers(passthrough.headers);
       respHeaders.set("Access-Control-Allow-Origin", isAllowed ? origin : "");
       respHeaders.set("Vary", "Origin");
+
       return new Response(passthrough.body, {
         status: passthrough.status,
         headers: respHeaders,
       });
     }
 
-    // 새 라우트: /country?iso=KR  → 3개 API 동시 호출
+    // 국가상세정보 → 3개 API 동시 호출
     if (url.pathname === "/country") {
       const iso = (url.searchParams.get("country") || "").toUpperCase().trim();
-      console.log("iso", iso);
 
       if (!/^[A-Z]{2}$/.test(iso)) {
         return new Response(
@@ -167,8 +159,6 @@ export default {
       }
 
       const endpoints = getCountryDetailUrl({ iso, env });
-
-      // console.log("endpoints", endpoints);
 
       // 동시 호출
       const [flagRes, economyRes, generalRes] = await Promise.allSettled([
@@ -211,7 +201,7 @@ export default {
     return new Response(
       JSON.stringify({
         error: "not_found",
-        routes: ["/diplomacy?pageNo=1", "/country?iso=KR"],
+        routes: ["/diplomacy?pageNo=1", "/country?country=KR"],
       }),
       {
         status: 404,

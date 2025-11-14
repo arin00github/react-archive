@@ -1,12 +1,12 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
-import { useRouter } from "next/navigation";
 
 import { IDiplomacyDetail } from "@/interfaces/deplomacy";
 import DiplomacyApiFactory from "@/service/frontend/DiplomacyApiFactory";
-import media from "@/styles/media";
 import { BasicButton } from "@/components/_common/style/BasicButton";
+import media from "@/styles/media";
+import { Loading } from "@/components/_common/loading/Loading";
 
 const StyledPopup = styled.div`
   //height: calc(100vh - 80px);
@@ -83,6 +83,13 @@ const StyledPopup = styled.div`
       }
     }
   }
+
+  .loadingBox {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 interface PopupProps {
@@ -90,38 +97,39 @@ interface PopupProps {
   selectedCountryIos: string;
 }
 const Popup = (props: PopupProps) => {
-  const router = useRouter();
-
   const { selectedCountryIos, handleClose } = props;
-  const { data, isError } = useQuery<IDiplomacyDetail>({
-    queryKey: ["get-deplomacy-selected-country", selectedCountryIos],
-    queryFn: async () => {
-      const res = await DiplomacyApiFactory.getDiplomacyDetail(
-        props.selectedCountryIos
-      );
-      if (res.status === 200) {
-        return res.data;
-      }
-      return null;
-    },
-  });
+
+  const { data, isError, isFetching, isLoading } =
+    useQuery<IDiplomacyDetail | null>({
+      queryKey: ["get-diplomacy-detail-country", selectedCountryIos],
+      queryFn: async () => {
+        const res = await DiplomacyApiFactory.getDiplomacyDetail(
+          (props.selectedCountryIos as string) || ""
+        );
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const data: any = await res.json();
+        if (res.status === 200) {
+          return {
+            flag: data.flag.response.body.items.item[0],
+            economy: data.economy.response.body.items.item[0],
+            general: data.general.response.body.items.item[0],
+          };
+        }
+        return null;
+      },
+    });
+
+  const isLoadingState = isFetching || isLoading;
   console.log("data", data);
 
   return (
     <StyledPopup>
       <div className="header">
-        <BasicButton
-          onClick={() => {
-            router.push(`/diplomacy/${selectedCountryIos}`);
-          }}
-        >
-          Go Detail
-        </BasicButton>
         <BasicButton className="closeBtn" onClick={handleClose}>
           X
         </BasicButton>
       </div>
-      {!isError && data && (
+      {!isLoadingState && !isError && data && (
         <div className="container">
           <div className="title">
             <div className="">{data.economy?.country_nm ?? ""}</div>
@@ -134,17 +142,22 @@ const Popup = (props: PopupProps) => {
           <div className="info">
             <div className="row">
               <div className="label">Name</div>
-              <div className="value">{data.economy.country_nm}</div>
+              <div className="value">{data.economy?.country_nm ?? ""}</div>
             </div>
             <div className="row">
               <div className="label">Name (eng)</div>
-              <div className="value">{data.economy.country_eng_nm}</div>
+              <div className="value">{data.economy?.country_eng_nm ?? ""}</div>
             </div>
             <div className="row">
               <div className="label">GDP</div>
-              <div className="value">{data.economy.gdp}</div>
+              <div className="value">{data.economy?.gdp ?? ""}</div>
             </div>
           </div>
+        </div>
+      )}
+      {isLoadingState && (
+        <div className="loadingBox">
+          <Loading />
         </div>
       )}
     </StyledPopup>

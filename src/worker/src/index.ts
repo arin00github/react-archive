@@ -5,7 +5,7 @@ interface Env {
 }
 
 const WORLD_BASE_URL =
-  "http://apis.data.go.kr/1262000/OverviewKorRelationService/getOverviewKorRelationList";
+  "http://apis.data.go.kr/1262000/OverviewGnrlInfoService/getOverviewGnrlInfoList";
 const WORLD_GENERAL_URL =
   "http://apis.data.go.kr/1262000/OverviewGnrlInfoService/getOverviewGnrlInfoList";
 const WORLD_ECONOMY_URL =
@@ -68,7 +68,7 @@ function corsHeaders(origin: string, isAllowed: boolean) {
 async function fetchJson(
   url: string,
   init?: RequestInit,
-  timeoutMs = DEFAULT_TIMEOUT_MS
+  timeoutMs = DEFAULT_TIMEOUT_MS,
 ) {
   const ac = new AbortController();
   const id = setTimeout(() => ac.abort(), timeoutMs);
@@ -100,6 +100,7 @@ export default {
     const origin = request.headers.get("Origin") || "";
     const isAllowed = ALLOWED_ORIGIN.includes(origin);
     const url = new URL(request.url);
+    console.log("url", url);
 
     // Preflight
     if (request.method === "OPTIONS") {
@@ -114,13 +115,16 @@ export default {
       const pageNo = url.searchParams.get("pageNo") || "1";
       const targetUrl = getDiplomacyListUrl({ pageNo, env });
 
+      console.log("targetUrl", targetUrl);
+
       const passthrough = await fetch(targetUrl, {
         method: "GET",
         headers: { Accept: "application/json, */*;q=0.1" },
       }).catch((e) => {
         console.error(e);
-        return null;
+        //return null;
       });
+      console.log("passthrough", passthrough);
 
       if (!passthrough) {
         return new Response(JSON.stringify({ error: "upstream failed" }), {
@@ -157,7 +161,7 @@ export default {
               "Content-Type": "application/json",
               ...corsHeaders(origin, isAllowed),
             },
-          }
+          },
         );
       }
 
@@ -212,7 +216,7 @@ export default {
           "Content-Type": "application/json",
           ...corsHeaders(origin, isAllowed),
         },
-      }
+      },
     );
   },
 } satisfies ExportedHandler<Env>;

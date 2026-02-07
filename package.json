@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && node -e \"require('fs').closeSync(require('fs').openSync('out/.nojekyll','w'))\"",
+    "build": "next build --production && node -e \"require('fs').closeSync(require('fs').openSync('out/.nojekyll','w'))\"",
     "start": "next start",
     "deploy": "gh-pages -d out -b gh-pages --dotfiles"
   },

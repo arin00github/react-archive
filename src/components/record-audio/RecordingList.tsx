@@ -59,7 +59,6 @@ interface IRecordingList {
 }
 
 const RecordingList = (props: IRecordingList) => {
-  console.log("RecordingList props", props);
   const { audioList, handleDelete, handleSelect, selectedAudioId } = props;
 
   return (

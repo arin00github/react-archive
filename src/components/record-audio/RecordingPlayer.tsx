@@ -21,10 +21,24 @@ const StyledRecordingPlayer = styled.div`
     display: flex;
     justify-content: center;
     align-content: center;
+
+    .noAudio {
+      animation: bounceText 2s infinite;
+    }
+  }
+
+  @keyframes bounceText {
+    0%,
+    100% {
+      transform: scale(1.2);
+    }
+    50% {
+      transform: scale(0.9);
+    }
   }
 `;
 
-const StyledSoundWave = styled.div`
+const StyledSoundWave = styled.div<{ active: string }>`
   position: relative;
   .soundWave {
     display: flex;
@@ -39,6 +53,8 @@ const StyledSoundWave = styled.div`
     background-color: #3498db; /* Bar color */
     animation: soundWave 1s infinite; /* Animation */
     border-radius: 6px;
+    animation-play-state: ${(props) =>
+      props.active === "true" ? "running" : "paused"};
   }
 
   .bar:nth-child(1) {
@@ -88,7 +104,6 @@ const RecordingPlayer = (props: IRecordingPlayer) => {
 
   const loadAudioData = async (id: string) => {
     const result = await loadAudioFromDB(id);
-    console.log("result", result);
     if (result) {
       const url = URL.createObjectURL(result.blob);
       setAudioUrl(url);
@@ -98,15 +113,15 @@ const RecordingPlayer = (props: IRecordingPlayer) => {
   useEffect(() => {
     if (selectedAudioId) {
       loadAudioData(selectedAudioId);
+    } else {
+      setAudioUrl(undefined);
     }
   }, [selectedAudioId]);
-
-  console.log("audioUrl", audioUrl);
 
   return (
     <StyledRecordingPlayer>
       <div className="effectBox">
-        <StyledSoundWave>
+        <StyledSoundWave active={!!selectedAudioId ? "true" : "false"}>
           <div className="soundWave">
             <div className="bar"></div>
             <div className="bar"></div>
@@ -119,6 +134,7 @@ const RecordingPlayer = (props: IRecordingPlayer) => {
       </div>
       <div className="audioBox">
         {audioUrl && <audio ref={playerRef} src={audioUrl} controls></audio>}
+        {!audioUrl && <div className="noAudio">Select Audio Data</div>}
       </div>
     </StyledRecordingPlayer>
   );

@@ -7,12 +7,12 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 import { deleteAudioFromDB, loadAllAudiosFormDB } from "@/utils/voiceDB";
 import { RecordData } from "@/interfaces/record";
+import { DialogState } from "@/interfaces/common";
 
 import VoiceRecorder from "./VoiceRecorder";
 import RecordingList from "./RecordingList";
 import RecordingPlayer from "./RecordingPlayer";
 import CommonDialog from "../_common/CommonDialog";
-import { DialogState } from "@/interfaces/common";
 
 const StyledAudioContainer = styled.div`
   width: 100%;
@@ -84,16 +84,7 @@ const RecordAudioContainer = () => {
   const loadAll = async () => {
     try {
       const audios = await loadAllAudiosFormDB();
-      console.log("loaded audios", audios);
       setAudioList(audios);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  const handleDeleteFromDB = async () => {
-    try {
-      await deleteAudioFromDB(dialogState.data);
     } catch (e) {
       console.error(e);
     }
@@ -113,9 +104,29 @@ const RecordAudioContainer = () => {
     });
   };
 
+  const handleDeleteFromDB = async () => {
+    try {
+      await deleteAudioFromDB(dialogState.data);
+      setDialogState({
+        ...dialogState,
+        status: "result",
+        message: "Successfully Delete Audio.",
+      });
+    } catch (e) {
+      console.error(e);
+      setDialogState({
+        ...dialogState,
+        status: "result-fail",
+        message: "Fail to Delete Audio.",
+      });
+    }
+  };
+
   useEffect(() => {
-    loadAll();
-  }, []);
+    if (dialogState.status === "input") {
+      loadAll();
+    }
+  }, [dialogState.status]);
 
   return (
     <StyledAudioContainer>
@@ -177,7 +188,7 @@ const RecordAudioContainer = () => {
       ></CommonDialog>
       <CommonDialog
         status={dialogState.status}
-        isOpen={dialogState.status === "result"}
+        isOpen={dialogState.status.includes("result")}
         handleClose={handleCloseDialog}
         message={dialogState.message}
       ></CommonDialog>

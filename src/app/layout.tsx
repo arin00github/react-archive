@@ -34,6 +34,7 @@ export default function RootLayout({ children }: Readonly<ChildrenWrapper>) {
               <StyledThemeProvider>
                 <GlobalStyles />
                 <GlobalLayout>{children}</GlobalLayout>
+                <div id="portal-root" />
               </StyledThemeProvider>
             </StyledComponentsRegistry>
           </StoreProvider>

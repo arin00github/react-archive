@@ -15,21 +15,24 @@ export const StyledPageButton = styled.button`
   width: 2rem;
   height: 2rem;
   line-height: 2rem;
-  margin-right: 0.625rem;
+  //margin-right: 0.625rem;
   padding: 0;
   text-align: center;
   background-color: transparent;
   border-color: ${({ theme }) => theme.custom.color.tableBorder};
-  &:last-child {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* &:last-child {
     margin-right: 0px;
-  }
+  } */
   &:hover {
     background-color: ${({ theme }) => theme.custom.color.primary};
-    color: ${({ theme }) => theme.custom.color.btnText};
+    color: #fff;
   }
   &.active {
     background-color: ${({ theme }) => theme.custom.color.primary};
-    color: ${({ theme }) => theme.custom.color.btnText};
+    color: #fff;
   }
 `;
 

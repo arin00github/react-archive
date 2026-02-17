@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import MicIcon from "@mui/icons-material/Mic";
 import PauseIcon from "@mui/icons-material/Pause";
+import DoneRoundedIcon from "@mui/icons-material/DoneRounded";
+import ReportProblemRoundedIcon from "@mui/icons-material/ReportProblemRounded";
 import { Box, Container, Typography } from "@mui/material";
 import styled from "styled-components";
 
@@ -145,8 +147,13 @@ const VoiceRecorder = (props: IVoiceRecorder) => {
 
   return (
     <Container>
-      <Box>
-        <Typography>
+      <Box paddingBottom="2rem" display="flex" gap="0.5rem">
+        {isMicAvailable ? (
+          <DoneRoundedIcon color="success" />
+        ) : (
+          <ReportProblemRoundedIcon color="warning" />
+        )}
+        <Typography color={isMicAvailable ? "success" : "warning"}>
           {isMicAvailable ? "마이크 사용 가능" : "마이크 허용 필요"}
         </Typography>
       </Box>

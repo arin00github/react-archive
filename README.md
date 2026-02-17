@@ -7,8 +7,7 @@
 
 ## Demo
 
-- Live: (배포 링크)
-- Screenshots: (이미지 또는 GIF)
+- Live: [배포 링크](https://arin00github.github.io/react-archive/)
 
 ## Tech Stack
 
@@ -27,11 +26,13 @@
 - `/worldmap` : OpenLayers 세계지도
 - `/diplomacy` : 공공데이터 API 연동 + Worker Proxy
 
----
-
 # Feature Breakdown & Engineering Notes
 
-## /drawing — Canvas 기반 그림판
+## Canvas 기반 그림판
+
+### url주소
+
+https://arin00github.github.io/react-archive/drawing/
 
 ### 제공 기능
 
@@ -45,9 +46,11 @@
 - Canvas는 React의 선언형 렌더링 모델과 다르게 **명령형(imperative) API** 중심이라, `useRef`로 Canvas 컨텍스트를 직접 제어하는 방식으로 구현.
 - Undo/Redo는 “히스토리 스택” 문제로 이어지므로, **상태/그리기 로직 분리 + 히스토리 관리 전략**을 의식하고 구성.
 
----
+## MediaRecorder 기반 녹음
 
-## /record-audio — MediaRecorder 기반 녹음
+### url주소
+
+https://arin00github.github.io/react-archive/record-audio/
 
 ### 제공 기능
 
@@ -62,9 +65,11 @@
 - 권한 승인/거부에 따라 UX 흐름이 갈라지기 때문에, **권한 상태를 UI에 명확히 노출**하도록 설계.
 - 녹음 결과는 Blob으로 수집되며, 재생을 위해 Object URL 생성/정리가 필요하므로 **자원 해제**(cleanup)를 고려.
 
----
+## 데이터 시각화
 
-## /data-visualize — 데이터 시각화
+### url주소
+
+https://arin00github.github.io/react-archive/data-visualize/
 
 ### 제공 기능
 
@@ -78,9 +83,11 @@
 
 - 옵션 변경이 잦은 UI라서, “옵션 상태 → 차트 설정” 변환 레이어를 분리해 **UI 로직과 차트 설정 로직을 분리**하는 방향으로 구성.
 
----
+## OpenLayers 세계지도
 
-## /worldmap — OpenLayers 세계지도
+### url주소
+
+https://arin00github.github.io/react-archive/worldmap/
 
 ### 제공 기능
 
@@ -91,9 +98,11 @@
 
 - OpenLayers는 React와 생명주기가 다르므로, 초기화/정리(cleanup)를 `useEffect` 기준으로 맞추고 **이벤트 핸들링과 레이어 관리**를 분리.
 
----
+## 공공데이터 API 연동
 
-## /diplomacy — 공공데이터 API 연동
+### url주소
+
+https://arin00github.github.io/react-archive/diplomacy/
 
 ### 제공 기능
 
@@ -107,8 +116,6 @@
 - API Key가 URL/클라이언트에 노출되는 문제를 줄이기 위해 **Cloudflare Worker Proxy**를 사용.
 - 클라이언트는 Worker 엔드포인트만 호출하도록 하여 “노출 최소화” 구조를 구성.
 - React Query를 사용해 **캐싱/재요청/로딩 상태**를 표준화.
-
----
 
 # Limitations
 

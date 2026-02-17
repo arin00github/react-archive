@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import styled from "styled-components";
 import { useTheme } from "next-themes";
 
@@ -57,13 +57,26 @@ const StyledNavigation = styled.div`
         flex-direction: column;
         gap: 0.8rem;
         li {
-          color: ${({ theme }) => theme.custom.color.text300};
+          color: ${({ theme }) => theme.custom.color.text100};
           height: 2.4rem;
-          padding: 0 2rem;
+          margin: 0 2rem;
+          position: relative;
           cursor: pointer;
 
           &:hover {
             // background-color: ${(props) => props.theme.hoverColor};
+          }
+          &.selected {
+            color: ${({ theme }) => theme.custom.color.text300};
+          }
+
+          span.bar {
+            position: absolute;
+            bottom: 0.5rem;
+            left: 0;
+            height: 1px;
+            width: 100%;
+            background-color: ${({ theme }) => theme.custom.color.text300};
           }
         }
       }
@@ -98,11 +111,11 @@ interface INavigation {
 
 const Navigation = (props: INavigation) => {
   const router = useRouter();
+  const pathname = usePathname();
 
   const { systemTheme, theme, setTheme } = useTheme();
 
   const boxRef = useRef<HTMLDivElement | null>(null);
-  //const { themeMode, toggleTheme } = useThemeMode();
 
   const handleToggleOpen = () => {
     if (props.isOpen) {
@@ -134,8 +147,15 @@ const Navigation = (props: INavigation) => {
           <ul className="menuBox">
             {navMenus.map((menu) => {
               return (
-                <li key={menu.id} onClick={() => handleClickMenu(menu.href)}>
+                <li
+                  key={menu.id}
+                  className={pathname.includes(menu.href) ? "selected" : ""}
+                  onClick={() => handleClickMenu(menu.href)}
+                >
                   {menu.label}
+                  {pathname.includes(menu.href) && (
+                    <span className="bar"></span>
+                  )}
                 </li>
               );
             })}

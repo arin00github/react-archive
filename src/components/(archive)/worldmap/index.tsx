@@ -14,7 +14,6 @@ const MapContainer = styled.div`
 const WorldMapContainer = () => {
   const dispatch = useAppDispatch();
   const selectedCountry = useAppSelector((state) => state.country);
-  console.log("world map");
 
   return (
     <MapContainer>

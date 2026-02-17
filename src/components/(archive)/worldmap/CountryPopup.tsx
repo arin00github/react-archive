@@ -104,7 +104,7 @@ const Popup = (props: PopupProps) => {
       queryKey: ["get-diplomacy-detail-country", selectedCountryIos],
       queryFn: async () => {
         const res = await DiplomacyApiFactory.getDiplomacyDetail(
-          (props.selectedCountryIos as string) || ""
+          (props.selectedCountryIos as string) || "",
         );
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const data: any = await res.json();
@@ -120,7 +120,6 @@ const Popup = (props: PopupProps) => {
     });
 
   const isLoadingState = isFetching || isLoading;
-  console.log("data", data);
 
   return (
     <StyledPopup>

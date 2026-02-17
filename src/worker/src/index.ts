@@ -95,8 +95,6 @@ async function fetchJson(
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
-    console.log("fetcn env", env);
-
     const origin = request.headers.get("Origin") || "";
     const isAllowed = ALLOWED_ORIGIN.includes(origin);
     const url = new URL(request.url);
@@ -114,8 +112,6 @@ export default {
     if (url.pathname === "/diplomacy") {
       const pageNo = url.searchParams.get("pageNo") || "1";
       const targetUrl = getDiplomacyListUrl({ pageNo, env });
-
-      console.log("targetUrl", targetUrl);
 
       const passthrough = await fetch(targetUrl, {
         method: "GET",

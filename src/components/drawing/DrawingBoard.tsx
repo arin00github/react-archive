@@ -212,7 +212,7 @@ const DrawingBoard = () => {
     const mimeType = fileType === "jpeg" ? "image/jpeg" : "image/png";
     const image = tempCanvas.toDataURL(mimeType);
     const extension = fileType === "jpeg" ? ".jpg" : ".png";
-    const safeName = fileName.trim() || "drawing";
+    const safeName = fileName.trim() || "drawing_download";
     const fileNameVal = safeName.endsWith(extension)
       ? safeName
       : safeName + extension;

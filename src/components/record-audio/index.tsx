@@ -171,7 +171,8 @@ const RecordAudioContainer = () => {
             setDialogState({
               ...dialogState,
               status: "confirm",
-              message: "Do you want to delete this audio?",
+              message:
+                "Click the 'Delete' button to delete the selected audio data.",
               data: id,
             });
           }}
@@ -185,6 +186,8 @@ const RecordAudioContainer = () => {
         handleClose={handleCloseDialog}
         message={dialogState.message}
         handleConfirm={handleDeleteFromDB}
+        btnText={{ confirmOK: "Delete" }}
+        titleText="Delete Audio?"
       ></CommonDialog>
       <CommonDialog
         status={dialogState.status}

@@ -7,6 +7,7 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
+  DialogTitle,
   // DialogTitle,
 } from "@mui/material";
 import styled from "styled-components";
@@ -26,26 +27,50 @@ interface IConfirmDialog {
   status: DialogStatus;
   handleClose: () => void;
   handleConfirm?: () => void;
+  btnText?: {
+    confirmOK: string;
+  };
+  titleText?: string;
 }
 
 const CommonDialog = (props: IConfirmDialog) => {
-  const { isOpen, handleClose, handleConfirm, message, status } = props;
+  const {
+    isOpen,
+    handleClose,
+    handleConfirm,
+    message,
+    status,
+    btnText,
+    titleText,
+  } = props;
 
   return (
     <StyledDialog open={isOpen} onClose={handleClose} style={{ zIndex: 5500 }}>
-      {/* <DialogTitle>Confirm</DialogTitle> */}
-      <DialogContent>
+      {titleText && status !== "input" && (
+        <DialogTitle>{titleText}</DialogTitle>
+      )}
+      <DialogContent style={{ padding: "1rem 2rem" }}>
         <DialogContentText>{message}</DialogContentText>
       </DialogContent>
       {status === "confirm" && (
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleConfirm}>OK</Button>
+        <DialogActions
+          style={{ justifyContent: "center", padding: "1.5rem 1.2rem" }}
+        >
+          <Button variant="outlined" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button variant="contained" onClick={handleConfirm}>
+            {btnText ? btnText.confirmOK : "Okey"}
+          </Button>
         </DialogActions>
       )}
       {status === "result" && (
-        <DialogActions>
-          <Button onClick={handleClose}>Confirm</Button>
+        <DialogActions
+          style={{ justifyContent: "center", padding: "1.5rem 1.2rem" }}
+        >
+          <Button variant="outlined" onClick={handleClose}>
+            Confirm
+          </Button>
         </DialogActions>
       )}
     </StyledDialog>

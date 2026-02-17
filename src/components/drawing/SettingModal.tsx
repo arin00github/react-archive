@@ -3,13 +3,13 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import {
   Button,
-  ButtonGroup,
+  Dialog,
+  DialogActions,
   FormControl,
   FormControlLabel,
   FormGroup,
   FormLabel,
   Input,
-  Modal,
   Radio,
   RadioGroup,
   Stack,
@@ -17,14 +17,23 @@ import {
 import styled from "styled-components";
 
 const StyledModalContainer = styled.div`
-  position: absolute;
+  /* position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); */
   width: 28rem;
   padding: 1.25rem;
   background-color: ${({ theme }) => theme.custom.color.background};
 `;
+
+const StyledDialog = styled(Dialog)(({ theme }) => ({
+  "& .MuiDialog-root": {
+    zIndex: 6000,
+  },
+  "& .MuiDialogActions-root": {
+    padding: theme.spacing(1),
+  },
+}));
 
 interface ISettingModal {
   isOpen: boolean;
@@ -68,7 +77,7 @@ const SettingModal = (props: ISettingModal) => {
   }, [isOpen]);
 
   return (
-    <Modal open={isOpen} onClose={handleClose}>
+    <StyledDialog open={isOpen} onClose={handleClose} style={{ zIndex: 5500 }}>
       <StyledModalContainer>
         <FormGroup>
           <Stack spacing={3}>
@@ -121,19 +130,25 @@ const SettingModal = (props: ISettingModal) => {
             </FormControl>
           </Stack>
         </FormGroup>
-
-        <ButtonGroup style={{ paddingTop: "1rem" }}>
-          <Button onClick={handleClose}>Close</Button>
-          <Button
-            onClick={() => {
-              handleSave({ fileName, fileType, bgColor });
-            }}
-          >
-            Save
-          </Button>
-        </ButtonGroup>
+        <DialogActions
+          style={{ justifyContent: "center", padding: "1.5rem 1.2rem" }}
+        >
+          <Stack direction="row" gap=".5rem">
+            <Button onClick={handleClose} variant="outlined">
+              Close
+            </Button>
+            <Button
+              variant="contained"
+              onClick={() => {
+                handleSave({ fileName, fileType, bgColor });
+              }}
+            >
+              Save
+            </Button>
+          </Stack>
+        </DialogActions>
       </StyledModalContainer>
-    </Modal>
+    </StyledDialog>
   );
 };
 

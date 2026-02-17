@@ -15,9 +15,15 @@ const StyledRecordingPlayer = styled.div`
     align-content: center;
   }
 
+  .audioTitle {
+    text-align: center;
+    margin-top: 1.5rem;
+    padding: 1rem 0;
+  }
+
   .audioBox {
     width: 100%;
-    margin-top: 3rem;
+    margin-top: 1rem;
     display: flex;
     justify-content: center;
     align-content: center;
@@ -101,10 +107,13 @@ const RecordingPlayer = (props: IRecordingPlayer) => {
   const playerRef = useRef<HTMLAudioElement | null>(null);
 
   const [audioUrl, setAudioUrl] = useState<string | undefined>();
+  const [audioTitle, setAudioTitle] = useState<string | undefined>();
 
   const loadAudioData = async (id: string) => {
     const result = await loadAudioFromDB(id);
     if (result) {
+      console.log("selectedAudio data", result);
+      setAudioTitle(result.id);
       const url = URL.createObjectURL(result.blob);
       setAudioUrl(url);
     }
@@ -115,6 +124,7 @@ const RecordingPlayer = (props: IRecordingPlayer) => {
       loadAudioData(selectedAudioId);
     } else {
       setAudioUrl(undefined);
+      setAudioTitle(undefined);
     }
   }, [selectedAudioId]);
 
@@ -132,6 +142,8 @@ const RecordingPlayer = (props: IRecordingPlayer) => {
           </div>
         </StyledSoundWave>
       </div>
+      {audioTitle && <div className="audioTitle">{audioTitle}</div>}
+
       <div className="audioBox">
         {audioUrl && <audio ref={playerRef} src={audioUrl} controls></audio>}
         {!audioUrl && <div className="noAudio">Select Audio Data</div>}

@@ -33,7 +33,7 @@ const NotFound = () => {
   const router = useRouter();
 
   const clickLinkBtn = () => {
-    router.push("/overview");
+    router.push("/");
   };
 
   return (

@@ -1,4 +1,4 @@
-import DiplomacyContainer from "@/components/(archive)/diplomacy";
+import DiplomacyContainer from "@/components/diplomacy";
 
 const WorldDiplomacyPage = () => {
   return <DiplomacyContainer />;

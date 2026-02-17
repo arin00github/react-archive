@@ -1,4 +1,4 @@
-import WorldMapContainer from "@/components/(archive)/worldmap";
+import WorldMapContainer from "@/components/worldmap";
 
 const WorldMapPage = () => {
   return <WorldMapContainer />;

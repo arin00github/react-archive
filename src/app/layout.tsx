@@ -5,7 +5,7 @@ import StoreProvider from "@/lib/StoreProvider";
 import ReactQueryClientProvider from "@/lib/QueryClientProvider";
 
 import GlobalStyles from "@/styles/GlobalStyles";
-import GlobalLayout from "@/components/_common/layout/GlobalLayout";
+//import GlobalLayout from "@/components/_common/layout/GlobalLayout";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -31,7 +31,8 @@ export default function RootLayout({ children }: Readonly<ChildrenWrapper>) {
             <StyledComponentsRegistry>
               <StyledThemeProvider>
                 <GlobalStyles />
-                <GlobalLayout>{children}</GlobalLayout>
+                {children}
+                {/* <GlobalLayout>{children}</GlobalLayout> */}
                 <div id="portal-root" />
               </StyledThemeProvider>
             </StyledComponentsRegistry>

@@ -52,14 +52,13 @@ const StyledNavigation = styled.div`
       }
 
       ul.menuBox {
-        padding-top: 3rem;
+        padding-top: 1.5rem;
         display: flex;
         flex-direction: column;
-        gap: 0.8rem;
         li {
           color: ${({ theme }) => theme.custom.color.text100};
-          height: 2.4rem;
-          margin: 0 2rem;
+          height: 1.7rem;
+          margin: 0.8rem 2.2rem 0;
           position: relative;
           cursor: pointer;
 
@@ -72,12 +71,19 @@ const StyledNavigation = styled.div`
 
           span.bar {
             position: absolute;
-            bottom: 0.5rem;
+            bottom: 0.4rem;
             left: 0;
             height: 1px;
             width: 100%;
             background-color: ${({ theme }) => theme.custom.color.text300};
           }
+        }
+        li.subTitle {
+          font-size: 0.8rem;
+          color: ${({ theme }) => theme.custom.color.text100};
+          height: 1.5rem;
+          margin: 1.4rem 1.8rem 0;
+          cursor: none;
         }
       }
 
@@ -144,22 +150,33 @@ const Navigation = (props: INavigation) => {
           {/* <button className="closeBtn" onClick={handleCloseBtn}>
             Close
           </button> */}
-          <ul className="menuBox">
-            {navMenus.map((menu) => {
-              return (
-                <li
-                  key={menu.id}
-                  className={pathname.includes(menu.href) ? "selected" : ""}
-                  onClick={() => handleClickMenu(menu.href)}
-                >
-                  {menu.label}
-                  {pathname.includes(menu.href) && (
-                    <span className="bar"></span>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
+          <div>
+            <ul className="menuBox">
+              {navMenus.map((menu) => {
+                if (menu.href) {
+                  return (
+                    <li
+                      key={menu.id}
+                      className={pathname.includes(menu.href) ? "selected" : ""}
+                      onClick={() => handleClickMenu(menu.href)}
+                    >
+                      {menu.label}
+                      {pathname.includes(menu.href) && (
+                        <span className="bar"></span>
+                      )}
+                    </li>
+                  );
+                } else {
+                  return (
+                    <li key={menu.id} className="subTitle">
+                      {menu.label}
+                    </li>
+                  );
+                }
+              })}
+            </ul>
+          </div>
+
           <div className="themeBox">
             <ThemeToggle
               systemTheme={systemTheme}

@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
-
 import { ChildrenWrapper } from "@/interfaces/common";
+
 import GlobalBody from "./GlobalBody";
 import Navigation from "./Navigation";
 import MobileNavigation from "./MobileNavigation";
@@ -17,8 +17,6 @@ const GlobalLayout = (props: ChildrenWrapper) => {
     setIsNavOpen(!isNavOpen);
   };
 
-  console.log("current screen (max-width:600px)", matches);
-
   return (
     <>
       {matches ? (
@@ -26,6 +24,7 @@ const GlobalLayout = (props: ChildrenWrapper) => {
       ) : (
         <Navigation isOpen={isNavOpen} handleToggle={handleNavToggle} />
       )}
+      {/* <Navigation isOpen={isNavOpen} handleToggle={handleNavToggle} /> */}
       <GlobalBody isOpen={isNavOpen} handleToggle={handleNavToggle}>
         {props.children}
       </GlobalBody>

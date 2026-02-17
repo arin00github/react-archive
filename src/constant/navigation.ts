@@ -1,8 +1,8 @@
 export const navMenus = [
   // { label: "Archive", href: "/archive", id: "menu-archive" },
-  { label: "Document", id: "SUB-TITLE-DOCUMENT" },
-  { label: "Overview", href: "/overview", id: "MENU-Overview" },
-  { label: "Project", id: "SUB-TITLE-PROJECT" },
+  // { label: "Document", id: "SUB-TITLE-DOCUMENT" },
+  // { label: "Overview", href: "/overview", id: "MENU-Overview" },
+  { label: "Project", href: "/", id: "SUB-TITLE-PROJECT" },
   // { label: "Google Form", href: "/googleform", id: "menu-google-form" },
   { label: "Drawing", href: "/drawing", id: "MENU-DRAWING" },
   {

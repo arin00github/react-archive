@@ -58,7 +58,7 @@ const StyledNavigation = styled.div`
         li {
           color: ${({ theme }) => theme.custom.color.text100};
           height: 1.7rem;
-          margin: 0.8rem 2.2rem 0;
+          margin: 0.8rem 2rem 0;
           position: relative;
           cursor: pointer;
 
@@ -82,8 +82,7 @@ const StyledNavigation = styled.div`
           font-size: 0.8rem;
           color: ${({ theme }) => theme.custom.color.text100};
           height: 1.5rem;
-          margin: 1.4rem 1.8rem 0;
-          cursor: none;
+          margin: 1.4rem 2rem 0;
         }
       }
 
@@ -153,7 +152,7 @@ const Navigation = (props: INavigation) => {
           <div>
             <ul className="menuBox">
               {navMenus.map((menu) => {
-                if (menu.href) {
+                if (menu.id.includes("MENU")) {
                   return (
                     <li
                       key={menu.id}
@@ -168,7 +167,11 @@ const Navigation = (props: INavigation) => {
                   );
                 } else {
                   return (
-                    <li key={menu.id} className="subTitle">
+                    <li
+                      key={menu.id}
+                      className="subTitle"
+                      onClick={() => handleClickMenu(menu.href)}
+                    >
                       {menu.label}
                     </li>
                   );

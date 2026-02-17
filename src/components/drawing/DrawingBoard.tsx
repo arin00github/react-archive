@@ -1,17 +1,18 @@
 "use client";
 
-import { MouseEvent, useEffect, useRef, useState } from "react";
+import { MouseEvent, ReactElement, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import RedoIcon from "@mui/icons-material/Redo";
 import UndoIcon from "@mui/icons-material/Undo";
 import DownloadIcon from "@mui/icons-material/Download";
 import RefreshIcon from "@mui/icons-material/Refresh";
-import { IconButton, Input, Slider, Stack } from "@mui/material";
+import { IconButton, Input, Slider, Stack, Tooltip } from "@mui/material";
+
 import SettingModal from "./SettingModal";
 
 const StyledDrawingSetting = styled.div`
   width: 100%;
-  height: 4rem;
+  height: 3.4rem;
   padding: 0 3.2rem;
   display: flex;
   gap: 1rem;
@@ -26,6 +27,33 @@ const StyledCustomColorThumbnail = styled.div`
   border-color: ${({ theme }) => theme.custom.color.tableBorder};
 `;
 
+type TooltipOffsetType = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  children: ReactElement<unknown, any>;
+  title: string;
+};
+
+const TooltipOffset = ({ children, title }: TooltipOffsetType) => {
+  return (
+    <Tooltip
+      title={title}
+      slotProps={{
+        popper: {
+          modifiers: [
+            {
+              name: "offset",
+              options: {
+                offset: [0, -14],
+              },
+            },
+          ],
+        },
+      }}
+    >
+      {children}
+    </Tooltip>
+  );
+};
 const DrawingBoard = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
@@ -42,7 +70,6 @@ const DrawingBoard = () => {
 
   useEffect(() => {
     const resizeCanvas = () => {
-      console.log("resizeCanvas");
       const canvas = canvasRef.current;
       if (!canvas) return;
       const parent = canvas.parentElement;
@@ -204,7 +231,7 @@ const DrawingBoard = () => {
   };
 
   return (
-    <div style={{ height: "calc(100vh - 4rem)" }}>
+    <div style={{ height: "calc(100vh - 3.4rem)" }}>
       <SettingModal
         isOpen={modalOpen}
         handleClose={closeModal}
@@ -212,7 +239,6 @@ const DrawingBoard = () => {
       />
       <StyledDrawingSetting>
         <Stack direction="row" spacing={1}>
-          {/* <label htmlFor="setting-line-color">Color</label> */}
           <StyledCustomColorThumbnail
             onClick={() => {
               if (!colorInputRef.current) return;
@@ -246,18 +272,37 @@ const DrawingBoard = () => {
             style={{ width: "1.2rem" }}
           />
         </Stack>
-        <IconButton onClick={clearCanvas}>
-          <RefreshIcon />
-        </IconButton>
-        <IconButton onClick={undo}>
-          <UndoIcon />
-        </IconButton>
-        <IconButton onClick={redo}>
-          <RedoIcon />
-        </IconButton>
-        <IconButton onClick={() => setModalOpen(true)}>
-          <DownloadIcon />
-        </IconButton>
+        <Stack spacing={1} direction="row">
+          <TooltipOffset title="reset">
+            <IconButton onClick={clearCanvas} aria-label="drawing-reset-btn">
+              <RefreshIcon />
+            </IconButton>
+          </TooltipOffset>
+          <TooltipOffset title="undo">
+            <IconButton onClick={undo} aria-label="drawing-undo-btn">
+              <UndoIcon />
+            </IconButton>
+          </TooltipOffset>
+          <TooltipOffset title="redo">
+            <IconButton onClick={redo} aria-label="drawing-redo-btn">
+              <RedoIcon />
+            </IconButton>
+          </TooltipOffset>
+          <TooltipOffset title="download" aria-label="drawing-download-btn">
+            <IconButton onClick={() => setModalOpen(true)}>
+              <DownloadIcon />
+            </IconButton>
+          </TooltipOffset>
+        </Stack>
+        {/* <Button onClick={clearCanvas} startIcon={<RefreshIcon />}>
+          reset
+        </Button>
+        <Button onClick={undo} startIcon={<UndoIcon />}>
+          undo
+        </Button>
+        <Button onClick={redo} startIcon={<RedoIcon />}>
+          undo
+        </Button> */}
       </StyledDrawingSetting>
       <canvas
         ref={canvasRef}
